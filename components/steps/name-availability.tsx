@@ -77,11 +77,11 @@ export function NameAvailabilityStep() {
     <div className="space-y-6 animate-slide-up">
       <FormSection
         title="Business Name Availability Check"
-        description="Enter up to 3 preferred business names in order of preference. We'll check their availability against CAC records."
+        description="Enter up to 2 preferred business names in order of preference. We'll check their availability against CAC records."
         isRequired
       >
         <div className="space-y-3">
-          {[0, 1, 2].map((index) => (
+          {[0, 1].map((index) => (
             <FormInput
               key={index}
               label={`Business Name ${index + 1} ${index === 0 ? "(Primary)" : ""}`}

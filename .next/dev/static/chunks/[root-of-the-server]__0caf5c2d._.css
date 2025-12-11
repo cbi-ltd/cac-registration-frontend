@@ -4896,6 +4896,12 @@
   }
 
   @media (min-width: 40rem) {
+    .sm\:top-5 {
+      top: calc(var(--spacing) * 5);
+    }
+  }
+
+  @media (min-width: 40rem) {
     .sm\:top-auto {
       top: auto;
     }
@@ -4910,6 +4916,18 @@
   @media (min-width: 40rem) {
     .sm\:bottom-0 {
       bottom: calc(var(--spacing) * 0);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:mt-3 {
+      margin-top: calc(var(--spacing) * 3);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:mt-10 {
+      margin-top: calc(var(--spacing) * 10);
     }
   }
 
@@ -4932,8 +4950,20 @@
   }
 
   @media (min-width: 40rem) {
+    .sm\:h-6 {
+      height: calc(var(--spacing) * 6);
+    }
+  }
+
+  @media (min-width: 40rem) {
     .sm\:h-12 {
       height: calc(var(--spacing) * 12);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:w-6 {
+      width: calc(var(--spacing) * 6);
     }
   }
 
@@ -4980,8 +5010,20 @@
   }
 
   @media (min-width: 40rem) {
+    .sm\:gap-2 {
+      gap: calc(var(--spacing) * 2);
+    }
+  }
+
+  @media (min-width: 40rem) {
     .sm\:gap-2\.5 {
       gap: calc(var(--spacing) * 2.5);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:overflow-x-auto {
+      overflow-x: auto;
     }
   }
 

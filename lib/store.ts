@@ -63,7 +63,7 @@ export interface RegistrationData {
 }
 
 const initialState: RegistrationData = {
-  preferredNames: ["", "", ""],
+  preferredNames: ["", ""],
   selectedBusinessName: "",
   applicantType: "individual",
   title: "",

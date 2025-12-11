@@ -13,7 +13,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$e
 const initialState = {
     preferredNames: [
         "",
-        "",
         ""
     ],
     selectedBusinessName: "",
@@ -617,30 +616,30 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 function ProgressIndicator({ currentStep, totalSteps, stepNames }) {
     const progressPercentage = totalSteps === 1 ? 100 : (currentStep - 1) / (totalSteps - 1) * 100;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "w-full py-8 px-4 sm:px-6",
+        className: "w-full py-6 px-3 sm:px-6",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative max-w-4xl md:mx-auto overflow-x-auto",
+                className: "relative mx-auto",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute left-0 right-0 top-5 h-1 bg-muted/60 rounded-full"
+                        className: "absolute left-0 right-0 top-4 sm:top-5 h-1 bg-muted/60 rounded-full"
                     }, void 0, false, {
                         fileName: "[project]/components/progress-indicator.tsx",
-                        lineNumber: 19,
+                        lineNumber: 18,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute left-0 top-5 h-1 bg-primary rounded-full transition-all duration-500 ease-out",
+                        className: "absolute left-0 top-4 sm:top-5 h-1 bg-primary rounded-full transition-all duration-500 ease-out",
                         style: {
                             width: `${progressPercentage}%`
                         }
                     }, void 0, false, {
                         fileName: "[project]/components/progress-indicator.tsx",
-                        lineNumber: 22,
+                        lineNumber: 21,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "relative flex justify-between",
+                        className: "relative flex justify-between gap-3 sm:gap-2",
                         children: Array.from({
                             length: totalSteps
                         }).map((_, index)=>{
@@ -648,66 +647,66 @@ function ProgressIndicator({ currentStep, totalSteps, stepNames }) {
                             const isComplete = stepNum < currentStep;
                             const isCurrent = stepNum === currentStep;
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex flex-col items-center flex-1 max-w-[140px]",
+                                className: "flex flex-col items-center flex-1 min-w-0",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "relative",
+                                        className: "relative flex-shrink-0",
                                         children: [
                                             isCurrent && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "absolute inset-0 rounded-full animate-ping bg-primary/30 -z-[-1]"
+                                                className: "absolute inset-0 rounded-full animate-ping bg-primary/30"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/progress-indicator.tsx",
-                                                lineNumber: 39,
+                                                lineNumber: 38,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: `relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-lg ${isComplete ? "bg-primary text-primary-foreground" : isCurrent ? "bg-primary text-primary-foreground ring-4 ring-primary/30 scale-110" : "bg-background text-muted-foreground border-2 border-muted"}`,
+                                                className: `relative z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-lg flex-shrink-0 ${isComplete ? "bg-primary text-primary-foreground" : isCurrent ? "bg-primary text-primary-foreground ring-4 ring-primary/30 scale-110" : "bg-background text-muted-foreground border-2 border-muted"}`,
                                                 children: isComplete ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
-                                                    className: "w-6 h-6"
+                                                    className: "w-5 h-5 sm:w-6 sm:h-6"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/progress-indicator.tsx",
-                                                    lineNumber: 51,
+                                                    lineNumber: 50,
                                                     columnNumber: 35
                                                 }, this) : stepNum
                                             }, void 0, false, {
                                                 fileName: "[project]/components/progress-indicator.tsx",
-                                                lineNumber: 42,
+                                                lineNumber: 41,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/progress-indicator.tsx",
-                                        lineNumber: 36,
+                                        lineNumber: 35,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: `mt-3 text-xs sm:text-sm font-medium text-center leading-tight px-1 transition-colors ${isComplete || isCurrent ? "text-foreground" : "text-muted-foreground"}`,
+                                        className: `hidden sm:block mt-2 sm:mt-3 text-xs sm:text-sm font-medium text-center leading-tight px-1 transition-colors line-clamp-2 ${isComplete || isCurrent ? "text-foreground" : "text-muted-foreground"}`,
                                         children: stepNames[index]
                                     }, void 0, false, {
                                         fileName: "[project]/components/progress-indicator.tsx",
-                                        lineNumber: 56,
+                                        lineNumber: 55,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, stepNum, true, {
                                 fileName: "[project]/components/progress-indicator.tsx",
-                                lineNumber: 35,
+                                lineNumber: 34,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/components/progress-indicator.tsx",
-                        lineNumber: 28,
+                        lineNumber: 27,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/progress-indicator.tsx",
-                lineNumber: 17,
+                lineNumber: 16,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mt-10 text-center text-sm text-muted-foreground",
+                className: "mt-8 sm:mt-10 text-center text-xs sm:text-sm text-muted-foreground",
                 children: [
                     "Step ",
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -715,7 +714,7 @@ function ProgressIndicator({ currentStep, totalSteps, stepNames }) {
                         children: currentStep
                     }, void 0, false, {
                         fileName: "[project]/components/progress-indicator.tsx",
-                        lineNumber: 71,
+                        lineNumber: 70,
                         columnNumber: 14
                     }, this),
                     " of ",
@@ -723,58 +722,76 @@ function ProgressIndicator({ currentStep, totalSteps, stepNames }) {
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/progress-indicator.tsx",
-                lineNumber: 70,
+                lineNumber: 69,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/progress-indicator.tsx",
-        lineNumber: 16,
+        lineNumber: 15,
         columnNumber: 5
     }, this);
 } // "use client"
  // import { CheckCircle2 } from "lucide-react"
  // interface ProgressIndicatorProps {
  //   currentStep: number
+ //   number: number
  //   totalSteps: number
  //   stepNames: string[]
  // }
  // export function ProgressIndicator({ currentStep, totalSteps, stepNames }: ProgressIndicatorProps) {
+ //   const progressPercentage = totalSteps === 1 ? 100 : ((currentStep - 1) / (totalSteps - 1)) * 100
  //   return (
- //     <div className="w-full py-8">
- //       <div className="flex items-center justify-between mb-6">
- //         {Array.from({ length: totalSteps }).map((_, index) => {
- //           const stepNum = index + 1
- //           const isComplete = stepNum < currentStep
- //           const isCurrent = stepNum === currentStep
- //           return (
- //             <div key={stepNum} className="flex items-center flex-1">
- //               <div className="flex flex-col items-center flex-1">
- //                 <div
- //                   className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
- //                     isComplete
- //                       ? "bg-primary text-primary-foreground"
- //                       : isCurrent
- //                         ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
- //                         : "bg-muted text-muted-foreground"
+ //     <div className="w-full py-8 px-4 sm:px-6">
+ //       <div className="relative max-w-4xl md:mx-auto ">
+ //         {/* Background Line */}
+ //         <div className="absolute left-0 right-0 top-5 h-1 bg-muted/60 rounded-full" />
+ //         {/* Progress Fill */}
+ //         <div
+ //           className="absolute left-0 top-5 h-1 bg-primary rounded-full transition-all duration-500 ease-out"
+ //           style={{ width: `${progressPercentage}%` }}
+ //         />
+ //         {/* Steps */}
+ //         <div className="relative flex justify-between">
+ //           {Array.from({ length: totalSteps }).map((_, index) => {
+ //             const stepNum = index + 1
+ //             const isComplete = stepNum < currentStep
+ //             const isCurrent = stepNum === currentStep
+ //             return (
+ //               <div key={stepNum} className="flex flex-col items-center flex-1 max-w-[140px]">
+ //                 <div className="relative">
+ //                   {/* Pulse effect for current step */}
+ //                   {isCurrent && (
+ //                     <div className="absolute inset-0 rounded-full animate-ping bg-primary/30 -z-[-1]" />
+ //                   )}
+ //                   <div
+ //                     className={`relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-lg ${
+ //                       isComplete
+ //                         ? "bg-primary text-primary-foreground"
+ //                         : isCurrent
+ //                           ? "bg-primary text-primary-foreground ring-4 ring-primary/30 scale-110"
+ //                           : "bg-background text-muted-foreground border-2 border-muted"
+ //                     }`}
+ //                   >
+ //                     {isComplete ? <CheckCircle2 className="w-6 h-6" /> : stepNum}
+ //                   </div>
+ //                 </div>
+ //                 {/* Step Label - responsive & wraps nicely */}
+ //                 <span
+ //                   className={`mt-3 text-xs sm:text-sm font-medium text-center leading-tight px-1 transition-colors ${
+ //                     isComplete || isCurrent ? "text-foreground" : "text-muted-foreground"
  //                   }`}
  //                 >
- //                   {isComplete ? <CheckCircle2 className="w-6 h-6" /> : stepNum}
- //                 </div>
- //                 <span className="text-xs font-medium mt-2 text-center max-w-20">{stepNames[index]}</span>
+ //                   {stepNames[index]}
+ //                 </span>
  //               </div>
- //               {stepNum < totalSteps && (
- //                 <div
- //                   className={`h-1 flex-1 mx-2 rounded-full transition-colors ${isComplete ? "bg-primary" : "bg-muted"}`}
- //                 />
- //               )}
- //             </div>
- //           )
- //         })}
+ //             )
+ //           })}
+ //         </div>
  //       </div>
- //       {/* Step Counter */}
- //       <div className="text-center text-sm text-muted-foreground">
- //         Step {currentStep} of {totalSteps}
+ //       {/* Step Counter - hidden on very small screens if needed */}
+ //       <div className="mt-10 text-center text-sm text-muted-foreground">
+ //         Step <span className="font-semibold text-foreground">{currentStep}</span> of {totalSteps}
  //       </div>
  //     </div>
  //   )
@@ -1155,15 +1172,14 @@ function NameAvailabilityStep() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
                 title: "Business Name Availability Check",
-                description: "Enter up to 3 preferred business names in order of preference. We'll check their availability against CAC records.",
+                description: "Enter up to 2 preferred business names in order of preference. We'll check their availability against CAC records.",
                 isRequired: true,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "space-y-3",
                         children: [
                             0,
-                            1,
-                            2
+                            1
                         ].map((index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormInput"], {
                                 label: `Business Name ${index + 1} ${index === 0 ? "(Primary)" : ""}`,
                                 placeholder: "e.g., ABC Technology Services",
