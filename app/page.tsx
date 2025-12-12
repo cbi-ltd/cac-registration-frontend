@@ -215,11 +215,17 @@ export default function HomePage() {
               Join hundreds of merchants and agents who have successfully registered with CAC through our portal.
             </p>
             <Link
-              href="/register"
+              href="/#"
               className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-primary-foreground text-primary font-semibold hover:bg-primary-foreground/90 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               Start Registration Now
             </Link>
+            {/* <Link
+              href="/register"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-primary-foreground text-primary font-semibold hover:bg-primary-foreground/90 transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+              Start Registration Now
+            </Link> */}
           </div>
         </section>
 

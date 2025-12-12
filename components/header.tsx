@@ -18,10 +18,10 @@ export function Header() {
             {/* <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg">
               <span className="text-primary-foreground font-bold text-xl">CBI</span>
             </div> */}
-            <Image src={cbiLogo} alt="CBI Logo" className="w-32 h-auto" />
             {/* <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
               Business Registration
-            </span> */}
+              </span> */}
+              <Image src={cbiLogo} alt="CBI Logo" className="w-32 h-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -49,11 +49,17 @@ export function Header() {
           {/* CTA Button - Desktop */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/register"
+              href="/#"
               className="px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Register Now
             </Link>
+            {/* <Link
+              href="/register"
+              className="px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              Register Now
+            </Link> */}
           </div>
 
           {/* Mobile Menu Button */}
@@ -92,12 +98,19 @@ export function Header() {
                 FAQ
               </a>
               <Link
-                href="/register"
+                href="/#"
                 className="w-full px-4 py-2.5 mt-2 rounded-lg bg-primary text-primary-foreground font-medium text-center hover:bg-primary/90 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Register Now
               </Link>
+              {/* <Link
+                href="/register"
+                className="w-full px-4 py-2.5 mt-2 rounded-lg bg-primary text-primary-foreground font-medium text-center hover:bg-primary/90 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Register Now
+              </Link> */}
             </nav>
           </div>
         )}
