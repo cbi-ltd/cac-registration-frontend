@@ -21,7 +21,7 @@ export function Header() {
             {/* <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
               Business Registration
               </span> */}
-              <Image src={cbiLogo} alt="CBI Logo" className="w-32 h-auto" />
+              <Image src={cbiLogo} alt="CBI Logo" className="w-[182px] h-[45px]" />
           </Link>
 
           {/* Desktop Navigation */}

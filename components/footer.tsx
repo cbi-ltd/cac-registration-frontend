@@ -16,7 +16,7 @@ export function Footer() {
                 <span className="text-white font-bold text-sm">CBI</span>
               </div>
               <span className="font-semibold text-foreground">CBI Technologies</span> */}
-              <Image src={cbiLogo} alt="CBI Logo" className="w-32 h-auto" />
+              <Image src={cbiLogo} alt="CBI Logo" className="w-[182px] h-[45px]" />
             </div>
             <p className="text-sm text-muted-foreground">
               Empowering businesses to achieve CAC compliance and deploy PoS solutions.
