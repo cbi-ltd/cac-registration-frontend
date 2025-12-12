@@ -105,8 +105,8 @@ export default function PrivacyPolicyPage() {
               <p>For privacy concerns or inquiries:</p>
               <div className="mt-4 p-4 rounded-lg bg-secondary border border-border">
                 <p className="font-semibold text-foreground">CBI Technologies Limited</p>
-                <p>Email: privacy@cbi.ng</p>
-                <p>Phone: +234 (0) 800 000 0000</p>
+                <p>Email: support@cbitechnologiesltd.com</p>
+                <p>Phone: +2348112936083</p>
               </div>
             </section>
           </div>

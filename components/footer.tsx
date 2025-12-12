@@ -50,12 +50,12 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:support@cbi.ng" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="mailto:support@cbitechnologiesltd.com" className="text-muted-foreground hover:text-primary transition-colors">
                   Email Support
                 </a>
               </li>
               <li>
-                <a href="tel:+234800000000" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="tel:+2348112936083" className="text-muted-foreground hover:text-primary transition-colors">
                   Call Support
                 </a>
               </li>

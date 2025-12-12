@@ -28,11 +28,17 @@ export default function HomePage() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
-                  href="/register"
+                  href="/#"
                   className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
                   Register New Business
                 </Link>
+                {/* <Link
+                  href="/register"
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Register New Business
+                </Link> */}
                 <Link
                   href="/status"
                   className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg border-2 border-primary text-primary font-semibold hover:bg-primary/5 transition-all duration-200"

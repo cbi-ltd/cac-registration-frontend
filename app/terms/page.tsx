@@ -132,8 +132,8 @@ export default function TermsPage() {
               <h2 className="text-2xl font-semibold text-foreground mb-3">12. Contact Information</h2>
               <div className="mt-4 p-4 rounded-lg bg-secondary border border-border">
                 <p className="font-semibold text-foreground">For inquiries about these Terms & Conditions:</p>
-                <p>Email: legal@cbi.ng</p>
-                <p>Phone: +234 (0) 800 000 0000</p>
+                <p>Email: legal@cbitechnologiesltd.com</p>
+                <p>Phone: +2348112936083</p>
               </div>
             </section>
           </div>

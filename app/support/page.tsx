@@ -30,10 +30,9 @@ export default function SupportPage() {
               </div>
               <p className="text-sm text-muted-foreground mb-4">Send us an email and we'll respond within 24 hours</p>
               <a
-                href="mailto:support@cbi.ng"
+                href="mailto:support@cbitechnologiesltd.com"
                 className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
-              >
-                support@cbi.ng
+              > support@cbitechnologiesltd.com
               </a>
             </div>
 
@@ -46,10 +45,10 @@ export default function SupportPage() {
               </div>
               <p className="text-sm text-muted-foreground mb-4">Call our support team during business hours</p>
               <a
-                href="tel:+234800000000"
+                href="tel:+2348112936083"
                 className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
               >
-                +234 (0) 800 000 0000
+                +2348112936083
               </a>
             </div>
 
@@ -61,8 +60,8 @@ export default function SupportPage() {
                 <h3 className="font-semibold text-foreground">Business Hours</h3>
               </div>
               <p className="text-sm text-muted-foreground">
-                <span className="block">Monday - Friday: 9:00 AM - 6:00 PM</span>
-                <span className="block">Saturday: 10:00 AM - 4:00 PM</span>
+                <span className="block">Monday - Friday: 9:00 AM - 5:00 PM</span>
+                <span className="block">Saturday: 10:00 AM - 3:00 PM</span>
                 <span className="block">Sunday: Closed</span>
               </p>
             </div>
@@ -162,13 +161,13 @@ export default function SupportPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="mailto:support@cbi.ng"
+                href="mailto:support@cbitechnologiesltd.com"
                 className="px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors text-center"
               >
                 Email Support
               </a>
               <a
-                href="tel:+234800000000"
+                href="tel:+2348112936083"
                 className="px-6 py-2.5 rounded-lg border border-primary text-primary font-medium hover:bg-primary/10 transition-colors text-center"
               >
                 Call Support
