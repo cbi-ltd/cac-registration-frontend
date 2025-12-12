@@ -5,3 +5,2001 @@
 [00:00:50.101] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
 [00:00:50.101] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765526821978}
 [00:03:27.191] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765526979965}
+[01:28:21.950] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/status color: rgb(120, 120, 120) color: inherit {"dp":"/status","o":"http://localhost:3000/status","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765532074703}
+[01:28:34.802] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765532087578}
+[02:53:40.115] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:53:40.250] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:53:40.250] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:53:40.250] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765537193025}
+[02:53:41.739] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:53:41.856] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:53:41.856] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[02:53:41.856] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765537194628}
+[03:18:40.956] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:18:41.087] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:18:41.087] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:18:41.087] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538693864}
+[03:18:42.098] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:18:42.214] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:18:42.214] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:18:42.214] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538694989}
+[03:18:43.244] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:18:43.360] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:18:43.360] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:18:43.360] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538696137}
+[03:18:44.266] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:18:44.384] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:18:44.384] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:18:44.384] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538697157}
+[03:21:03.742] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:21:03.859] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:21:03.859] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:21:03.859] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538836628}
+[03:21:25.735] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:21:25.871] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:21:25.871] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:21:25.871] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538858648}
+[03:21:30.933] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:21:31.044] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:21:31.044] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:21:31.044] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538863821}
+[03:21:32.461] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:21:32.582] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:21:32.582] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:21:32.582] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765538865355}
+[03:24:10.163] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:24:10.292] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:24:10.292] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:24:10.292] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539023068}
+[03:24:38.202] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:24:38.346] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:24:38.346] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:24:38.346] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539051108}
+[03:27:00.489] Server  LOG      ✓ Compiled in 104ms
+[03:27:17.796] Server  LOG      ✓ Compiled in 44ms
+[03:27:32.663] Server  LOG      ✓ Compiled in 66ms
+[03:27:41.905] Server  LOG      ✓ Compiled in 41ms
+[03:27:44.068] Server  LOG      ✓ Compiled in 85ms
+[03:27:45.104] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:27:45.104] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:27:47.110] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:27:47.110] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:27:52.107] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <im
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:27:52.107] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <im
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:27:56.110] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <image
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:27:56.110] Browser ERROR   ./components/header.tsx:20:13
+Parsing ecmascript source code failed
+  18 |             </div> */}
+  19 |             <image
+> 20 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+     |             ^
+  21 |               Business Registration
+  22 |             </span>
+  23 |           </Link>
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:28:00.103] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. image
+[03:28:00.103] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. image
+[03:31:25.133] Server  LOG      ✓ Compiled in 50ms
+[03:31:28.442] Server  LOG      ✓ Compiled in 44ms
+[03:31:29.111] Browser ERROR   An empty string ("") was passed to the %s attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to %s instead of an empty string. src src
+[03:31:29.112] Browser ERROR   An empty string ("") was passed to the %s attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to %s instead of an empty string. src src
+[03:31:29.684] Server  LOG      ✓ Compiled in 39ms
+[03:31:31.511] Server  LOG      ✓ Compiled in 39ms
+[03:31:33.172] Server  LOG      ✓ Compiled in 50ms
+[03:31:34.106] Browser ERROR   An empty string ("") was passed to the %s attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to %s instead of an empty string. src src
+[03:31:34.106] Browser ERROR   An empty string ("") was passed to the %s attribute. This may cause the browser to download the whole page again over the network. To fix this, either do not render the element at all or pass null to %s instead of an empty string. src src
+[03:31:34.757] Server  LOG      ✓ Compiled in 38ms
+[03:31:38.783] Server  LOG      ✓ Compiled in 41ms
+[03:31:45.440] Server  LOG      ✓ Compiled in 44ms
+[03:31:50.027] Server  LOG      ✓ Compiled in 41ms
+[03:31:54.100] Server  LOG      ✓ Compiled in 36ms
+[03:31:55.111] Server  LOG      ✓ Compiled in 35ms
+[03:32:05.052] Server  LOG      ✓ Compiled in 38ms
+[03:32:15.201] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_a5d34254._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.202] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\[turbopack]_runtime.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.230] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\node_modules\next\dist\compiled\next-server\app-page-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.233] Server  ERROR    ⨯ ReferenceError: im is not defined
+[03:32:15.248] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_a5d34254._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.248] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\[turbopack]_runtime.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.249] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\node_modules\next\dist\compiled\next-server\app-page-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.249] Server  ERROR    ⨯ ReferenceError: im is not defined
+[03:32:15.259] Server  LOG      ✓ Compiled in 44ms
+[03:32:15.281] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_a5d34254._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.281] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\[turbopack]_runtime.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.282] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\node_modules\next\dist\compiled\next-server\app-page-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.282] Server  ERROR    ⨯ ReferenceError: im is not defined
+[03:32:15.304] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_a5d34254._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.304] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\[turbopack]_runtime.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.305] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\node_modules\next\dist\compiled\next-server\app-page-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:15.306] Server  ERROR    ⨯ ReferenceError: im is not defined
+[03:32:15.506] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:15.507] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:16.110] Browser ERROR   uncaughtError: ReferenceError: im is not defined
+[03:32:16.111] Browser ERROR   uncaughtError: ReferenceError: im is not defined
+[03:32:16.241] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:16.241] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./components/header.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[03:32:16.242] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:16.242] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./components/header.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[03:32:16.242] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:16.243] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:16.346] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_a5d34254._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.347] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\[turbopack]_runtime.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.348] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\node_modules\next\dist\compiled\next-server\app-page-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.348] Server  ERROR    ⨯ ReferenceError: imp is not defined
+[03:32:16.356] Server  LOG      ✓ Compiled in 43ms
+[03:32:16.372] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_a5d34254._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.373] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\[turbopack]_runtime.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.373] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\node_modules\next\dist\compiled\next-server\app-page-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.374] Server  ERROR    ⨯ ReferenceError: imp is not defined
+[03:32:16.400] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_a5d34254._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.401] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\[turbopack]_runtime.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.403] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\node_modules\next\dist\compiled\next-server\app-page-turbo.runtime.dev.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:16.404] Server  ERROR    ⨯ ReferenceError: imp is not defined
+[03:32:16.542] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:16.546] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:17.099] Browser ERROR   uncaughtError: ReferenceError: imp is not defined
+[03:32:17.100] Browser ERROR   uncaughtError: ReferenceError: imp is not defined
+[03:32:18.064] Server  LOG      ✓ Compiled in 41ms
+[03:32:19.110] Browser ERROR   ./components/header.tsx:5:1
+Parsing ecmascript source code failed
+  3 | import React from "react"
+  4 | import
+> 5 | import Link from "next/link"
+    | ^^^^^^
+  6 | import { Menu, X } from "lucide-react"
+  7 |
+  8 | export function Header() {
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:32:19.110] Browser ERROR   ./components/header.tsx:5:1
+Parsing ecmascript source code failed
+  3 | import React from "react"
+  4 | import
+> 5 | import Link from "next/link"
+    | ^^^^^^
+  6 | import { Menu, X } from "lucide-react"
+  7 |
+  8 | export function Header() {
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:32:20.106] Browser ERROR   ./components/header.tsx:5:1
+Parsing ecmascript source code failed
+  3 | import React from "react"
+  4 | import
+> 5 | import Link from "next/link"
+    | ^^^^^^
+  6 | import { Menu, X } from "lucide-react"
+  7 |
+  8 | export function Header() {
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:32:20.106] Browser ERROR   ./components/header.tsx:5:1
+Parsing ecmascript source code failed
+  3 | import React from "react"
+  4 | import
+> 5 | import Link from "next/link"
+    | ^^^^^^
+  6 | import { Menu, X } from "lucide-react"
+  7 |
+  8 | export function Header() {
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:32:20.892] Server  LOG      ✓ Compiled in 43ms
+[03:32:20.893] Browser ERROR   ./components/header.tsx:5:1
+Parsing ecmascript source code failed
+  3 | import React from "react"
+  4 | import
+> 5 | import Link from "next/link"
+    | ^^^^^^
+  6 | import { Menu, X } from "lucide-react"
+  7 |
+  8 | export function Header() {
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:32:20.894] Browser ERROR   ./components/header.tsx:5:1
+Parsing ecmascript source code failed
+  3 | import React from "react"
+  4 | import
+> 5 | import Link from "next/link"
+    | ^^^^^^
+  6 | import { Menu, X } from "lucide-react"
+  7 |
+  8 | export function Header() {
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:32:20.895] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:20.895] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./components/header.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[03:32:20.896] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:20.896] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:20.896] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./components/header.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[03:32:20.896] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:21.201] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:21.225] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:22.099] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. image
+[03:32:22.099] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="page.tsx">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function HomePage} serverProvidedParams={{...}}>
+            <HomePage params={Promise} searchParams={Promise}>
+              <div className="min-h-scre...">
+                <Header>
+                  <header className="sticky top...">
+                    <div className="max-w-7xl ...">
+                      <div className="flex items...">
+                        <LinkComponent href="/" className="flex items...">
+                          <a className="flex items..." ref={function} onClick={function onClick} ...>
++                           <image src="@/public/assets/cbi-logo.png" alt="CBI Logo" className="w-32 h-auto">
+-                           <img src="@/public/assets/cbi-logo.png" alt="CBI Logo" className="w-32 h-auto">
+                            ...
+                        ...
+                ...
+        ...
+      ...
+
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539514246}
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539514247}
+[03:32:22.099] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. image
+[03:32:22.099] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="page.tsx">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function HomePage} serverProvidedParams={{...}}>
+            <HomePage params={Promise} searchParams={Promise}>
+              <div className="min-h-scre...">
+                <Header>
+                  <header className="sticky top...">
+                    <div className="max-w-7xl ...">
+                      <div className="flex items...">
+                        <LinkComponent href="/" className="flex items...">
+                          <a className="flex items..." ref={function} onClick={function onClick} ...>
++                           <image src="@/public/assets/cbi-logo.png" alt="CBI Logo" className="w-32 h-auto">
+-                           <img src="@/public/assets/cbi-logo.png" alt="CBI Logo" className="w-32 h-auto">
+                            ...
+                        ...
+                ...
+        ...
+      ...
+
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539514195}
+[03:32:22.099] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539514195}
+[03:32:27.164] Server  LOG      ✓ Compiled in 120ms
+[03:32:28.110] Browser ERROR   uncaughtError: Error: Image with src "@/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:28.110] Browser ERROR   uncaughtError: Error: Image with src "@/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:36.043] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:36.044] Server  ERROR    ⨯ Error: Image with src "@/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:36.136] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:36.264] Browser ERROR   uncaughtError: Error: Image with src "@/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:45.788] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:45.789] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:45.890] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:45.891] Server  ERROR    ⨯ Error: Image with src "/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:45.901] Server  LOG      ✓ Compiled in 37ms
+[03:32:45.930] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:45.931] Server  ERROR    ⨯ Error: Image with src "/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:46.052] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:46.068] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:47.106] Browser ERROR   uncaughtError: Error: Image with src "/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:47.106] Browser ERROR   uncaughtError: Error: Image with src "/public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:48.177] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:48.178] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:48.274] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:48.275] Server  ERROR    ⨯ Error: Image with src "..//public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:48.283] Server  LOG      ✓ Compiled in 37ms
+[03:32:48.305] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:48.305] Server  ERROR    ⨯ Error: Image with src "..//public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:48.437] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:48.451] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:49.108] Browser ERROR   uncaughtError: Error: Image with src "..//public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:49.108] Browser ERROR   uncaughtError: Error: Image with src "..//public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:49.681] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:49.682] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:32:49.780] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:49.780] Server  ERROR    ⨯ Error: Image with src "../../public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:49.790] Server  LOG      ✓ Compiled in 40ms
+[03:32:49.815] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:32:49.816] Server  ERROR    ⨯ Error: Image with src "../../public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:49.932] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:49.935] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:32:51.098] Browser ERROR   uncaughtError: Error: Image with src "../../public/assets/cbi-logo.png" is missing required "width" property.
+[03:32:51.099] Browser ERROR   uncaughtError: Error: Image with src "../../public/assets/cbi-logo.png" is missing required "width" property.
+[03:33:02.657] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:33:02.657] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:33:02.782] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:33:02.782] Server  ERROR    ⨯ Error: Image with src "../.." is missing required "width" property.
+[03:33:02.800] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:33:02.800] Server  ERROR    ⨯ Error: Image with src "../.." is missing required "width" property.
+[03:33:02.815] Server  LOG      ✓ Compiled in 39ms
+[03:33:02.928] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:33:02.938] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:33:04.109] Browser ERROR   uncaughtError: Error: Image with src "../.." is missing required "width" property.
+[03:33:04.109] Browser ERROR   uncaughtError: Error: Image with src "../.." is missing required "width" property.
+[03:33:04.739] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:33:04.740] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:33:04.857] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:33:04.858] Server  ERROR    ⨯ Error: Image with src "../" is missing required "width" property.
+[03:33:04.875] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:33:04.876] Server  ERROR    ⨯ Error: Image with src "../" is missing required "width" property.
+[03:33:04.884] Server  LOG      ✓ Compiled in 41ms
+[03:33:05.022] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:33:05.029] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:33:06.105] Browser ERROR   uncaughtError: Error: Image with src "../" is missing required "width" property.
+[03:33:06.105] Browser ERROR   uncaughtError: Error: Image with src "../" is missing required "width" property.
+[03:33:10.620] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:33:10.621] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:33:10.723] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:33:10.723] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:33:10.739] Server  LOG      ✓ Compiled in 52ms
+[03:33:10.750] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:33:10.751] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:33:10.873] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:33:10.892] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:33:11.100] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:33:11.100] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:33:59.996] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:33:59.997] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:00.099] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:00.099] Server  ERROR    ⨯ Error: Image with src ".." is missing required "width" property.
+[03:34:00.109] Server  LOG      ✓ Compiled in 36ms
+[03:34:00.150] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:00.150] Server  ERROR    ⨯ Error: Image with src ".." is missing required "width" property.
+[03:34:00.259] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:00.282] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:01.099] Browser ERROR   uncaughtError: Error: Image with src ".." is missing required "width" property.
+[03:34:01.099] Browser ERROR   uncaughtError: Error: Image with src ".." is missing required "width" property.
+[03:34:01.195] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:01.196] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:01.288] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:01.289] Server  ERROR    ⨯ Error: Image with src "../" is missing required "width" property.
+[03:34:01.299] Server  LOG      ✓ Compiled in 38ms
+[03:34:01.332] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:01.333] Server  ERROR    ⨯ Error: Image with src "../" is missing required "width" property.
+[03:34:01.432] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:01.445] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:02.109] Browser ERROR   uncaughtError: Error: Image with src "../" is missing required "width" property.
+[03:34:02.110] Browser ERROR   uncaughtError: Error: Image with src "../" is missing required "width" property.
+[03:34:03.844] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:03.844] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:03.936] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:03.937] Server  ERROR    ⨯ Error: Image with src "../p" is missing required "width" property.
+[03:34:03.953] Server  LOG      ✓ Compiled in 37ms
+[03:34:03.964] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:03.964] Server  ERROR    ⨯ Error: Image with src "../p" is missing required "width" property.
+[03:34:04.098] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:04.103] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:05.102] Browser ERROR   uncaughtError: Error: Image with src "../p" is missing required "width" property.
+[03:34:05.102] Browser ERROR   uncaughtError: Error: Image with src "../p" is missing required "width" property.
+[03:34:19.465] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:19.466] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:19.565] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:19.566] Server  ERROR    ⨯ Error: Image with src "../pub" is missing required "width" property.
+[03:34:19.577] Server  LOG      ✓ Compiled in 37ms
+[03:34:19.609] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:19.610] Server  ERROR    ⨯ Error: Image with src "../pub" is missing required "width" property.
+[03:34:19.708] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:19.721] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:20.099] Browser ERROR   uncaughtError: Error: Image with src "../pub" is missing required "width" property.
+[03:34:20.100] Browser ERROR   uncaughtError: Error: Image with src "../pub" is missing required "width" property.
+[03:34:20.782] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:20.784] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:20.872] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:20.872] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:20.883] Server  LOG      ✓ Compiled in 34ms
+[03:34:20.910] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:20.910] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:21.023] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:21.053] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:22.102] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:22.103] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:48.764] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:48.764] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:34:48.866] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:48.866] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:48.877] Server  LOG      ✓ Compiled in 42ms
+[03:34:48.905] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:34:48.905] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:49.018] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:49.038] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:34:50.102] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:50.102] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:34:52.330] Server  LOG      ✓ Compiled in 40ms
+[03:34:53.106] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:53.106] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:54.882] Server  LOG      ✓ Compiled in 39ms
+[03:34:55.098] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:55.099] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import cbi
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected ',', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:55.099] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:55.099] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import cbi
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected ',', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:57.105] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import cbi
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected ',', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:57.105] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import cbi
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected ',', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:58.655] Server  LOG      ✓ Compiled in 39ms
+[03:34:59.106] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import 
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:34:59.106] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import 
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:00.102] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import {}
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:00.102] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import {}
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:04.105] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import { cbi}
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:04.105] Browser ERROR   ./components/header.tsx:9:1
+Parsing ecmascript source code failed
+   7 | import { cbi}
+   8 |
+>  9 | export function Header() {
+     | ^^^^^^
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+  11 |
+  12 |   return (
+
+Expected 'from', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:06.591] Server  LOG      ✓ Compiled in 35ms
+[03:35:07.105] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo}
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:07.105] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo}
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:08.102] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo }
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:08.102] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo }
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:10.098] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:10.098] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:24.108] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:24.108] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:28.101] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.pngg
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:28.101] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.pngg
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:29.112] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.pngg"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:29.112] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.pngg"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:33.109] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:33.109] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:36.110] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:36.110] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo } from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:39.098] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo  from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:39.098] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo  from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:40.104] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo  from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:40.104] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo  from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:41.097] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:41.097] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:42.107] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:42.108] Browser ERROR   ./components/header.tsx:7:13
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import { cbi-logo from "../public/assets/cbi-logo.png"
+     |             ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:45.105] Browser ERROR   ./components/header.tsx:7:12
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import  cbi-logo from "../public/assets/cbi-logo.png"
+     |            ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:45.105] Browser ERROR   ./components/header.tsx:7:12
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import  cbi-logo from "../public/assets/cbi-logo.png"
+     |            ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:46.108] Browser ERROR   ./components/header.tsx:7:12
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import  cbi-logo from "../public/assets/cbi-logo.png"
+     |            ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:46.108] Browser ERROR   ./components/header.tsx:7:11
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import cbi-logo from "../public/assets/cbi-logo.png"
+     |           ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:46.108] Browser ERROR   ./components/header.tsx:7:12
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import  cbi-logo from "../public/assets/cbi-logo.png"
+     |            ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:46.108] Browser ERROR   ./components/header.tsx:7:11
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import cbi-logo from "../public/assets/cbi-logo.png"
+     |           ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:48.098] Browser ERROR   ./components/header.tsx:7:11
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import cbi-logo from "../public/assets/cbi-logo.png"
+     |           ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:48.098] Browser ERROR   ./components/header.tsx:7:11
+Parsing ecmascript source code failed
+   5 | import Link from "next/link"
+   6 | import { Menu, X } from "lucide-react"
+>  7 | import cbi-logo from "../public/assets/cbi-logo.png"
+     |           ^
+   8 |
+   9 | export function Header() {
+  10 |   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+Expected ',', got '-'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:35:51.246] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:35:51.247] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:35:51.272] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:35:51.272] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:35:51.305] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\node_modules_75d0a3e1._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:35:51.305] Server  ERROR    ⨯ Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:35:51.433] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:35:51.444] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:35:52.110] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:35:52.110] Browser ERROR   uncaughtError: Error: Image with src "../public/assets/cbi-logo.png" is missing required "width" property.
+[03:36:03.658] Server  LOG      ✓ Compiled in 40ms
+[03:36:04.104] Browser ERROR   ./components/header.tsx:21:27
+Parsing ecmascript source code failed
+  19 |               <span className="text-primary-foreground font-bold text-xl">CBI</span>
+  20 |             </div> */}
+> 21 |             <Image src={} alt="CBI Logo" className="w-32 h-auto" />
+     |                           ^^^
+  22 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+  23 |               Business Registration
+  24 |             </span>
+
+Expected '</', got 'alt'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:36:04.104] Browser ERROR   ./components/header.tsx:21:27
+Parsing ecmascript source code failed
+  19 |               <span className="text-primary-foreground font-bold text-xl">CBI</span>
+  20 |             </div> */}
+> 21 |             <Image src={} alt="CBI Logo" className="w-32 h-auto" />
+     |                           ^^^
+  22 |             <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+  23 |               Business Registration
+  24 |             </span>
+
+Expected '</', got 'alt'
+
+Import traces:
+  Client Component Browser:
+    ./components/header.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/header.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:36:05.498] Server  LOG      ✓ Compiled in 48ms
+[03:36:05.503] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:36:05.505] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:36:05.728] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:36:05.750] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:36:06.102] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:36:06.102] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:36:06.103] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539738723}
+[03:36:06.103] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:36:06.103] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:36:06.103] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765539738704}
+[03:36:32.102] Server  LOG      ✓ Compiled in 36ms
+[03:50:40.113] Server  LOG      ✓ Compiled in 40ms
+[03:50:43.836] Server  LOG      ✓ Compiled in 42ms
+[03:50:48.831] Server  LOG      ✓ Compiled in 64ms
+[03:50:49.097] Browser ERROR   uncaughtError: ReferenceError: cbiLogo is not defined
+[03:50:49.097] Browser ERROR   uncaughtError: ReferenceError: cbiLogo is not defined
+[03:50:53.636] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:50:53.637] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:50:53.740] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_2597fac5._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:50:53.741] Server  ERROR    ⨯ ReferenceError: Image is not defined
+[03:50:53.752] Server  LOG      ✓ Compiled in 45ms
+[03:50:53.787] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_2597fac5._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:50:53.787] Server  ERROR    ⨯ ReferenceError: Image is not defined
+[03:50:53.912] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:50:54.020] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:50:55.100] Browser ERROR   uncaughtError: ReferenceError: cbiLogo is not defined
+[03:50:55.101] Browser ERROR   uncaughtError: ReferenceError: cbiLogo is not defined
+[03:50:57.822] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:50:57.824] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:50:57.921] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_2597fac5._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:50:57.921] Server  ERROR    ⨯ ReferenceError: Image is not defined
+[03:50:57.929] Server  LOG      ✓ Compiled in 49ms
+[03:50:57.955] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_2597fac5._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[03:50:57.955] Server  ERROR    ⨯ ReferenceError: Image is not defined
+[03:50:58.073] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:50:58.099] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:50:59.101] Browser ERROR   uncaughtError: TypeError: Failed to construct 'Image': Please use the 'new' operator, this DOM object constructor cannot be called as a function.
+[03:50:59.102] Browser ERROR   uncaughtError: TypeError: Failed to construct 'Image': Please use the 'new' operator, this DOM object constructor cannot be called as a function.
+[03:51:22.570] Server  LOG      ✓ Compiled in 41ms
+[03:51:23.097] Browser ERROR   ./components/footer.tsx:3:1
+Parsing ecmascript source code failed
+  1 | "use client"
+  2 | import
+> 3 | import cbiLogo from "../public/assets/cbi-logo.png"
+    | ^^^^^^
+  4 |
+  5 | export function Footer() {
+  6 |   const currentYear = new Date().getFullYear()
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/footer.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/footer.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:51:23.097] Browser ERROR   ./components/footer.tsx:3:1
+Parsing ecmascript source code failed
+  1 | "use client"
+  2 | import
+> 3 | import cbiLogo from "../public/assets/cbi-logo.png"
+    | ^^^^^^
+  4 |
+  5 | export function Footer() {
+  6 |   const currentYear = new Date().getFullYear()
+
+Expected 'from', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/footer.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/footer.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:51:32.783] Server  LOG      ✓ Compiled in 37ms
+[03:51:33.110] Browser ERROR   ./components/footer.tsx:3:1
+Parsing ecmascript source code failed
+  1 | "use client"
+  2 | import Im
+> 3 | import cbiLogo from "../public/assets/cbi-logo.png"
+    | ^^^^^^
+  4 |
+  5 | export function Footer() {
+  6 |   const currentYear = new Date().getFullYear()
+
+Expected ',', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/footer.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/footer.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:51:33.110] Browser ERROR   ./components/footer.tsx:3:1
+Parsing ecmascript source code failed
+  1 | "use client"
+  2 | import Im
+> 3 | import cbiLogo from "../public/assets/cbi-logo.png"
+    | ^^^^^^
+  4 |
+  5 | export function Footer() {
+  6 |   const currentYear = new Date().getFullYear()
+
+Expected ',', got 'import'
+
+Import traces:
+  Client Component Browser:
+    ./components/footer.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/footer.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[03:51:34.198] Server  LOG      ✓ Compiled in 44ms
+[03:51:34.203] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:51:34.205] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[03:51:34.452] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:51:34.466] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[03:51:35.111] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:51:35.111] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:51:35.111] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765540667434}
+[03:51:35.112] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[03:51:35.112] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[03:51:35.112] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765540667446}
+[04:27:26.638] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1765542819410}

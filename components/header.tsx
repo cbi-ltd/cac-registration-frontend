@@ -1,8 +1,10 @@
 "use client"
 
 import React from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
+import cbiLogo from "../public/assets/cbi-logo.png"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
@@ -13,12 +15,13 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg">
+            {/* <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg">
               <span className="text-primary-foreground font-bold text-xl">CBI</span>
-            </div>
-            <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
+            </div> */}
+            <Image src={cbiLogo} alt="CBI Logo" className="w-32 h-auto" />
+            {/* <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
               Business Registration
-            </span>
+            </span> */}
           </Link>
 
           {/* Desktop Navigation */}

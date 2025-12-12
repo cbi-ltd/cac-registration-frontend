@@ -1,4 +1,6 @@
 "use client"
+import Image from "next/image"
+import cbiLogo from "../public/assets/cbi-logo.png"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -10,10 +12,11 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              {/* <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">CBI</span>
               </div>
-              <span className="font-semibold text-foreground">CBI Technologies</span>
+              <span className="font-semibold text-foreground">CBI Technologies</span> */}
+              <Image src={cbiLogo} alt="CBI Logo" className="w-32 h-auto" />
             </div>
             <p className="text-sm text-muted-foreground">
               Empowering businesses to achieve CAC compliance and deploy PoS solutions.
