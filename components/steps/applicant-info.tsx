@@ -5,6 +5,7 @@ import { FormSection } from "@/components/form-section"
 import { FormInput } from "@/components/form-input"
 import { FormSelect } from "@/components/form-select"
 import { User } from "lucide-react"
+import { countries } from "@/components/countries"
 
 export function ApplicantInfoStep() {
   const store = useRegistrationStore()
@@ -14,7 +15,7 @@ export function ApplicantInfoStep() {
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
   ]
-  const nationalities = ["Nigerian", "Other"]
+  const nationalities = countries;
   const idTypes = ["NIN", "International Passport", "Driver's License", "Voter's Card"]
 
   const handleFieldChange = (field: string, value: string) => {
