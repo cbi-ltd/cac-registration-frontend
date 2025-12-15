@@ -12,10 +12,6 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              {/* <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">CBI</span>
-              </div>
-              <span className="font-semibold text-foreground">CBI Technologies</span> */}
               <Image src={cbiLogo} alt="CBI Logo" className="w-[182px] h-[45px]" />
             </div>
             <p className="text-sm text-muted-foreground">

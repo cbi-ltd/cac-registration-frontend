@@ -15,13 +15,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            {/* <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg">
-              <span className="text-primary-foreground font-bold text-xl">CBI</span>
-            </div> */}
-            {/* <span className="hidden sm:inline font-bold text-base text-foreground group-hover:text-primary transition-colors">
-              Business Registration
-              </span> */}
-              <Image src={cbiLogo} alt="CBI Logo" className="w-[182px] h-[45px]" />
+            <Image src={cbiLogo} alt="CBI Logo" className="w-[182px] h-[45px]" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -49,17 +43,11 @@ export function Header() {
           {/* CTA Button - Desktop */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/#"
-              className="px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-lg"
-            >
-              Register Now
-            </Link>
-            {/* <Link
               href="/register"
               className="px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-lg"
             >
               Register Now
-            </Link> */}
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -98,19 +86,12 @@ export function Header() {
                 FAQ
               </a>
               <Link
-                href="/#"
-                className="w-full px-4 py-2.5 mt-2 rounded-lg bg-primary text-primary-foreground font-medium text-center hover:bg-primary/90 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Register Now
-              </Link>
-              {/* <Link
                 href="/register"
                 className="w-full px-4 py-2.5 mt-2 rounded-lg bg-primary text-primary-foreground font-medium text-center hover:bg-primary/90 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Register Now
-              </Link> */}
+              </Link>
             </nav>
           </div>
         )}
