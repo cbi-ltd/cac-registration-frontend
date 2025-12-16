@@ -116,22 +116,22 @@ export const useRegistrationStore = create<
   persist(
     (set) => ({
       ...initialState,
-      updateField: (field, value) =>
-        set((state) => ({
+      updateField: (field: any, value: any) =>
+        set((state: any) => ({
           ...state,
           [field]: value,
         })),
       nextStep: () =>
-        set((state) => ({
+        set((state: any) => ({
           currentStep: Math.min(state.currentStep + 1, 7),
           completedSteps: [...new Set([...state.completedSteps, state.currentStep])],
         })),
       previousStep: () =>
-        set((state) => ({
+        set((state: any) => ({
           currentStep: Math.max(state.currentStep - 1, 1),
         })),
-      markStepComplete: (step) =>
-        set((state) => ({
+      markStepComplete: (step: number) =>
+        set((state: any) => ({
           completedSteps: [...new Set([...state.completedSteps, step])],
         })),
       reset: () => set(initialState),
@@ -139,5 +139,5 @@ export const useRegistrationStore = create<
     {
       name: "cbi-registration",
     },
-  ),
+  ) as any,
 )
