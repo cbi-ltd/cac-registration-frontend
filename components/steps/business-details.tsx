@@ -57,7 +57,7 @@ export function BusinessDetailsStep() {
       </FormSection>
 
       <FormSection title="Business Address" isRequired>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
@@ -67,17 +67,15 @@ export function BusinessDetailsStep() {
             />
             <span className="text-sm font-medium text-foreground">Same as residential address</span>
           </label>
-        </div>
+        </div> */}
 
-        {!store.sameAsResidential && (
-          <FormInput
-            label="Business Street Address"
-            value={store.businessAddress}
-            onChange={(e) => handleFieldChange("businessAddress", e.target.value)}
-            placeholder="123 Business Street"
-            required
-          />
-        )}
+        <FormInput
+          label="Business Street Address"
+          value={store.businessAddress}
+          onChange={(e) => handleFieldChange("businessAddress", e.target.value)}
+          placeholder="123 Business Street"
+          required
+        />
       </FormSection>
 
       <FormSection title="Business Contact Information" isRequired>

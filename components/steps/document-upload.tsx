@@ -28,7 +28,7 @@ export function DocumentUploadStep() {
       required: true,
       accepted: ["application/pdf", "image/jpeg", "image/png"],
       maxSize: 5 * 1024 * 1024,
-      alreadyUploaded: true,
+      // initially not uploaded
     },
     {
       name: "Passport Photograph",
@@ -37,7 +37,7 @@ export function DocumentUploadStep() {
       required: true,
       accepted: ["image/jpeg", "image/png"],
       maxSize: 5 * 1024 * 1024,
-      alreadyUploaded: true,
+      // initially not uploaded
     },
     {
       name: "Proof of Address",

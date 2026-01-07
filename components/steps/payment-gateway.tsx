@@ -92,12 +92,20 @@ export function PaymentGatewayStep() {
       store.updateField("paymentStatus", "success")
       store.updateField("paymentReference", reference)
       store.updateField("applicationReference", reference)
-      setPaymentSuccess(true)
 
-      // Auto move to next step after success
-      setTimeout(() => {
-        store.nextStep()
-      }, 2000)
+      try {
+        // submit registration to backend after successful payment
+        await store.submitRegistration()
+        setPaymentSuccess(true)
+
+        // Auto move to next step after success
+        setTimeout(() => {
+          store.nextStep()
+        }, 2000)
+      } catch (err: any) {
+        setPaymentError({ type: "server", message: err?.message || "Submission failed" })
+        store.updateField("paymentStatus", "failed")
+      }
     } catch (error: any) {
       const errorMessage = error.message || "An unexpected error occurred"
 

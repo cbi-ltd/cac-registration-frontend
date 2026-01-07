@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { API_BASE_URL } from "@/lib/store"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { FormInput } from "@/components/form-input"
@@ -23,24 +24,28 @@ export default function StatusPage() {
     setError("")
 
     try {
-      // Mock API call - Replace with real API
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const resp = await fetch(`${API_BASE_URL}check-status/${reference.trim()}`)
 
-      // Mock status data
+      if (!resp.ok) {
+        setError("Failed to retrieve status. Please try again.")
+        return
+      }
+
+      const json = await resp.json()
+
+      // Response shape provided by backend
+      // { statusCode, status, message, data: { status, transactionRef, data: { rcNumber, entityName, entityType, registrationDate, tin }, partners }, ... }
+      const payload = json?.data ?? null
+      if (!payload) {
+        setError("No status data returned.")
+        return
+      }
+
       setStatus({
-        reference,
-        businessName: "ABC Technology Services",
-        applicantName: "John Smith",
-        status: "Approved", // pending | submitted | approved | rejected
-        submittedDate: "2024-12-01",
-        approvedDate: "2024-12-08",
-        progress: 100,
-        notes: "Your CAC business registration has been approved.",
-        documents: [
-          { name: "CAC Certificate", available: true },
-          { name: "Registration Receipt", available: true },
-          { name: "Application Form", available: true },
-        ],
+        status: payload.status,
+        transactionRef: payload.transactionRef,
+        entity: payload.data,
+        message: json?.message ?? json?.data?.message ?? "",
       })
     } catch (err) {
       setError("Failed to retrieve status. Please try again.")
@@ -49,15 +54,18 @@ export default function StatusPage() {
     }
   }
 
+  const capitalize = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s)
+
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Approved":
+    const key = (status || "").toLowerCase()
+    switch (key) {
+      case "approved":
         return "text-green-600"
-      case "Pending":
+      case "pending":
         return "text-amber-600"
-      case "Submitted":
+      case "submitted":
         return "text-blue-600"
-      case "Rejected":
+      case "rejected":
         return "text-destructive"
       default:
         return "text-foreground"
@@ -65,12 +73,13 @@ export default function StatusPage() {
   }
 
   const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "Approved":
+    const key = (status || "").toLowerCase()
+    switch (key) {
+      case "approved":
         return <CheckCircle2 className="w-6 h-6 text-green-600" />
-      case "Pending":
+      case "pending":
         return <Clock className="w-6 h-6 text-amber-600" />
-      case "Rejected":
+      case "rejected":
         return <AlertCircle className="w-6 h-6 text-destructive" />
       default:
         return <Clock className="w-6 h-6 text-blue-600" />
@@ -125,72 +134,52 @@ export default function StatusPage() {
                   {getStatusIcon(status.status)}
                   <div className="flex-1">
                     <p className="text-sm text-muted-foreground">Application Status</p>
-                    <p className={`text-2xl font-bold mt-1 ${getStatusColor(status.status)}`}>{status.status}</p>
-                    <p className="text-sm text-muted-foreground mt-2">{status.notes}</p>
+                    <p className={`text-2xl font-bold mt-1 ${getStatusColor(status.status)}`}>{capitalize(status.status)}</p>
+                    {status.message && <p className="text-sm text-muted-foreground mt-2">{status.message}</p>}
                   </div>
                 </div>
               </div>
 
-              {/* Application Details */}
+              {/* Application Details - display backend data */}
               <FormSection title="Application Details">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Reference Number</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.reference}</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">Reference / Transaction</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{status.transactionRef}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Business Name</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.businessName}</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">Entity Name</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.entityName}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Applicant Name</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.applicantName}</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">Entity Type</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.entityType}</p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Submitted Date</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.submittedDate}</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">RC Number</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.rcNumber ?? "-"}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">Registration Date</p>
+                    <p className="text-sm font-medium text-foreground mt-1">
+                      {status.entity?.registrationDate ? new Date(status.entity.registrationDate).toLocaleDateString() : "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">TIN</p>
+                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.tin ?? "-"}</p>
                   </div>
                 </div>
               </FormSection>
-
-              {/* Progress */}
-              <FormSection title="Processing Progress">
-                <div className="space-y-3">
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-primary transition-all duration-300"
-                      style={{ width: `${status.progress}%` }}
-                    />
-                  </div>
-                  <p className="text-sm text-muted-foreground text-center">{status.progress}% Complete</p>
-                </div>
-              </FormSection>
-
-              {/* Available Documents */}
-              {status.documents && status.documents.some((d: any) => d.available) && (
-                <FormSection title="Available Documents">
-                  <div className="space-y-2">
-                    {status.documents.map((doc: any) => (
-                      <button
-                        key={doc.name}
-                        className="w-full flex items-center justify-between p-3 rounded-lg border border-border hover:bg-secondary transition-colors"
-                      >
-                        <span className="font-medium text-foreground">{doc.name}</span>
-                        {doc.available && <Download className="w-4 h-4 text-primary" />}
-                      </button>
-                    ))}
-                  </div>
-                </FormSection>
-              )}
 
               {/* Support Info */}
               <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800">
                 <p className="text-sm text-blue-900 dark:text-blue-100">
-                  Have questions? Contact our support team at{" "}
+                  Have questions? Contact our support team at{' '}
                   <a href="mailto:support@cbi.ng" className="font-medium underline">
                     support@cbi.ng
-                  </a>{" "}
-                  or call{" "}
+                  </a>{' '}
+                  or call{' '}
                   <a href="tel:+234800000000" className="font-medium underline">
                     +234 800 000 0000
                   </a>

@@ -134,6 +134,7 @@ export function ApplicantInfoStep() {
               onChange={(e) => handleFieldChange("email", e.target.value)}
               placeholder="john@example.com"
               required
+              tooltip="your current active email"
             />
           </FormSection>
         </>

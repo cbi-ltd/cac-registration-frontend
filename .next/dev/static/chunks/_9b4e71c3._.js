@@ -3,6 +3,8 @@
 "use strict";
 
 __turbopack_context__.s([
+    "API_BASE_URL",
+    ()=>API_BASE_URL,
     "useRegistrationStore",
     ()=>useRegistrationStore
 ]);
@@ -10,6 +12,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$e
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/zustand/esm/middleware.mjs [app-client] (ecmascript)");
 ;
 ;
+const API_BASE_URL = "https://cac-registration-backend.onrender.com/api/merchant/";
 const initialState = {
     preferredNames: [
         "",
@@ -40,7 +43,7 @@ const initialState = {
     businessActivityCode: "",
     natureOfBusiness: "",
     businessAddress: "",
-    sameAsResidential: true,
+    sameAsResidential: "",
     businessPhone: "",
     businessEmail: "",
     commencementDate: "",
@@ -52,10 +55,101 @@ const initialState = {
     currentStep: 1,
     completedSteps: [],
     applicationId: "",
-    applicationReference: ""
+    applicationReference: "",
+    supportingDocBase64: null,
+    signatureBase64: null,
+    meansOfIdBase64: null,
+    passportBase64: null
 };
 const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["create"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["persist"])((set)=>({
         ...initialState,
+        // Populate store fields from backend API response shape
+        loadFromApi: (data)=>set((state)=>({
+                    // map known fields from backend response to store
+                    businessActivity: data.lineOfBusiness ?? state.businessActivity,
+                    commencementDate: data.businessCommencementDate ?? state.commencementDate,
+                    businessAddress: data.companyAddress ?? state.businessAddress,
+                    businessEmail: data.companyEmail ?? state.businessEmail,
+                    businessPhone: data.proprietorPhonenumber ?? state.businessPhone,
+                    selectedBusinessName: data.proposedOption1 ?? state.selectedBusinessName,
+                    // proprietor -> applicant fields
+                    firstName: data.proprietorFirstname ?? state.firstName,
+                    middleName: data.proprietorOthername ?? state.middleName,
+                    lastName: data.proprietorSurname ?? state.lastName,
+                    dateOfBirth: data.proprietorDob ?? state.dateOfBirth,
+                    gender: (data.proprietorGender ?? state.gender)?.toLowerCase() === "male" ? "male" : "female",
+                    nationality: data.proprietorNationality ?? state.nationality,
+                    phone: data.proprietorPhonenumber ?? state.phone,
+                    email: data.proprietorEmail ?? state.email,
+                    residentialAddress: `${data.proprietorStreetNumber ?? ""} ${data.proprietorServiceAddress ?? ""} ${data.proprietorCity ?? ""}`.trim(),
+                    // transaction and document base64
+                    applicationReference: data.transactionRef ?? state.applicationReference,
+                    supportingDocBase64: data.supportingDoc ?? state.supportingDocBase64,
+                    signatureBase64: data.signature ?? state.signatureBase64,
+                    meansOfIdBase64: data.meansOfId ?? state.meansOfIdBase64,
+                    passportBase64: data.passport ?? state.passportBase64
+                })),
+        // Submit registration payload to backend endpoint
+        submitRegistration: async ()=>{
+            let result = null;
+            try {
+                // read persisted store from localStorage
+                const raw = localStorage.getItem("cbi-registration");
+                let storeObj = {};
+                if (raw) {
+                    try {
+                        storeObj = JSON.parse(raw);
+                    } catch (e) {
+                        storeObj = {};
+                    }
+                }
+                const body = {
+                    lineOfBusiness: storeObj.businessActivity ?? storeObj.natureOfBusiness ?? "",
+                    proprietorCity: storeObj.proprietorCity ?? storeObj.proprietorCity ?? "",
+                    companyCity: storeObj.companyCity ?? "",
+                    proprietorPhonenumber: storeObj.phone ?? storeObj.proprietorPhonenumber ?? "",
+                    businessCommencementDate: storeObj.commencementDate ?? "",
+                    companyState: storeObj.companyState ?? "",
+                    proprietorNationality: storeObj.nationality ?? "",
+                    proprietorState: storeObj.proprietorState ?? "",
+                    proprietorDob: storeObj.dateOfBirth ?? "",
+                    proprietorFirstname: storeObj.firstName ?? "",
+                    proprietorOthername: storeObj.middleName ?? "",
+                    proprietorSurname: storeObj.lastName ?? "",
+                    proposedOption1: storeObj.selectedBusinessName ?? "",
+                    proprietorGender: (storeObj.gender ?? "").toUpperCase() ?? "",
+                    proprietorStreetNumber: storeObj.proprietorStreetNumber ?? "",
+                    proprietorServiceAddress: storeObj.residentialAddress ?? "",
+                    companyEmail: storeObj.businessEmail ?? storeObj.companyEmail ?? "",
+                    companyStreetNumber: storeObj.companyStreetNumber ?? "",
+                    proprietorEmail: storeObj.email ?? "",
+                    companyAddress: storeObj.businessAddress ?? "",
+                    proprietorPostcode: storeObj.proprietorPostcode ?? "",
+                    proprietorLga: storeObj.proprietorLga ?? "",
+                    transactionRef: storeObj.paymentReference ?? storeObj.applicationReference ?? "",
+                    supportingDoc: storeObj.supportingDocBase64 ?? null,
+                    signature: storeObj.signatureBase64 ?? null,
+                    meansOfId: storeObj.meansOfIdBase64 ?? null,
+                    passport: storeObj.passportBase64 ?? null
+                };
+                const resp = await fetch(`${API_BASE_URL}reg-bn`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body)
+                });
+                if (!resp.ok) throw new Error("Registration submission failed");
+                result = await resp.json();
+                // Optionally update store from response
+                set((s)=>({
+                        applicationId: result?.data?.data?.rcNumber ?? s.applicationId
+                    }));
+            } catch (err) {
+                throw err;
+            }
+            return result;
+        },
         updateField: (field, value)=>set((state)=>({
                     ...state,
                     [field]: value
@@ -1149,7 +1243,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-client] (ecmascript) <export default as Search>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-alert.js [app-client] (ecmascript) <export default as AlertCircle>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-client] (ecmascript) <export default as CheckCircle2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/clock.js [app-client] (ecmascript) <export default as Clock>");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -1161,42 +1254,43 @@ var _s = __turbopack_context__.k.signature();
 function NameAvailabilityStep() {
     _s();
     const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
-    const [results, setResults] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState([]);
+    const [responseMessage, setResponseMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
     const [isChecking, setIsChecking] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [error, setError] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
-    const handleNameChange = (index, value)=>{
-        const newNames = [
-            ...store.preferredNames
-        ];
-        newNames[index] = value;
-        store.updateField("preferredNames", newNames);
-    };
+    const [proposedName, setProposedName] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
+    const [lineOfBusiness, setLineOfBusiness] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
+    const handleProposedNameChange = (value)=>setProposedName(value);
+    const handleLineOfBusinessChange = (value)=>setLineOfBusiness(value);
     const checkAvailability = async ()=>{
-        const names = store.preferredNames.filter((n)=>n.trim() !== "");
-        if (names.length === 0) {
-            setError("Please enter at least one business name");
+        if (!proposedName.trim()) {
+            setError("Please enter a proposed business name");
             return;
         }
         setIsChecking(true);
         setError("");
-        setResults(names.map((name)=>({
-                name,
-                available: false,
-                status: "checking"
-            })));
+        setResponseMessage("");
         try {
-            // Mock API call - Replace with real Oasis VAS endpoint
-            await new Promise((resolve)=>setTimeout(resolve, 1500));
-            const mockResults = names.map((name)=>({
-                    name,
-                    available: Math.random() > 0.3,
-                    status: Math.random() > 0.3 ? "available" : "reserved"
-                }));
-            setResults(mockResults);
-            // Auto-select first available name if user hasn't selected one
-            const firstAvailable = mockResults.find((r)=>r.available);
-            if (firstAvailable && !store.selectedBusinessName) {
-                store.updateField("selectedBusinessName", firstAvailable.name);
+            const resp = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_BASE_URL"]}check-bn`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    proposedName: proposedName.trim(),
+                    lineOfBusiness: lineOfBusiness.trim()
+                })
+            });
+            if (!resp.ok) {
+                setError("Name check failed. Please try again.");
+                return;
+            }
+            const json = await resp.json();
+            const message = json?.data?.message ?? "";
+            setResponseMessage(message);
+            // If backend indicates the name is unique (but suggests checking similarity),
+            // treat the name as available and auto-select it so the user can proceed.
+            if (message === "Name is unique but check the similarity details") {
+                store.updateField("selectedBusinessName", proposedName.trim());
             }
         } catch (err) {
             setError("Failed to check availability. Please try again.");
@@ -1204,10 +1298,7 @@ function NameAvailabilityStep() {
             setIsChecking(false);
         }
     };
-    const handleSelectName = (name)=>{
-        store.updateField("selectedBusinessName", name);
-    };
-    const hasAvailableName = results.some((r)=>r.available);
+    const handleSelectName = (name)=>store.updateField("selectedBusinessName", name);
     const canProceed = store.selectedBusinessName !== "";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
@@ -1220,49 +1311,60 @@ function NameAvailabilityStep() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "space-y-3",
                         children: [
-                            0,
-                            1
-                        ].map((index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
-                                label: `Business Name ${index + 1} ${index === 0 ? "(Primary)" : ""}`,
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
+                                label: `Proposed Name`,
                                 placeholder: "e.g., ABC Technology Services",
-                                value: store.preferredNames[index] || "",
-                                onChange: (e)=>handleNameChange(index, e.target.value),
-                                maxLength: 50,
-                                tooltip: "Business name must be 2-50 characters and relevant to your business activity",
-                                helperText: `${store.preferredNames[index]?.length || 0}/50 characters`
-                            }, index, false, {
+                                value: proposedName,
+                                onChange: (e)=>handleProposedNameChange(e.target.value),
+                                maxLength: 100,
+                                tooltip: "Enter the exact proposed business name to check"
+                            }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 85,
-                                columnNumber: 13
-                            }, this))
-                    }, void 0, false, {
+                                lineNumber: 71,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
+                                label: `Line Of Business`,
+                                placeholder: "e.g., Information Technology, Retail",
+                                value: lineOfBusiness,
+                                onChange: (e)=>handleLineOfBusinessChange(e.target.value),
+                                maxLength: 100,
+                                tooltip: "Provide the business activity or industry"
+                            }, void 0, false, {
+                                fileName: "[project]/components/steps/name-availability.tsx",
+                                lineNumber: 80,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 83,
+                        lineNumber: 70,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: checkAvailability,
                         disabled: isChecking,
-                        className: "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-secondary text-foreground font-medium hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+                        className: "w-full border border-secondary flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-secondary hover:bg-destructive text-foreground font-medium hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+                        "aria-label": "Check Name Availability",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
                                 className: "w-4 h-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 103,
+                                lineNumber: 96,
                                 columnNumber: 11
                             }, this),
                             isChecking ? "Checking Availability..." : "Check Availability"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 98,
+                        lineNumber: 90,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 78,
+                lineNumber: 65,
                 columnNumber: 7
             }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1272,7 +1374,7 @@ function NameAvailabilityStep() {
                         className: "w-5 h-5 text-destructive flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 110,
+                        lineNumber: 103,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1280,166 +1382,46 @@ function NameAvailabilityStep() {
                         children: error
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 111,
+                        lineNumber: 104,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
+                fileName: "[project]/components/steps/name-availability.tsx",
+                lineNumber: 102,
+                columnNumber: 9
+            }, this),
+            responseMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
+                title: "Availability Results",
+                description: "",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "p-4 rounded-lg bg-muted/5 border border-muted/20",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-sm",
+                        children: responseMessage === "Name is unique but check the similarity details" ? "Name is unique" : responseMessage
+                    }, void 0, false, {
+                        fileName: "[project]/components/steps/name-availability.tsx",
+                        lineNumber: 111,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/components/steps/name-availability.tsx",
+                    lineNumber: 110,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
                 fileName: "[project]/components/steps/name-availability.tsx",
                 lineNumber: 109,
                 columnNumber: 9
             }, this),
-            results.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
-                title: "Availability Results",
-                description: "Select an available business name to proceed. You can only select names marked as available.",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "space-y-3",
-                        children: results.map((result)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: `p-4 rounded-lg border-2 transition-all cursor-pointer ${store.selectedBusinessName === result.name ? "border-primary bg-primary/5" : result.available ? "border-border hover:border-primary/50 hover:bg-secondary/50" : "border-border bg-muted/30 opacity-60 cursor-not-allowed"}`,
-                                onClick: ()=>result.available && handleSelectName(result.name),
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex items-start justify-between gap-3",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex-1",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "font-medium text-foreground",
-                                                    children: result.name
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                    lineNumber: 135,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "flex items-center gap-2 mt-1",
-                                                    children: [
-                                                        result.status === "checking" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
-                                                                    className: "w-4 h-4 text-muted-foreground animate-spin"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                                    lineNumber: 139,
-                                                                    columnNumber: 27
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-sm text-muted-foreground",
-                                                                    children: "Checking..."
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                                    lineNumber: 140,
-                                                                    columnNumber: 27
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true),
-                                                        result.status === "available" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
-                                                                    className: "w-4 h-4 text-green-600"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                                    lineNumber: 145,
-                                                                    columnNumber: 27
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-sm text-green-600 font-medium",
-                                                                    children: "Available"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                                    lineNumber: 146,
-                                                                    columnNumber: 27
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true),
-                                                        result.status === "reserved" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
-                                                                    className: "w-4 h-4 text-destructive"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                                    lineNumber: 151,
-                                                                    columnNumber: 27
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "text-sm text-destructive font-medium",
-                                                                    children: "Reserved/Not Available"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                                    lineNumber: 152,
-                                                                    columnNumber: 27
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                                    lineNumber: 136,
-                                                    columnNumber: 21
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/steps/name-availability.tsx",
-                                            lineNumber: 134,
-                                            columnNumber: 19
-                                        }, this),
-                                        result.available && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "radio",
-                                            name: "business-name",
-                                            checked: store.selectedBusinessName === result.name,
-                                            onChange: ()=>{},
-                                            className: "mt-1 w-4 h-4 cursor-pointer"
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/steps/name-availability.tsx",
-                                            lineNumber: 159,
-                                            columnNumber: 21
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/components/steps/name-availability.tsx",
-                                    lineNumber: 133,
-                                    columnNumber: 17
-                                }, this)
-                            }, result.name, false, {
-                                fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 122,
-                                columnNumber: 15
-                            }, this))
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 120,
-                        columnNumber: 11
-                    }, this),
-                    !hasAvailableName && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "p-4 rounded-lg bg-amber-50 border border-amber-200 dark:bg-amber-950 dark:border-amber-800",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-sm text-amber-900 dark:text-amber-100",
-                            children: "None of the names you entered are available. Please try different names."
-                        }, void 0, false, {
-                            fileName: "[project]/components/steps/name-availability.tsx",
-                            lineNumber: 174,
-                            columnNumber: 15
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 173,
-                        columnNumber: 13
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 116,
-                columnNumber: 9
-            }, this),
-            canProceed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            responseMessage === "Name is unique but check the similarity details" && canProceed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
                         className: "w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 184,
+                        lineNumber: 118,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1449,7 +1431,7 @@ function NameAvailabilityStep() {
                                 children: "Name Selected"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 186,
+                                lineNumber: 120,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1464,36 +1446,36 @@ function NameAvailabilityStep() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/steps/name-availability.tsx",
-                                        lineNumber: 188,
+                                        lineNumber: 122,
                                         columnNumber: 31
                                     }, this),
                                     ". Click Next to continue with applicant information."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 187,
+                                lineNumber: 121,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 185,
+                        lineNumber: 119,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 183,
+                lineNumber: 117,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/name-availability.tsx",
-        lineNumber: 77,
+        lineNumber: 64,
         columnNumber: 5
     }, this);
 }
-_s(NameAvailabilityStep, "vYvdacK5OpgD/hTL5SEc9aUavkk=", false, function() {
+_s(NameAvailabilityStep, "Mwwo2gEzWjUa8HFenTYvaNUCp9w=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"]
     ];
@@ -2124,7 +2106,8 @@ function ApplicantInfoStep() {
                                 value: store.email,
                                 onChange: (e)=>handleFieldChange("email", e.target.value),
                                 placeholder: "john@example.com",
-                                required: true
+                                required: true,
+                                tooltip: "your current active email"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/applicant-info.tsx",
                                 lineNumber: 130,
@@ -2152,7 +2135,7 @@ function ApplicantInfoStep() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/applicant-info.tsx",
-                                lineNumber: 146,
+                                lineNumber: 147,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2166,7 +2149,7 @@ function ApplicantInfoStep() {
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/applicant-info.tsx",
-                                        lineNumber: 155,
+                                        lineNumber: 156,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
@@ -2178,19 +2161,19 @@ function ApplicantInfoStep() {
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/applicant-info.tsx",
-                                        lineNumber: 162,
+                                        lineNumber: 163,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/applicant-info.tsx",
-                                lineNumber: 154,
+                                lineNumber: 155,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/applicant-info.tsx",
-                        lineNumber: 145,
+                        lineNumber: 146,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -2208,7 +2191,7 @@ function ApplicantInfoStep() {
                                     required: true
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/applicant-info.tsx",
-                                    lineNumber: 175,
+                                    lineNumber: 176,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSelect"], {
@@ -2219,18 +2202,18 @@ function ApplicantInfoStep() {
                                     required: true
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/applicant-info.tsx",
-                                    lineNumber: 183,
+                                    lineNumber: 184,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/applicant-info.tsx",
-                            lineNumber: 174,
+                            lineNumber: 175,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/steps/applicant-info.tsx",
-                        lineNumber: 173,
+                        lineNumber: 174,
                         columnNumber: 11
                     }, this)
                 ]
@@ -2246,12 +2229,12 @@ function ApplicantInfoStep() {
                     required: true
                 }, void 0, false, {
                     fileName: "[project]/components/steps/applicant-info.tsx",
-                    lineNumber: 196,
+                    lineNumber: 197,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/applicant-info.tsx",
-                lineNumber: 195,
+                lineNumber: 196,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -2273,7 +2256,7 @@ function ApplicantInfoStep() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/applicant-info.tsx",
-                                lineNumber: 211,
+                                lineNumber: 212,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
@@ -2284,13 +2267,13 @@ function ApplicantInfoStep() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/applicant-info.tsx",
-                                lineNumber: 218,
+                                lineNumber: 219,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/applicant-info.tsx",
-                        lineNumber: 210,
+                        lineNumber: 211,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2304,7 +2287,7 @@ function ApplicantInfoStep() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/applicant-info.tsx",
-                                lineNumber: 228,
+                                lineNumber: 229,
                                 columnNumber: 11
                             }, this),
                             showIdExpiryDate && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
@@ -2315,26 +2298,26 @@ function ApplicantInfoStep() {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/applicant-info.tsx",
-                                lineNumber: 236,
+                                lineNumber: 237,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/applicant-info.tsx",
-                        lineNumber: 227,
+                        lineNumber: 228,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/applicant-info.tsx",
-                lineNumber: 205,
+                lineNumber: 206,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/applicant-info.tsx",
-                lineNumber: 247,
+                lineNumber: 248,
                 columnNumber: 7
             }, this)
         ]
@@ -2515,54 +2498,18 @@ function BusinessDetailsStep() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
                 title: "Business Address",
                 isRequired: true,
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mb-4",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            className: "flex items-center gap-2 cursor-pointer",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                    type: "checkbox",
-                                    checked: store.sameAsResidential,
-                                    onChange: (e)=>handleFieldChange("sameAsResidential", e.target.checked),
-                                    className: "w-4 h-4"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/business-details.tsx",
-                                    lineNumber: 62,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-sm font-medium text-foreground",
-                                    children: "Same as residential address"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/business-details.tsx",
-                                    lineNumber: 68,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/steps/business-details.tsx",
-                            lineNumber: 61,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/business-details.tsx",
-                        lineNumber: 60,
-                        columnNumber: 9
-                    }, this),
-                    !store.sameAsResidential && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
-                        label: "Business Street Address",
-                        value: store.businessAddress,
-                        onChange: (e)=>handleFieldChange("businessAddress", e.target.value),
-                        placeholder: "123 Business Street",
-                        required: true
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/business-details.tsx",
-                        lineNumber: 73,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
+                    label: "Business Street Address",
+                    value: store.businessAddress,
+                    onChange: (e)=>handleFieldChange("businessAddress", e.target.value),
+                    placeholder: "123 Business Street",
+                    required: true
+                }, void 0, false, {
+                    fileName: "[project]/components/steps/business-details.tsx",
+                    lineNumber: 72,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
                 fileName: "[project]/components/steps/business-details.tsx",
                 lineNumber: 59,
                 columnNumber: 7
@@ -2582,7 +2529,7 @@ function BusinessDetailsStep() {
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/components/steps/business-details.tsx",
-                            lineNumber: 85,
+                            lineNumber: 83,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
@@ -2594,18 +2541,18 @@ function BusinessDetailsStep() {
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/components/steps/business-details.tsx",
-                            lineNumber: 93,
+                            lineNumber: 91,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/business-details.tsx",
-                    lineNumber: 84,
+                    lineNumber: 82,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/business-details.tsx",
-                lineNumber: 83,
+                lineNumber: 81,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -2620,12 +2567,12 @@ function BusinessDetailsStep() {
                     tooltip: "The date you plan to officially start business operations"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/business-details.tsx",
-                    lineNumber: 105,
+                    lineNumber: 103,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/business-details.tsx",
-                lineNumber: 104,
+                lineNumber: 102,
                 columnNumber: 7
             }, this)
         ]
@@ -2686,8 +2633,7 @@ function DocumentUploadStep() {
                 "image/jpeg",
                 "image/png"
             ],
-            maxSize: 5 * 1024 * 1024,
-            alreadyUploaded: true
+            maxSize: 5 * 1024 * 1024
         },
         {
             name: "Passport Photograph",
@@ -2698,8 +2644,7 @@ function DocumentUploadStep() {
                 "image/jpeg",
                 "image/png"
             ],
-            maxSize: 5 * 1024 * 1024,
-            alreadyUploaded: true
+            maxSize: 5 * 1024 * 1024
         },
         {
             name: "Proof of Address",
@@ -3783,11 +3728,21 @@ function PaymentGatewayStep() {
             store.updateField("paymentStatus", "success");
             store.updateField("paymentReference", reference);
             store.updateField("applicationReference", reference);
-            setPaymentSuccess(true);
-            // Auto move to next step after success
-            setTimeout(()=>{
-                store.nextStep();
-            }, 2000);
+            try {
+                // submit registration to backend after successful payment
+                await store.submitRegistration();
+                setPaymentSuccess(true);
+                // Auto move to next step after success
+                setTimeout(()=>{
+                    store.nextStep();
+                }, 2000);
+            } catch (err) {
+                setPaymentError({
+                    type: "server",
+                    message: err?.message || "Submission failed"
+                });
+                store.updateField("paymentStatus", "failed");
+            }
         } catch (error) {
             const errorMessage = error.message || "An unexpected error occurred";
             // Determine error type
@@ -3834,12 +3789,12 @@ function PaymentGatewayStep() {
                             className: "w-12 h-12 text-green-600"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/payment-gateway.tsx",
-                            lineNumber: 146,
+                            lineNumber: 154,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 145,
+                        lineNumber: 153,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -3847,7 +3802,7 @@ function PaymentGatewayStep() {
                         children: "Payment Successful!"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 148,
+                        lineNumber: 156,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3855,7 +3810,7 @@ function PaymentGatewayStep() {
                         children: "Your registration payment has been processed successfully."
                     }, void 0, false, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 149,
+                        lineNumber: 157,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3867,13 +3822,13 @@ function PaymentGatewayStep() {
                                 children: store.paymentReference
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 151,
+                                lineNumber: 159,
                                 columnNumber: 24
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 150,
+                        lineNumber: 158,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3884,7 +3839,7 @@ function PaymentGatewayStep() {
                                 children: "What Happens Next?"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 155,
+                                lineNumber: 163,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -3898,59 +3853,11 @@ function PaymentGatewayStep() {
                                                 children: "1."
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 158,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Your application will be submitted to the CAC"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 159,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 157,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        className: "flex items-start gap-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-green-600 dark:text-green-400 font-bold",
-                                                children: "2."
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 162,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "You'll receive a confirmation email shortly"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 163,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 161,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        className: "flex items-start gap-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-green-600 dark:text-green-400 font-bold",
-                                                children: "3."
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
                                                 lineNumber: 166,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Your application status will be updated regularly"
+                                                children: "Your application will be submitted to the CAC"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/payment-gateway.tsx",
                                                 lineNumber: 167,
@@ -3961,17 +3868,65 @@ function PaymentGatewayStep() {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
                                         lineNumber: 165,
                                         columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                        className: "flex items-start gap-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-green-600 dark:text-green-400 font-bold",
+                                                children: "2."
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                                lineNumber: 170,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                children: "You'll receive a confirmation email shortly"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                                lineNumber: 171,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/steps/payment-gateway.tsx",
+                                        lineNumber: 169,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                        className: "flex items-start gap-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-green-600 dark:text-green-400 font-bold",
+                                                children: "3."
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                                lineNumber: 174,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                children: "Your application status will be updated regularly"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                                lineNumber: 175,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/steps/payment-gateway.tsx",
+                                        lineNumber: 173,
+                                        columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 156,
+                                lineNumber: 164,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 154,
+                        lineNumber: 162,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3979,18 +3934,18 @@ function PaymentGatewayStep() {
                         children: "Redirecting to confirmation page..."
                     }, void 0, false, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 172,
+                        lineNumber: 180,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 144,
+                lineNumber: 152,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/steps/payment-gateway.tsx",
-            lineNumber: 143,
+            lineNumber: 151,
             columnNumber: 7
         }, this);
     }
@@ -4001,7 +3956,7 @@ function PaymentGatewayStep() {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 180,
+                lineNumber: 188,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -4011,7 +3966,7 @@ function PaymentGatewayStep() {
                     className: "w-5 h-5 text-primary"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/payment-gateway.tsx",
-                    lineNumber: 185,
+                    lineNumber: 193,
                     columnNumber: 15
                 }, void 0),
                 isRequired: true,
@@ -4027,7 +3982,7 @@ function PaymentGatewayStep() {
                                         children: "Amount to Pay:"
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 191,
+                                        lineNumber: 199,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4035,13 +3990,13 @@ function PaymentGatewayStep() {
                                         children: "₦12,900"
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 192,
+                                        lineNumber: 200,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 190,
+                                lineNumber: 198,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4049,13 +4004,13 @@ function PaymentGatewayStep() {
                                 children: "Includes CAC Registration (₦10,000) + Service Charge (₦2,000) + VAT (₦900)"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 194,
+                                lineNumber: 202,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 189,
+                        lineNumber: 197,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4068,7 +4023,7 @@ function PaymentGatewayStep() {
                                         children: "Cardholder Name *"
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 202,
+                                        lineNumber: 210,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -4080,13 +4035,13 @@ function PaymentGatewayStep() {
                                         disabled: isProcessing
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 203,
+                                        lineNumber: 211,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 201,
+                                lineNumber: 209,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4096,7 +4051,7 @@ function PaymentGatewayStep() {
                                         children: "Card Number *"
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 214,
+                                        lineNumber: 222,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -4109,7 +4064,7 @@ function PaymentGatewayStep() {
                                         disabled: isProcessing
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 215,
+                                        lineNumber: 223,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4117,13 +4072,13 @@ function PaymentGatewayStep() {
                                         children: "Demo: Use any 16 digits (e.g., 4532015112830366)"
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 232,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 213,
+                                lineNumber: 221,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4136,7 +4091,7 @@ function PaymentGatewayStep() {
                                                 children: "Expiry Date *"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 229,
+                                                lineNumber: 237,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -4148,13 +4103,13 @@ function PaymentGatewayStep() {
                                                 disabled: isProcessing
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 230,
+                                                lineNumber: 238,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 228,
+                                        lineNumber: 236,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4164,7 +4119,7 @@ function PaymentGatewayStep() {
                                                 children: "CVV *"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 240,
+                                                lineNumber: 248,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -4177,31 +4132,31 @@ function PaymentGatewayStep() {
                                                 disabled: isProcessing
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 241,
+                                                lineNumber: 249,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 239,
+                                        lineNumber: 247,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 227,
+                                lineNumber: 235,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 200,
+                        lineNumber: 208,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 182,
+                lineNumber: 190,
                 columnNumber: 7
             }, this),
             paymentError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4211,13 +4166,13 @@ function PaymentGatewayStep() {
                         className: "w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 265,
+                        lineNumber: 273,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
                         className: "w-5 h-5 text-destructive flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 267,
+                        lineNumber: 275,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4227,7 +4182,7 @@ function PaymentGatewayStep() {
                                 children: paymentError.type === "network" ? "Network Error" : paymentError.type === "server" ? "Server Error" : paymentError.type === "timeout" ? "Request Timeout" : "Payment Declined"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 270,
+                                lineNumber: 278,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4235,7 +4190,7 @@ function PaymentGatewayStep() {
                                 children: paymentError.message
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 283,
+                                lineNumber: 291,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4243,19 +4198,19 @@ function PaymentGatewayStep() {
                                 children: paymentError.type === "network" ? "Please check your internet connection and try again." : paymentError.type === "server" ? "The payment server is experiencing issues. Please try again in a few moments." : paymentError.type === "timeout" ? "The request took too long. Please try again." : "Verify your card details and try a different card."
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 290,
+                                lineNumber: 298,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 269,
+                        lineNumber: 277,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 257,
+                lineNumber: 265,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4265,12 +4220,12 @@ function PaymentGatewayStep() {
                     children: "🔒 Your payment information is encrypted and secure. This is a demo gateway - no actual charges will be made."
                 }, void 0, false, {
                     fileName: "[project]/components/steps/payment-gateway.tsx",
-                    lineNumber: 305,
+                    lineNumber: 313,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 304,
+                lineNumber: 312,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4283,7 +4238,7 @@ function PaymentGatewayStep() {
                             className: "w-5 h-5 animate-spin"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/payment-gateway.tsx",
-                            lineNumber: 318,
+                            lineNumber: 326,
                             columnNumber: 13
                         }, this),
                         "Processing Payment..."
@@ -4294,7 +4249,7 @@ function PaymentGatewayStep() {
                             className: "w-5 h-5"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/payment-gateway.tsx",
-                            lineNumber: 323,
+                            lineNumber: 331,
                             columnNumber: 13
                         }, this),
                         "Pay ₦12,900"
@@ -4302,20 +4257,20 @@ function PaymentGatewayStep() {
                 }, void 0, true)
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 311,
+                lineNumber: 319,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 329,
+                lineNumber: 337,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/payment-gateway.tsx",
-        lineNumber: 179,
+        lineNumber: 187,
         columnNumber: 5
     }, this);
 }

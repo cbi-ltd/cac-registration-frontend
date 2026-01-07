@@ -1,63 +1,54 @@
 "use client"
 
 import React from "react"
-import { useRegistrationStore } from "@/lib/store"
+import { useRegistrationStore, API_BASE_URL } from "@/lib/store"
 import { FormSection } from "@/components/form-section"
 import { FormInput } from "@/components/form-input"
 import { Search, AlertCircle, CheckCircle2, Clock } from "lucide-react"
 
-interface NameCheckResult {
-  name: string
-  available: boolean
-  status: "pending" | "available" | "reserved" | "checking"
-}
-
 export function NameAvailabilityStep() {
   const store = useRegistrationStore()
-  const [results, setResults] = React.useState<NameCheckResult[]>([])
+  const [responseMessage, setResponseMessage] = React.useState("")
   const [isChecking, setIsChecking] = React.useState(false)
   const [error, setError] = React.useState("")
+  const [proposedName, setProposedName] = React.useState("")
+  const [lineOfBusiness, setLineOfBusiness] = React.useState("")
 
-  const handleNameChange = (index: number, value: string) => {
-    const newNames = [...store.preferredNames]
-    newNames[index] = value
-    store.updateField("preferredNames", newNames)
-  }
+  const handleProposedNameChange = (value: string) => setProposedName(value)
+  const handleLineOfBusinessChange = (value: string) => setLineOfBusiness(value)
 
   const checkAvailability = async () => {
-    const names = store.preferredNames.filter((n) => n.trim() !== "")
-
-    if (names.length === 0) {
-      setError("Please enter at least one business name")
+    if (!proposedName.trim()) {
+      setError("Please enter a proposed business name")
       return
     }
 
     setIsChecking(true)
     setError("")
-    setResults(
-      names.map((name) => ({
-        name,
-        available: false,
-        status: "checking",
-      })),
-    )
+    setResponseMessage("")
 
     try {
-      // Mock API call - Replace with real Oasis VAS endpoint
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const resp = await fetch(`${API_BASE_URL}check-bn`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ proposedName: proposedName.trim(), lineOfBusiness: lineOfBusiness.trim() }),
+      })
 
-      const mockResults: NameCheckResult[] = names.map((name) => ({
-        name,
-        available: Math.random() > 0.3, // 70% chance available for demo
-        status: Math.random() > 0.3 ? "available" : "reserved",
-      }))
+      if (!resp.ok) {
+        setError("Name check failed. Please try again.")
+        return
+      }
 
-      setResults(mockResults)
+      const json = await resp.json()
 
-      // Auto-select first available name if user hasn't selected one
-      const firstAvailable = mockResults.find((r) => r.available)
-      if (firstAvailable && !store.selectedBusinessName) {
-        store.updateField("selectedBusinessName", firstAvailable.name)
+      const message = json?.data?.message ?? ""
+
+      setResponseMessage(message)
+
+      // If backend indicates the name is unique (but suggests checking similarity),
+      // treat the name as available and auto-select it so the user can proceed.
+      if (message === "Name is unique but check the similarity details") {
+        store.updateField("selectedBusinessName", proposedName.trim())
       }
     } catch (err) {
       setError("Failed to check availability. Please try again.")
@@ -66,11 +57,7 @@ export function NameAvailabilityStep() {
     }
   }
 
-  const handleSelectName = (name: string) => {
-    store.updateField("selectedBusinessName", name)
-  }
-
-  const hasAvailableName = results.some((r) => r.available)
+  const handleSelectName = (name: string) => store.updateField("selectedBusinessName", name)
   const canProceed = store.selectedBusinessName !== ""
 
   return (
@@ -81,24 +68,30 @@ export function NameAvailabilityStep() {
         isRequired
       >
         <div className="space-y-3">
-          {[0, 1].map((index) => (
-            <FormInput
-              key={index}
-              label={`Business Name ${index + 1} ${index === 0 ? "(Primary)" : ""}`}
-              placeholder="e.g., ABC Technology Services"
-              value={store.preferredNames[index] || ""}
-              onChange={(e) => handleNameChange(index, e.target.value)}
-              maxLength={50}
-              tooltip="Business name must be 2-50 characters and relevant to your business activity"
-              helperText={`${store.preferredNames[index]?.length || 0}/50 characters`}
-            />
-          ))}
+          <FormInput
+            label={`Proposed Name`}
+            placeholder="e.g., ABC Technology Services"
+            value={proposedName}
+            onChange={(e) => handleProposedNameChange(e.target.value)}
+            maxLength={100}
+            tooltip="Enter the exact proposed business name to check"
+          />
+
+          <FormInput
+            label={`Line Of Business`}
+            placeholder="e.g., Information Technology, Retail"
+            value={lineOfBusiness}
+            onChange={(e) => handleLineOfBusinessChange(e.target.value)}
+            maxLength={100}
+            tooltip="Provide the business activity or industry"
+          />
         </div>
 
         <button
           onClick={checkAvailability}
           disabled={isChecking}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-secondary text-foreground font-medium hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full border border-secondary flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-secondary hover:bg-destructive text-foreground font-medium hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Check Name Availability"
         >
           <Search className="w-4 h-4" />
           {isChecking ? "Checking Availability..." : "Check Availability"}
@@ -112,74 +105,15 @@ export function NameAvailabilityStep() {
         </div>
       )}
 
-      {results.length > 0 && (
-        <FormSection
-          title="Availability Results"
-          description="Select an available business name to proceed. You can only select names marked as available."
-        >
-          <div className="space-y-3">
-            {results.map((result) => (
-              <div
-                key={result.name}
-                className={`p-4 rounded-lg border-2 transition-all cursor-pointer ${
-                  store.selectedBusinessName === result.name
-                    ? "border-primary bg-primary/5"
-                    : result.available
-                      ? "border-border hover:border-primary/50 hover:bg-secondary/50"
-                      : "border-border bg-muted/30 opacity-60 cursor-not-allowed"
-                }`}
-                onClick={() => result.available && handleSelectName(result.name)}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1">
-                    <div className="font-medium text-foreground">{result.name}</div>
-                    <div className="flex items-center gap-2 mt-1">
-                      {result.status === "checking" && (
-                        <>
-                          <Clock className="w-4 h-4 text-muted-foreground animate-spin" />
-                          <span className="text-sm text-muted-foreground">Checking...</span>
-                        </>
-                      )}
-                      {result.status === "available" && (
-                        <>
-                          <CheckCircle2 className="w-4 h-4 text-green-600" />
-                          <span className="text-sm text-green-600 font-medium">Available</span>
-                        </>
-                      )}
-                      {result.status === "reserved" && (
-                        <>
-                          <AlertCircle className="w-4 h-4 text-destructive" />
-                          <span className="text-sm text-destructive font-medium">Reserved/Not Available</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-
-                  {result.available && (
-                    <input
-                      type="radio"
-                      name="business-name"
-                      checked={store.selectedBusinessName === result.name}
-                      onChange={() => {}}
-                      className="mt-1 w-4 h-4 cursor-pointer"
-                    />
-                  )}
-                </div>
-              </div>
-            ))}
+      {responseMessage && (
+        <FormSection title="Availability Results" description="">
+          <div className="p-4 rounded-lg bg-muted/5 border border-muted/20">
+            <p className="text-sm">{responseMessage === "Name is unique but check the similarity details" ? "Name is unique" : responseMessage}</p>
           </div>
-
-          {!hasAvailableName && (
-            <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 dark:bg-amber-950 dark:border-amber-800">
-              <p className="text-sm text-amber-900 dark:text-amber-100">
-                None of the names you entered are available. Please try different names.
-              </p>
-            </div>
-          )}
         </FormSection>
       )}
 
-      {canProceed && (
+      {responseMessage === "Name is unique but check the similarity details" && canProceed && (
         <div className="p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3">
           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
           <div>
