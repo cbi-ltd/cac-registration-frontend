@@ -10,7 +10,9 @@ export function ConfirmationPageStep() {
   const [copied, setCopied] = React.useState(false)
 
   const handleCopyReference = () => {
-    navigator.clipboard.writeText(store.applicationReference)
+    // Do not expose transactionRef/applicationReference directly per privacy requirement
+    // Provide a generic acknowledgement copy instead
+    navigator.clipboard.writeText("Your application reference is available in your email.")
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -18,7 +20,6 @@ export function ConfirmationPageStep() {
   const downloadReceipt = () => {
     const receipt = `CAC BUSINESS REGISTRATION - RECEIPT
 
-Reference Number: ${store.applicationReference}
 Date: ${new Date().toLocaleDateString()}
 Time: ${new Date().toLocaleTimeString()}
 
@@ -35,25 +36,20 @@ Business Activity: ${store.businessActivity}
 
 PAYMENT INFORMATION
 ===================
-CAC Registration Fee: ₦10,000.00
-Service Charge: ₦2,000.00
-VAT (7.5%): ₦900.00
-Total Paid: ₦12,900.00
-Payment Reference: ${store.paymentReference}
+Total Paid: ₦29,000.00
 Payment Status: SUCCESS
 
 NEXT STEPS
 ==========
 1. Your application has been successfully submitted to CAC
 2. You will receive email updates on your application status
-3. Check your application status using the reference number above
+3. Check your application status via the support channels provided
 4. Expected processing time: 2-5 working days
 
 IMPORTANT NOTES
 ===============
 - Keep this receipt for your records
-- Your application reference is required for status tracking
-- Do not share your reference number with anyone
+- Do not share sensitive transaction information
 - For inquiries, contact support@cbi.ng or call +234 (0) 800 000 0000
 
 ---
@@ -63,7 +59,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = `CAC_Registration_Receipt_${store.applicationReference}.txt`
+    a.download = `CAC_Registration_Receipt_${Date.now()}.txt`
     document.body.appendChild(a)
     a.click()
     window.URL.revokeObjectURL(url)
@@ -82,22 +78,20 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
           Your business registration application has been submitted to CAC successfully.
         </p>
 
-        {/* Reference Number */}
+        {/* Reference Notice (hidden transactionRef) */}
         <div className="bg-secondary rounded-lg p-6 mb-8 max-w-md mx-auto">
-          <p className="text-sm text-muted-foreground mb-2 uppercase font-semibold">Your Application Reference</p>
+          <p className="text-sm text-muted-foreground mb-2 uppercase font-semibold">Application Reference</p>
           <div className="flex items-center justify-between gap-3 mb-3">
-            <span className="font-mono text-2xl font-bold text-primary break-all">{store.applicationReference}</span>
+            <span className="text-sm text-muted-foreground">A unique reference has been recorded and sent to your email.</span>
             <button
               onClick={handleCopyReference}
               className="p-2 hover:bg-secondary-dark rounded-lg transition-colors"
-              title="Copy reference"
+              title="Copy info"
             >
               <Copy className="w-5 h-5 text-primary" />
             </button>
           </div>
-          <p className="text-xs text-muted-foreground">
-            {copied ? "✓ Copied to clipboard!" : "Click to copy reference number"}
-          </p>
+          <p className="text-xs text-muted-foreground">{copied ? "✓ Copied to clipboard!" : "Check your email for the reference number"}</p>
         </div>
 
         {/* Confirmation Details */}
@@ -108,7 +102,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
           </div>
           <div className="rounded-lg border border-border p-4">
             <p className="text-xs text-muted-foreground uppercase mb-1">Total Amount Paid</p>
-            <p className="font-semibold text-foreground">₦12,900.00</p>
+            <p className="font-semibold text-foreground">₦29,000.00</p>
           </div>
           <div className="rounded-lg border border-border p-4">
             <p className="text-xs text-muted-foreground uppercase mb-1">Applicant</p>
@@ -192,7 +186,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
         </div>
 
         {/* Support Section */}
-        <div className="mt-12 pt-8 border-t border-border text-center max-w-2xl mx-auto">
+        {/* <div className="mt-12 pt-8 border-t border-border text-center max-w-2xl mx-auto">
           <p className="text-sm text-muted-foreground mb-4">Need help? Contact our support team</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <a
@@ -214,7 +208,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
               Call Support
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

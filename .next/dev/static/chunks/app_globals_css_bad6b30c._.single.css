@@ -1496,10 +1496,6 @@
     cursor: help;
   }
 
-  .cursor-not-allowed {
-    cursor: not-allowed;
-  }
-
   .cursor-pointer {
     cursor: pointer;
   }
@@ -1594,6 +1590,10 @@
 
   .justify-center {
     justify-content: center;
+  }
+
+  .justify-end {
+    justify-content: flex-end;
   }
 
   .justify-start {
@@ -2012,10 +2012,6 @@
     background-color: var(--destructive);
   }
 
-  .bg-destructive-foreground {
-    background-color: var(--destructive-foreground);
-  }
-
   .bg-destructive\/10 {
     background-color: var(--destructive);
   }
@@ -2057,16 +2053,6 @@
   @supports (color: color-mix(in lab, red, red)) {
     .bg-muted\/5 {
       background-color: color-mix(in oklab, var(--muted) 5%, transparent);
-    }
-  }
-
-  .bg-muted\/30 {
-    background-color: var(--muted);
-  }
-
-  @supports (color: color-mix(in lab, red, red)) {
-    .bg-muted\/30 {
-      background-color: color-mix(in oklab, var(--muted) 30%, transparent);
     }
   }
 
@@ -2720,10 +2706,6 @@
 
   .opacity-50 {
     opacity: .5;
-  }
-
-  .opacity-60 {
-    opacity: .6;
   }
 
   .opacity-70 {

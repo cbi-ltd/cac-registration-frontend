@@ -10,13 +10,11 @@ import { countries } from "@/components/countries"
 export function ApplicantInfoStep() {
   const store = useRegistrationStore()
 
-  const titles = ["Mr", "Mrs", "Ms", "Dr", "Prof", "Engr", "Arc"]
   const genders = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
+    { value: "MALE", label: "Male" },
+    { value: "FEMALE", label: "Female" },
   ]
-  const nationalities = countries;
-  const idTypes = ["NIN", "International Passport", "Driver's License", "Voter's Card"]
+  const nationalities = countries
 
   const handleFieldChange = (field: string, value: string) => {
     store.updateField(field, value)
@@ -51,91 +49,126 @@ export function ApplicantInfoStep() {
         </div>
       </FormSection>
 
-      {/* Individual Fields */}
+      {/* Individual Fields (refactored to required keys only) */}
       {store.applicantType === "individual" && (
         <>
           <FormSection title="Personal Information" isRequired>
             <div className="grid md:grid-cols-2 gap-4">
-              <FormSelect
-                label="Title"
-                value={store.title}
-                onChange={(e) => handleFieldChange("title", e.target.value)}
-                options={titles.map((t) => ({ value: t, label: t }))}
-                required
-              />
               <FormInput
                 label="First Name"
                 value={store.firstName}
                 onChange={(e) => handleFieldChange("firstName", e.target.value)}
-                placeholder="John"
+                placeholder="Joshua"
                 required
               />
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
               <FormInput
-                label="Middle Name"
+                label="Other/Middle Name"
                 value={store.middleName}
                 onChange={(e) => handleFieldChange("middleName", e.target.value)}
-                placeholder="Michael"
-              />
-              <FormInput
-                label="Last Name"
-                value={store.lastName}
-                onChange={(e) => handleFieldChange("lastName", e.target.value)}
-                placeholder="Smith"
-                required
+                placeholder="James"
               />
             </div>
-          </FormSection>
 
-          <FormSection title="Contact & Demographics" isRequired>
             <div className="grid md:grid-cols-2 gap-4">
+              <FormInput
+                label="Surname"
+                value={store.lastName}
+                onChange={(e) => handleFieldChange("lastName", e.target.value)}
+                placeholder="Adeyemo"
+                required
+              />
               <FormInput
                 label="Date of Birth"
                 type="date"
                 value={store.dateOfBirth}
                 onChange={(e) => handleFieldChange("dateOfBirth", e.target.value)}
                 required
-                tooltip="Must be 18 years or older"
-              />
-              <FormSelect
-                label="Gender"
-                value={store.gender}
-                onChange={(e) => handleFieldChange("gender", e.target.value)}
-                options={genders}
-                required
               />
             </div>
+          </FormSection>
 
+          <FormSection title="Contact & Address" isRequired>
             <div className="grid md:grid-cols-2 gap-4">
-              <FormSelect
-                label="Nationality"
-                value={store.nationality}
-                onChange={(e) => handleFieldChange("nationality", e.target.value)}
-                options={nationalities.map((n) => ({ value: n, label: n }))}
-                required
-              />
               <FormInput
                 label="Phone Number"
                 type="tel"
                 value={store.phone}
                 onChange={(e) => handleFieldChange("phone", e.target.value)}
-                placeholder="+234 800 000 0000"
+                placeholder="07057001119"
                 required
-                tooltip="Valid Nigerian mobile number"
+              />
+              <FormInput
+                label="Email Address"
+                type="email"
+                value={store.email}
+                onChange={(e) => handleFieldChange("email", e.target.value)}
+                placeholder="chylau12@gmail.com"
+                required
               />
             </div>
 
-            <FormInput
-              label="Email Address"
-              type="email"
-              value={store.email}
-              onChange={(e) => handleFieldChange("email", e.target.value)}
-              placeholder="john@example.com"
-              required
-              tooltip="your current active email"
-            />
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <FormInput
+                label="Street Number"
+                value={(store as any).proprietorStreetNumber || ""}
+                onChange={(e) => handleFieldChange("proprietorStreetNumber", e.target.value)}
+                placeholder="41"
+              />
+              <FormInput
+                label="Street / Service Address"
+                value={store.residentialAddress}
+                onChange={(e) => handleFieldChange("residentialAddress", e.target.value)}
+                placeholder="limpopo street"
+              />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <FormInput
+                label="City"
+                value={(store as any).proprietorCity || ""}
+                onChange={(e) => handleFieldChange("proprietorCity", e.target.value)}
+                placeholder="Abuja"
+              />
+              <FormInput
+                label="State"
+                value={(store as any).proprietorState || ""}
+                onChange={(e) => handleFieldChange("proprietorState", e.target.value)}
+                placeholder="F.C.T"
+              />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <FormInput
+                label="Postcode"
+                value={(store as any).proprietorPostcode || ""}
+                onChange={(e) => handleFieldChange("proprietorPostcode", e.target.value)}
+                placeholder="900108"
+              />
+              <FormInput
+                label="LGA"
+                value={(store as any).proprietorLga || ""}
+                onChange={(e) => handleFieldChange("proprietorLga", e.target.value)}
+                placeholder="municipal"
+              />
+            </div>
+
+            <div className="mt-4">
+              <FormSelect
+                label="Gender"
+                value={store.gender?.toString().toUpperCase() ?? ""}
+                onChange={(e) => handleFieldChange("gender", e.target.value)}
+                options={genders}
+              />
+            </div>
+
+            <div className="mt-4">
+              <FormSelect
+                label="Nationality"
+                value={store.nationality}
+                onChange={(e) => handleFieldChange("nationality", e.target.value)}
+                options={nationalities.map((n) => ({ value: n, label: n }))}
+              />
+            </div>
           </FormSection>
         </>
       )}
@@ -203,47 +236,7 @@ export function ApplicantInfoStep() {
         />
       </FormSection>
 
-      <FormSection
-        title="Identification"
-        description="Provide your valid identification details. NIN and Voter's Card do not have expiry dates."
-        isRequired
-      >
-        <div className="grid md:grid-cols-2 gap-4">
-          <FormSelect
-            label="Identification Type"
-            value={store.idType}
-            onChange={(e) => handleFieldChange("idType", e.target.value)}
-            options={idTypes.map((t) => ({ value: t, label: t }))}
-            required
-          />
-          <FormInput
-            label="Identification Number"
-            value={store.idNumber}
-            onChange={(e) => handleFieldChange("idNumber", e.target.value)}
-            placeholder="Enter your ID number"
-            required
-          />
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          <FormInput
-            label="Issue Date"
-            type="date"
-            value={store.idIssueDate}
-            onChange={(e) => handleFieldChange("idIssueDate", e.target.value)}
-            required
-          />
-          {showIdExpiryDate && (
-            <FormInput
-              label="Expiry Date"
-              type="date"
-              value={store.idExpiryDate}
-              onChange={(e) => handleFieldChange("idExpiryDate", e.target.value)}
-              required
-            />
-          )}
-        </div>
-      </FormSection>
+      {/* Identification moved to Document Upload step; minimal fields kept above */}
 
       <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
     </div>

@@ -1,1012 +1,117 @@
-[00:00:01.495] Server  LOG      ✓ Ready in 960ms
-[00:24:21.708] Server  LOG      ○ Compiling /register ...
-[00:24:31.654] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:24:33.145] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:24:33.145] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[00:24:33.145] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767776880260}
-[00:33:30.326] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[00:00:01.443] Server  LOG      ✓ Ready in 939ms
+[00:10:29.539] Server  LOG      ○ Compiling /register ...
+[00:10:36.136] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:36.204] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:59:53.337] Server  LOG      ✓ Compiled in 111ms
-[01:00:06.255] Server  LOG      ✓ Compiled in 98ms
-[01:04:32.699] Server  LOG      ✓ Compiled in 53ms
-[01:04:33.044] Browser ERROR   Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 0
-[01:04:58.958] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:04:59.141] Browser ERROR   Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 0
-[01:04:59.141] Browser ERROR   Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 0
-[01:04:59.141] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:04:59.141] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[01:04:59.141] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767779306753}
-[01:07:24.315] Server  LOG      ✓ Compiled in 64ms
-[01:24:11.847] Server  LOG      ✓ Compiled in 169ms
-[01:24:13.051] Browser ERROR   uncaughtError: ReferenceError: results is not defined
-[01:25:10.875] Server  LOG      ✓ Compiled in 131ms
-[01:25:10.890] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[01:25:11.333] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:25:12.042] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:25:12.042] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[01:25:12.042] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767780519245}
-[01:34:28.240] Server  LOG      ✓ Compiled in 97ms
-[01:36:22.064] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:36:22.264] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[00:10:36.204] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:10:36.204] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:10:36.204] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767857743177}
+[00:14:53.533] Server  LOG      ✓ Compiled in 77ms
+[00:14:55.932] Server  LOG      ✓ Compiled in 58ms
+[00:15:03.143] Server  LOG      ✓ Compiled in 63ms
+[00:15:16.826] Server  LOG      ✓ Compiled in 48ms
+[00:15:51.542] Server  LOG      ✓ Compiled in 51ms
+[00:15:54.414] Server  LOG      ✓ Compiled in 51ms
+[00:15:57.292] Server  LOG      ✓ Compiled in 58ms
+[00:56:42.239] Server  LOG      ✓ Compiled in 56ms
+[00:56:53.655] Server  LOG      ✓ Compiled in 128ms
+[00:58:59.328] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:58:59.483] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[01:36:22.264] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:36:22.264] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[01:36:22.264] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767781189879}
-[01:40:54.197] Server  LOG      ✓ Compiled in 41ms
-[01:40:57.972] Server  LOG      ✓ Compiled in 38ms
-[01:40:59.327] Server  LOG      ✓ Compiled in 45ms
-[01:41:01.657] Server  LOG      ✓ Compiled in 39ms
-[01:42:27.589] Server  LOG      ✓ Compiled in 39ms
-[01:42:29.316] Server  LOG      ✓ Compiled in 42ms
-[01:42:35.588] Server  LOG      ✓ Compiled in 36ms
-[01:42:38.079] Server  LOG      ✓ Compiled in 37ms
-[01:42:49.840] Server  LOG      ✓ Compiled in 42ms
-[01:42:52.470] Server  LOG      ✓ Compiled in 38ms
-[01:42:56.266] Server  LOG      ✓ Compiled in 47ms
-[01:43:00.365] Server  LOG      ✓ Compiled in 39ms
-[01:43:02.436] Server  LOG      ✓ Compiled in 37ms
-[01:43:09.679] Server  LOG      ✓ Compiled in 70ms
-[01:44:56.566] Server  LOG      ✓ Compiled in 42ms
-[01:45:00.451] Server  LOG      ✓ Compiled in 39ms
-[01:45:45.571] Server  LOG      ✓ Compiled in 42ms
-[01:45:48.504] Server  LOG      ✓ Compiled in 39ms
-[01:45:50.719] Server  LOG      ✓ Compiled in 38ms
-[01:45:53.297] Server  LOG      ✓ Compiled in 43ms
-[01:46:05.489] Server  LOG      ✓ Compiled in 40ms
-[01:46:07.983] Server  LOG      ✓ Compiled in 37ms
-[01:46:09.458] Server  LOG      ✓ Compiled in 65ms
-[01:46:35.430] Server  LOG      ✓ Compiled in 39ms
-[01:46:58.313] Server  LOG      ✓ Compiled in 37ms
-[01:47:01.768] Server  LOG      ✓ Compiled in 36ms
-[01:47:04.955] Server  LOG      ✓ Compiled in 38ms
-[01:47:06.353] Server  LOG      ✓ Compiled in 37ms
-[01:47:08.663] Server  LOG      ✓ Compiled in 36ms
-[01:47:13.326] Server  LOG      ✓ Compiled in 37ms
-[01:47:14.745] Server  LOG      ✓ Compiled in 70ms
-[01:48:08.585] Server  LOG      ✓ Compiled in 36ms
-[01:50:16.554] Server  LOG      ✓ Compiled in 43ms
-[01:50:17.043] Browser ERROR   uncaughtError: ReferenceError: respcanProceed is not defined
-[01:50:18.307] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[01:50:18.387] Server  ERROR   C:\Users\Akinlolu\OneDrive - Baywood Group\Desktop\business-registration-portal\.next\dev\server\chunks\ssr\_2ab75628._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
-[01:50:18.389] Server  ERROR    ⨯ ReferenceError: responseMessagecanProceed is not defined
-[01:50:18.399] Server  LOG      ✓ Compiled in 43ms
-[01:50:18.592] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:50:19.034] Browser ERROR   uncaughtError: ReferenceError: responseMessagecanProceed is not defined
-[01:50:25.372] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[01:50:25.441] Server  LOG      ✓ Compiled in 38ms
-[01:50:25.557] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:50:26.038] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[01:50:26.038] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[01:50:26.038] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767782033395}
-[01:50:27.517] Server  LOG      ✓ Compiled in 52ms
-[01:50:28.032] Browser ERROR   ./components/steps/name-availability.tsx:116:27
-Parsing ecmascript source code failed
-  114 |       )}
-  115 |
-> 116 |       {responseMessage == "canProceed && (
-      |                           ^^^^^^^^^^^^^^^^
-  117 |         <div className="p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3">
-  118 |           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-  119 |           <div>
-
-Unterminated string constant
-
-Import traces:
-  Client Component Browser:
-    ./components/steps/name-availability.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/steps/name-availability.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[01:50:28.865] Server  LOG      ✓ Compiled in 38ms
-[01:50:29.037] Browser ERROR   ./components/steps/name-availability.tsx:116:27
-Parsing ecmascript source code failed
-  114 |       )}
-  115 |
-> 116 |       {responseMessage == "canProceed && (
-      |                           ^^^^^^^^^^^^^^^^
-  117 |         <div className="p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3">
-  118 |           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-  119 |           <div>
-
-Unterminated string constant
-
-Import traces:
-  Client Component Browser:
-    ./components/steps/name-availability.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/steps/name-availability.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[01:50:29.037] Browser ERROR   ./components/steps/name-availability.tsx:116:29
-Parsing ecmascript source code failed
-  114 |       )}
-  115 |
-> 116 |       {responseMessage == ""canProceed && (
-      |                             ^^^^^^^^^^
-  117 |         <div className="p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3">
-  118 |           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-  119 |           <div>
-
-Expected '</', got 'canProceed'
-
-Import traces:
-  Client Component Browser:
-    ./components/steps/name-availability.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/steps/name-availability.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[01:50:32.037] Browser ERROR   ./components/steps/name-availability.tsx:116:29
-Parsing ecmascript source code failed
-  114 |       )}
-  115 |
-> 116 |       {responseMessage == ""canProceed && (
-      |                             ^^^^^^^^^^
-  117 |         <div className="p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3">
-  118 |           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-  119 |           <div>
-
-Expected '</', got 'canProceed'
-
-Import traces:
-  Client Component Browser:
-    ./components/steps/name-availability.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/steps/name-availability.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[01:51:17.733] Server  LOG      ✓ Compiled in 39ms
-[01:51:23.758] Server  LOG      ✓ Compiled in 40ms
-[01:55:51.773] Server  LOG      ✓ Compiled in 41ms
-[01:55:52.042] Browser ERROR   ./components/steps/name-availability.tsx:111:54
-Parsing ecmascript source code failed
-  109 |         <FormSection title="Availability Results" description="">
-  110 |           <div className="p-4 rounded-lg bg-muted/5 border border-muted/20">
-> 111 |             <p className="text-sm">{responseMessage ?}</p>
-      |                                                      ^
-  112 |           </div>
-  113 |         </FormSection>
-  114 |       )}
-
-Expected '</', got '}'
-
-Import traces:
-  Client Component Browser:
-    ./components/steps/name-availability.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/steps/name-availability.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[01:55:55.035] Browser ERROR   ./components/steps/name-availability.tsx:111:54
-Parsing ecmascript source code failed
-  109 |         <FormSection title="Availability Results" description="">
-  110 |           <div className="p-4 rounded-lg bg-muted/5 border border-muted/20">
-> 111 |             <p className="text-sm">{responseMessage ?}</p>
-      |                                                      ^
-  112 |           </div>
-  113 |         </FormSection>
-  114 |       )}
-
-Expected '</', got '}'
-
-Import traces:
-  Client Component Browser:
-    ./components/steps/name-availability.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./components/steps/name-availability.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[02:00:20.862] Server  LOG      ✓ Compiled in 41ms
-[02:00:37.029] Server  LOG      ✓ Compiled in 38ms
-[02:00:42.652] Server  LOG      ✓ Compiled in 38ms
-[02:01:58.665] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767782726276}
-[02:04:46.948] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/status color: rgb(120, 120, 120) color: inherit {"dp":"/status","o":"http://localhost:3000/status","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767782894562}
-[02:46:39.401] Server  LOG      ✓ Compiled in 70ms
-[02:46:42.214] Server  LOG      ✓ Compiled in 43ms
-[02:46:43.037] Browser ERROR   ./app/status/page.tsx:5:1
-Parsing ecmascript source code failed
-  3 | import React from "react"
-  4 | import
-> 5 | import { Header } from "@/components/header"
-    | ^^^^^^
-  6 | import { Footer } from "@/components/footer"
-  7 | import { FormInput } from "@/components/form-input"
-  8 | import { FormSection } from "@/components/form-section"
-
-Expected 'from', got 'import'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:47:14.888] Server  LOG      ✓ Compiled in 45ms
-[02:47:15.044] Browser ERROR   ./app/status/page.tsx:30:7
-Parsing ecmascript source code failed
-  28 |
-  29 |       // Mock status data
-> 30 |       setStatus({
-     |       ^^^^^^^^^
-  31 |         reference,
-  32 |         businessName: "ABC Technology Services",
-  33 |         applicantName: "John Smith",
-
-'const' declarations must be initialized
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:47:15.044] Browser ERROR   ./app/status/page.tsx:30:16
-Parsing ecmascript source code failed
-  28 |
-  29 |       // Mock status data
-> 30 |       setStatus({
-     |                ^
-  31 |         reference,
-  32 |         businessName: "ABC Technology Services",
-  33 |         applicantName: "John Smith",
-
-Expected a semicolon
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:47:21.037] Browser ERROR   ./app/status/page.tsx:30:7
-Parsing ecmascript source code failed
-  28 |
-  29 |       // Mock status data
-> 30 |       setStatus({
-     |       ^^^^^^^^^
-  31 |         reference,
-  32 |         businessName: "ABC Technology Services",
-  33 |         applicantName: "John Smith",
-
-'const' declarations must be initialized
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:47:21.037] Browser ERROR   ./app/status/page.tsx:30:16
-Parsing ecmascript source code failed
-  28 |
-  29 |       // Mock status data
-> 30 |       setStatus({
-     |                ^
-  31 |         reference,
-  32 |         businessName: "ABC Technology Services",
-  33 |         applicantName: "John Smith",
-
-Expected a semicolon
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:47:47.761] Server  LOG      ✓ Compiled in 37ms
-[02:47:55.080] Server  LOG      ✓ Compiled in 40ms
-[02:48:03.061] Server  LOG      ✓ Compiled in 43ms
-[02:48:04.033] Browser ERROR   ./app/status/page.tsx:28:7
-Parsing ecmascript source code failed
-  26 |     try {
-  27 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 28 |       meth
-     |       ^^^^
-  29 |     )
-  30 |
-  31 |       // Mock status data
-
-Expected ',', got 'meth'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:04.813] Server  LOG      ✓ Compiled in 48ms
-[02:48:05.036] Browser ERROR   ./app/status/page.tsx:28:7
-Parsing ecmascript source code failed
-  26 |     try {
-  27 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 28 |       method
-     |       ^^^^^^
-  29 |     )
-  30 |
-  31 |       // Mock status data
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:08.034] Browser ERROR   ./app/status/page.tsx:28:7
-Parsing ecmascript source code failed
-  26 |     try {
-  27 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 28 |       method:
-     |       ^^^^^^
-  29 |     )
-  30 |
-  31 |       // Mock status data
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:17.046] Browser ERROR   ./app/status/page.tsx:28:7
-Parsing ecmascript source code failed
-  26 |     try {
-  27 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 28 |       method: ""
-     |       ^^^^^^
-  29 |     )
-  30 |
-  31 |       // Mock status data
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:20.044] Browser ERROR   ./app/status/page.tsx:28:7
-Parsing ecmascript source code failed
-  26 |     try {
-  27 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 28 |       method: "GET"
-     |       ^^^^^^
-  29 |     )
-  30 |
-  31 |       // Mock status data
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:22.040] Browser ERROR   ./app/status/page.tsx:28:7
-Parsing ecmascript source code failed
-  26 |     try {
-  27 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 28 |       method: "GET",
-     |       ^^^^^^
-  29 |     )
-  30 |
-  31 |       // Mock status data
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:26.038] Browser ERROR   ./app/status/page.tsx:28:7
-Parsing ecmascript source code failed
-  26 |     try {
-  27 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 28 |       method: "GET",
-     |       ^^^^^^
-  29 |       
-  30 |     )
-  31 |
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:30.037] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       method: "GET",
-     |       ^^^^^^
-  30 |       headers: {
-  31 |     )
-  32 |
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:31.032] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       method: "GET",
-     |       ^^^^^^
-  30 |       headers: {
-  31 |         "Content-Type": "application/json",
-  32 |         // Forward cookies from the incoming request for session management if needed
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:46.038] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       method: "GET",
-     |       ^^^^^^
-  30 |       headers: {
-  31 |         "Content-Type": "application/json",
-  32 |         
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:52.037] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       method: "GET",
-     |       ^^^^^^
-  30 |       headers: {
-  31 |         "Content-Type": "application/json",
-  32 |         
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:54.041] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       method: "GET",
-     |       ^^^^^^
-  30 |       headers: {
-  31 |         "Content-Type": "application/json",
-  32 |         <body>
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:48:56.033] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       method: "GET",
-     |       ^^^^^^
-  30 |       headers: {
-  31 |         "Content-Type": "application/json",
-  32 |         bod
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:13.033] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       method: "GET",
-     |       ^^^^^^
-  30 |       headers: {
-  31 |         "Content-Type": "application/json",
-  32 |         body: JSON.stringify({ reference: reference.trim() })
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:29.042] Browser ERROR   ./app/status/page.tsx:30:7
-Parsing ecmascript source code failed
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-  29 |       
-> 30 |       method: "GET",
-     |       ^^^^^^
-  31 |       headers: {
-  32 |         "Content-Type": "application/json",
-  33 |         body: JSON.stringify({ reference: reference.trim() })
-
-Expected ',', got 'method'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:30.527] Server  LOG      ✓ Compiled in 35ms
-[02:49:31.042] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       {}
-     |       ^
-  30 |       method: "GET",
-  31 |       headers: {
-  32 |         "Content-Type": "application/json",
-
-Expected ',', got '{'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:33.035] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       {
-     |       ^
-  30 |       method: "GET",
-  31 |       headers: {
-  32 |         "Content-Type": "application/json",
-
-Expected ',', got '{'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:36.035] Browser ERROR   ./app/status/page.tsx:29:7
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`
-> 29 |       {
-     |       ^
-  30 |       method: "GET",
-  31 |       headers: {
-  32 |         "Content-Type": "application/json",
-
-Expected ',', got '{'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:36.515] Server  LOG      ✓ Compiled in 38ms
-[02:49:37.040] Browser ERROR   ./app/status/page.tsx:34:5
-Parsing ecmascript source code failed
-  32 |           body: JSON.stringify({ reference: reference.trim() })
-  33 |         },
-> 34 |     )
-     |     ^
-  35 |
-  36 |       // Mock status data
-  37 |       setStatus({
-
-Unexpected token `)`. Expected identifier, string literal, numeric literal or [ for the computed key
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:46.107] Server  LOG      ✓ Compiled in 47ms
-[02:49:47.033] Browser ERROR   ./app/status/page.tsx:29:15
-Parsing ecmascript source code failed
-  27 |     try {
-  28 |       const resp = await fetch(`${API_BASE_URL}status/${reference.trim()}`, 
-> 29 |         method: "GET",
-     |               ^
-  30 |         headers: {
-  31 |           "Content-Type": "application/json",
-  32 |           body: JSON.stringify({ reference: reference.trim() })
-
-Expected ',', got ':'
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:48.247] Server  LOG      ✓ Compiled in 36ms
-[02:49:49.039] Browser ERROR   ./app/status/page.tsx:34:5
-Parsing ecmascript source code failed
-  32 |           body: JSON.stringify({ reference: reference.trim() })
-  33 |         },
-> 34 |     )
-     |     ^
-  35 |
-  36 |       // Mock status data
-  37 |       setStatus({
-
-Unexpected token `)`. Expected identifier, string literal, numeric literal or [ for the computed key
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:51.038] Browser ERROR   ./app/status/page.tsx:34:5
-Parsing ecmascript source code failed
-  32 |           body: JSON.stringify({ reference: reference.trim() })
-  33 |         },
-> 34 |     )
-     |     ^
-  35 |
-  36 |       // Mock status data
-  37 |       setStatus({
-
-Unexpected token `)`. Expected identifier, string literal, numeric literal or [ for the computed key
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:49:59.765] Server  LOG      ✓ Compiled in 37ms
-[02:50:00.036] Browser ERROR   ./app/status/page.tsx:10:1
-Ecmascript file had an error
-   8 | import { FormSection } from "@/components/form-section"
-   9 | import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
-> 10 | import { headers } from "next/headers"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  11 |
-  12 | export default function StatusPage() {
-  13 |   const [reference, setReference] = React.useState("")
-
-You're importing a component that needs "next/headers". That only works in a Server Component but one of its parents is marked with "use client", so it's a Client Component.
-Learn more: https://nextjs.org/docs/app/building-your-application/rendering
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:50:07.037] Browser ERROR   ./app/status/page.tsx:10:1
-Ecmascript file had an error
-   8 | import { FormSection } from "@/components/form-section"
-   9 | import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
-> 10 | import { headers } from "next/headers"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  11 |
-  12 | export default function StatusPage() {
-  13 |   const [reference, setReference] = React.useState("")
-
-You're importing a component that needs "next/headers". That only works in a Server Component but one of its parents is marked with "use client", so it's a Client Component.
-Learn more: https://nextjs.org/docs/app/building-your-application/rendering
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[02:50:29.041] Browser ERROR   ./app/status/page.tsx:10:1
-Ecmascript file had an error
-   8 | import { FormSection } from "@/components/form-section"
-   9 | import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
-> 10 | import { headers } from "next/headers"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  11 |
-  12 | export default function StatusPage() {
-  13 |   const [reference, setReference] = React.useState("")
-
-You're importing a component that needs "next/headers". That only works in a Server Component but one of its parents is marked with "use client", so it's a Client Component.
-Learn more: https://nextjs.org/docs/app/building-your-application/rendering
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[03:04:54.605] Server  LOG      ✓ Compiled in 53ms
-[03:05:41.216] Server  LOG      ✓ Compiled in 59ms
-[03:07:55.386] Browser ERROR   ./app/status/page.tsx:10:1
-Ecmascript file had an error
-   8 | import { FormSection } from "@/components/form-section"
-   9 | import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
-> 10 | import { headers } from "next/headers"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  11 |
-  12 | export default function StatusPage() {
-  13 |   const [reference, setReference] = React.useState("")
-
-You're importing a component that needs "next/headers". That only works in a Server Component but one of its parents is marked with "use client", so it's a Client Component.
-Learn more: https://nextjs.org/docs/app/building-your-application/rendering
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[03:07:55.386] Browser ERROR   ./app/status/page.tsx:10:1
-Ecmascript file had an error
-   8 | import { FormSection } from "@/components/form-section"
-   9 | import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
-> 10 | import { headers } from "next/headers"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  11 |
-  12 | export default function StatusPage() {
-  13 |   const [reference, setReference] = React.useState("")
-
-You're importing a component that needs "next/headers". That only works in a Server Component but one of its parents is marked with "use client", so it's a Client Component.
-Learn more: https://nextjs.org/docs/app/building-your-application/rendering
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[03:07:55.386] Browser ERROR   ./app/status/page.tsx:10:1
-Ecmascript file had an error
-   8 | import { FormSection } from "@/components/form-section"
-   9 | import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
-> 10 | import { headers } from "next/headers"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  11 |
-  12 | export default function StatusPage() {
-  13 |   const [reference, setReference] = React.useState("")
-
-You're importing a component that needs "next/headers". That only works in a Server Component but one of its parents is marked with "use client", so it's a Client Component.
-Learn more: https://nextjs.org/docs/app/building-your-application/rendering
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[03:07:55.386] Browser ERROR   ./app/status/page.tsx:10:1
-Ecmascript file had an error
-   8 | import { FormSection } from "@/components/form-section"
-   9 | import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
-> 10 | import { headers } from "next/headers"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  11 |
-  12 | export default function StatusPage() {
-  13 |   const [reference, setReference] = React.useState("")
-
-You're importing a component that needs "next/headers". That only works in a Server Component but one of its parents is marked with "use client", so it's a Client Component.
-Learn more: https://nextjs.org/docs/app/building-your-application/rendering
-
-Import traces:
-  Client Component Browser:
-    ./app/status/page.tsx [Client Component Browser]
-    ./app/status/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/status/page.tsx [Client Component SSR]
-    ./app/status/page.tsx [Server Component]
-[03:18:03.908] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:18:04.035] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[03:18:04.035] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/status","route":"/status"}
-[03:18:04.035] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/status color: rgb(120, 120, 120) color: inherit {"dp":"/status","o":"http://localhost:3000/status","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767787291652}
-[03:18:06.320] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767787293932}
-[03:30:05.453] Server  LOG      ✓ Compiled in 53ms
-[03:30:13.675] Server  LOG      ✓ Compiled in 46ms
-[04:03:20.772] Server  LOG      ✓ Compiled in 46ms
-[04:03:21.041] Browser ERROR   ./lib/store.ts:100:22
-Parsing ecmascript source code failed
-   98 |   natureOfBusiness: "",
-   99 |   businessAddress: "",
-> 100 |   sameAsResidential: ,
-      |                      ^
-  101 |   businessPhone: "",
-  102 |   businessEmail: "",
-  103 |   commencementDate: "",
-
-Expression expected
-
-Import traces:
-  Client Component Browser:
-    ./lib/store.ts [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/store.ts [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[04:03:36.309] Server  LOG      ✓ Compiled in 42ms
-[04:03:37.035] Browser ERROR   ./lib/store.ts:7:8
-Parsing ecmascript source code failed
-   5 | export const API_BASE_URL = "https://cac-registration-backend.onrender.com/api/merchant/"
-   6 |
->  7 | export interface RegistrationData {
-     |        ^^^^^^^^^
-   8 |   // Step 1: Name availability
-   9 |   preferredNames: string[]
-  10 |   selectedBusinessName: string
-
-Expected '{', got 'interface'
-
-Import traces:
-  Client Component Browser:
-    ./lib/store.ts [Client Component Browser]
-    ./components/registration-form.tsx [Client Component Browser]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./lib/store.ts [Client Component SSR]
-    ./components/registration-form.tsx [Client Component SSR]
-    ./components/registration-form.tsx [Server Component]
-    ./app/register/page.tsx [Server Component]
-[04:03:58.316] Server  LOG      ✓ Compiled in 38ms
-[04:03:59.038] Browser ERROR   A component is changing a controlled input to be uncontrolled. This is likely caused by the value changing from a defined to undefined, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://react.dev/link/controlled-components
-[04:04:05.910] Server  LOG      ✓ Compiled in 37ms
-[04:04:06.037] Browser ERROR   A component is changing an uncontrolled input to be controlled. This is likely caused by the value changing from undefined to a defined value, which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component. More info: https://react.dev/link/controlled-components
-[04:04:53.329] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[04:04:53.520] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[00:58:59.573] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:58:59.574] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:58:59.574] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767860646537}
+[01:01:33.177] Server  LOG      ✓ Compiled in 66ms
+[01:01:46.993] Server  LOG      ✓ Compiled in 52ms
+[01:01:51.855] Server  LOG      ✓ Compiled in 50ms
+[01:01:54.458] Server  LOG      ✓ Compiled in 55ms
+[01:01:59.292] Server  LOG      ✓ Compiled in 54ms
+[01:02:15.418] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:02:15.739] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[04:04:53.520] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[04:04:53.520] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[04:04:53.520] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767790101133}
-[04:10:52.321] Server  LOG      ✓ Compiled in 61ms
-[04:11:04.167] Server  LOG      ✓ Compiled in 48ms
-[04:13:35.459] Server  LOG      ✓ Compiled in 41ms
-[04:15:02.894] Server  LOG      ✓ Compiled in 44ms
-[04:15:05.721] Server  LOG      ✓ Compiled in 41ms
-[04:15:10.400] Server  LOG      ✓ Compiled in 47ms
-[04:15:19.427] Server  LOG      ✓ Compiled in 44ms
-[04:15:28.413] Server  LOG      ✓ Compiled in 41ms
-[04:15:45.764] Server  LOG      ✓ Compiled in 38ms
-[04:16:09.390] Server  LOG      ✓ Compiled in 38ms
+[01:02:15.739] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:02:15.739] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[01:02:15.739] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767860842625}
+[01:12:21.559] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:12:22.216] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:12:22.216] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[01:12:22.216] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767861449070}
+[01:13:02.035] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:13:02.265] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:13:02.265] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[01:13:02.265] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767861489230}
+[01:32:52.883] Server  LOG      ✓ Compiled in 58ms
+[01:33:07.177] Server  LOG      ✓ Compiled in 63ms
+[01:33:09.511] Server  LOG      ✓ Compiled in 51ms
+[01:33:11.412] Server  LOG      ✓ Compiled in 50ms
+[01:33:15.401] Server  LOG      ✓ Compiled in 48ms
+[01:33:22.026] Server  LOG      ✓ Compiled in 49ms
+[01:33:34.046] Server  LOG      ✓ Compiled in 48ms
+[01:33:36.953] Server  LOG      ✓ Compiled in 63ms
+[01:33:39.056] Server  LOG      ✓ Compiled in 53ms
+[01:33:41.712] Server  LOG      ✓ Compiled in 51ms
+[01:33:48.270] Server  LOG      ✓ Compiled in 64ms
+[01:34:16.104] Server  LOG      ✓ Compiled in 80ms
+[01:34:43.390] Server  LOG      ✓ Compiled in 62ms
+[01:37:26.037] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:37:26.244] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[01:37:26.244] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[01:37:26.244] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767862953213}
+[01:48:03.135] Server  LOG      ✓ Compiled in 165ms
+[01:48:25.864] Server  LOG      ✓ Compiled in 81ms
+[01:48:36.108] Server  LOG      ✓ Compiled in 55ms
+[01:51:40.847] Server  LOG      ✓ Compiled in 62ms
+[01:54:20.100] Server  LOG      ✓ Compiled in 75ms
+[01:55:05.234] Server  LOG      ✓ Compiled in 115ms
+[01:55:39.210] Server  LOG      ✓ Compiled in 73ms
+[02:01:55.101] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:01:55.328] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:01:55.328] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[02:01:55.328] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767864422297}
+[02:09:06.205] Server  LOG      ✓ Compiled in 75ms
+[02:09:22.672] Server  LOG      ✓ Compiled in 57ms
+[02:13:54.583] Server  LOG      ✓ Compiled in 65ms
+[02:15:14.518] Browser ERROR   uncaughtError: ReferenceError: file is not defined
+[02:16:00.767] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:16:01.025] Browser ERROR   uncaughtError: ReferenceError: file is not defined
+[02:16:49.873] Server  LOG      ✓ Compiled in 77ms
+[02:16:49.965] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[02:16:50.706] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:16:57.643] Browser ERROR   uncaughtError: Error: Failed to load chunk /_next/static/chunks/app_layout_tsx_78cdd4a3._.js from module [project]/node_modules/next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-client.browser.development.js [app-client] (ecmascript)
+[02:18:02.042] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:18:02.123] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[02:18:02.277] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[02:18:02.277] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[02:18:02.277] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767865389179}
+[02:19:08.367] Server  LOG      ✓ Compiled in 71ms
+[02:24:02.368] Server  LOG      ✓ Compiled in 137ms
+[02:51:29.852] Server  LOG      ✓ Compiled in 43ms
+[02:51:33.640] Server  LOG      ✓ Compiled in 38ms
+[06:43:37.272] Server  LOG      ✓ Compiled in 75ms
+[06:48:19.525] Server  LOG      ✓ Compiled in 44ms
+[06:48:22.404] Server  LOG      ✓ Compiled in 51ms
+[06:48:24.997] Server  LOG      ✓ Compiled in 40ms
+[06:49:32.375] Server  LOG      ✓ Compiled in 44ms
+[06:51:02.153] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:51:02.355] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[06:51:02.355] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[06:51:02.355] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[06:51:02.355] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767881769327}
+[06:51:25.175] Server  LOG      ✓ Compiled in 45ms
+[06:51:27.718] Server  LOG      ✓ Compiled in 37ms
+[06:51:30.211] Server  LOG      ✓ Compiled in 46ms
+[06:51:31.611] Server  LOG      ✓ Compiled in 44ms
+[06:54:32.184] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:54:32.337] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[06:54:32.337] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/support","route":"/support"}
+[06:54:32.337] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/support color: rgb(120, 120, 120) color: inherit {"dp":"/support","o":"http://localhost:3000/support","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767881979305}
+[06:54:40.752] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:54:40.895] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[06:54:40.895] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/status","route":"/status"}
+[06:54:40.895] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/status color: rgb(120, 120, 120) color: inherit {"dp":"/status","o":"http://localhost:3000/status","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767881987862}
+[07:16:26.119] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[07:16:26.263] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[07:16:26.263] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/status","route":"/status"}
+[07:16:26.263] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/status color: rgb(120, 120, 120) color: inherit {"dp":"/status","o":"http://localhost:3000/status","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1767883293233}

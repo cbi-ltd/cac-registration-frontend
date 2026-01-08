@@ -29,24 +29,19 @@ export function RegistrationForm() {
       case 2: // Applicant Info
         if (store.applicantType === "individual") {
           return (
-            store.title !== "" &&
             store.firstName !== "" &&
             store.lastName !== "" &&
             store.dateOfBirth !== "" &&
             store.gender !== "" &&
             store.phone !== "" &&
             store.email !== "" &&
-            store.residentialAddress !== "" &&
-            store.idType !== "" &&
-            store.idNumber !== "" &&
-            store.idIssueDate !== ""
+            store.residentialAddress !== ""
           )
         } else {
           return (
             store.organizationName !== "" &&
             store.rcNumber !== "" &&
             store.organizationEmail !== "" &&
-            store.gender !== "" &&
             store.phone !== ""
           )
         }
@@ -54,8 +49,7 @@ export function RegistrationForm() {
       case 3: // Business Details
         return (
           store.businessActivity !== "" &&
-          store.natureOfBusiness !== "" &&
-          (store.sameAsResidential || store.businessAddress !== "") &&
+          (!!store.sameAsResidential || store.businessAddress !== "") &&
           store.businessPhone !== "" &&
           store.businessEmail !== "" &&
           store.commencementDate !== ""
@@ -63,10 +57,10 @@ export function RegistrationForm() {
 
       case 4: // Documents
         return (
-          store.idDocument !== null &&
-          store.passportPhoto !== null &&
-          store.proofOfAddress !== null &&
-          store.consentLetter !== null
+          !!store.supportingDocBase64 &&
+          !!store.signatureBase64 &&
+          !!store.meansOfIdBase64 &&
+          !!store.passportBase64
         )
 
       case 5: // Review
@@ -74,7 +68,8 @@ export function RegistrationForm() {
         return true
 
       case 6: // Payment
-        return store.paymentStatus === "success"
+        // Allow navigation to confirmation even if paymentStatus isn't marked 'success'
+        return true
 
       default:
         return true

@@ -25,8 +25,8 @@ export function ReviewSummaryStep() {
     if (!store.email || !store.phone) newErrors.push("Contact information incomplete")
     if (!store.businessActivity) newErrors.push("Business activity not selected")
     if (!store.commencementDate) newErrors.push("Business commencement date not set")
-    if (!store.passportPhoto || !store.idDocument) newErrors.push("Required documents not uploaded")
-    if (!store.proofOfAddress || !store.consentLetter) newErrors.push("Address proof or consent letter missing")
+    if (!store.supportingDocBase64 || !store.signatureBase64) newErrors.push("Supporting documents not uploaded")
+    if (!store.meansOfIdBase64 || !store.passportBase64) newErrors.push("ID or passport missing")
     if (!termsAccepted) newErrors.push("Terms and conditions must be accepted")
 
     setErrors(newErrors)
@@ -38,8 +38,9 @@ export function ReviewSummaryStep() {
       section: "Business Information",
       items: [
         { label: "Business Name", value: store.selectedBusinessName },
-        { label: "Business Activity", value: store.businessActivity },
-        { label: "Nature of Business", value: store.natureOfBusiness },
+        { label: "Line of Business", value: store.businessActivity },
+        { label: "Business Email", value: store.businessEmail },
+        { label: "Business Phone", value: store.businessPhone },
         { label: "Commencement Date", value: store.commencementDate },
       ],
     },
@@ -52,12 +53,14 @@ export function ReviewSummaryStep() {
               { label: "Date of Birth", value: store.dateOfBirth },
               { label: "Email", value: store.email },
               { label: "Phone", value: store.phone },
-              { label: "ID Type", value: store.idType },
+              { label: "Nationality", value: store.nationality },
+              { label: "Gender", value: store.gender },
+              { label: "Residential Address", value: store.residentialAddress },
             ]
           : [
               { label: "Organization Name", value: store.organizationName },
               { label: "RC Number", value: store.rcNumber },
-              { label: "Email", value: store.organizationEmail },
+              { label: "Organization Email", value: store.organizationEmail },
               { label: "Phone", value: store.phone },
             ],
     },
@@ -101,10 +104,10 @@ export function ReviewSummaryStep() {
             <p className="text-xs font-medium text-muted-foreground uppercase">Documents Uploaded</p>
             <div className="grid grid-cols-2 gap-2 mt-2">
               {[
-                { name: "ID Document", uploaded: !!store.idDocument },
-                { name: "Passport Photo", uploaded: !!store.passportPhoto },
-                { name: "Proof of Address", uploaded: !!store.proofOfAddress },
-                { name: "Consent Letter", uploaded: !!store.consentLetter },
+                { name: "Supporting Document", uploaded: !!store.supportingDocBase64 },
+                { name: "Signature (scanned)", uploaded: !!store.signatureBase64 },
+                { name: "Means of ID", uploaded: !!store.meansOfIdBase64 },
+                { name: "Passport Photo", uploaded: !!store.passportBase64 },
               ].map((doc) => (
                 <div key={doc.name} className="flex items-center gap-2">
                   <div className={`w-2 h-2 rounded-full ${doc.uploaded ? "bg-green-600" : "bg-destructive"}`} />
@@ -121,19 +124,19 @@ export function ReviewSummaryStep() {
         <div className="space-y-3">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">CAC Registration Fee</span>
-            <span className="font-medium text-foreground">₦10,000.00</span>
+            <span className="font-medium text-foreground">₦28,000.00</span>
           </div>
-          <div className="flex justify-between text-sm">
+          {/* <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Service Charge</span>
             <span className="font-medium text-foreground">₦2,000.00</span>
-          </div>
+          </div> */}
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">VAT (7.5%)</span>
             <span className="font-medium text-foreground">₦900.00</span>
           </div>
           <div className="border-t border-border pt-3 flex justify-between">
             <span className="font-semibold text-foreground">Total Amount Due</span>
-            <span className="font-bold text-lg text-primary">₦12,900.00</span>
+            <span className="font-bold text-lg text-primary">₦29,000.00</span>
           </div>
         </div>
       </FormSection>

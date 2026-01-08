@@ -9,19 +9,7 @@ import { Briefcase } from "lucide-react"
 export function BusinessDetailsStep() {
   const store = useRegistrationStore()
 
-  const businessActivities = [
-    { value: "trading", label: "Trading/Retail" },
-    { value: "manufacturing", label: "Manufacturing" },
-    { value: "services", label: "Services" },
-    { value: "education", label: "Education" },
-    { value: "healthcare", label: "Healthcare" },
-    { value: "technology", label: "Information Technology" },
-    { value: "agriculture", label: "Agriculture" },
-    { value: "construction", label: "Construction" },
-    { value: "other", label: "Other" },
-  ]
-
-  const natureOfBusiness = ["Trading", "Manufacturing", "Services", "Hybrid"]
+  // Simplified: map user-entered lineOfBusiness and company address fields
 
   const handleFieldChange = (field: string, value: any) => {
     store.updateField(field, value)
@@ -38,19 +26,18 @@ export function BusinessDetailsStep() {
 
       <FormSection title="Business Classification" isRequired>
         <div className="grid md:grid-cols-2 gap-4">
-          <FormSelect
-            label="Business Activity"
-            value={store.businessActivity}
+          <FormInput
+            label="Line of Business"
+            value={(store as any).businessActivity || ""}
             onChange={(e) => handleFieldChange("businessActivity", e.target.value)}
-            options={businessActivities}
+            placeholder="fashion"
             required
-            tooltip="Select the primary activity of your business"
           />
-          <FormSelect
-            label="Nature of Business"
-            value={store.natureOfBusiness}
-            onChange={(e) => handleFieldChange("natureOfBusiness", e.target.value)}
-            options={natureOfBusiness.map((n) => ({ value: n, label: n }))}
+          <FormInput
+            label="Proposed Business Name"
+            value={store.selectedBusinessName}
+            onChange={(e) => handleFieldChange("selectedBusinessName", e.target.value)}
+            placeholder="joshua ahmed store"
             required
           />
         </div>
@@ -69,13 +56,34 @@ export function BusinessDetailsStep() {
           </label>
         </div> */}
 
-        <FormInput
-          label="Business Street Address"
-          value={store.businessAddress}
-          onChange={(e) => handleFieldChange("businessAddress", e.target.value)}
-          placeholder="123 Business Street"
-          required
-        />
+        <div className="grid md:grid-cols-2 gap-4">
+          <FormInput
+            label="Business Street Number"
+            value={(store as any).companyStreetNumber || ""}
+            onChange={(e) => handleFieldChange("companyStreetNumber", e.target.value)}
+            placeholder="41"
+          />
+          <FormInput
+            label="Business Street / Address"
+            value={store.businessAddress}
+            onChange={(e) => handleFieldChange("businessAddress", e.target.value)}
+            placeholder="limpopo street"
+          />
+        </div>
+        <div className="grid md:grid-cols-2 gap-4 mt-4">
+          <FormInput
+            label="City"
+            value={(store as any).companyCity || ""}
+            onChange={(e) => handleFieldChange("companyCity", e.target.value)}
+            placeholder="Abuja"
+          />
+          <FormInput
+            label="State"
+            value={(store as any).companyState || ""}
+            onChange={(e) => handleFieldChange("companyState", e.target.value)}
+            placeholder="F.C.T"
+          />
+        </div>
       </FormSection>
 
       <FormSection title="Business Contact Information" isRequired>
@@ -85,7 +93,7 @@ export function BusinessDetailsStep() {
             type="tel"
             value={store.businessPhone}
             onChange={(e) => handleFieldChange("businessPhone", e.target.value)}
-            placeholder="+234 800 000 0000"
+            placeholder="07057001119"
             required
           />
           <FormInput
@@ -93,7 +101,7 @@ export function BusinessDetailsStep() {
             type="email"
             value={store.businessEmail}
             onChange={(e) => handleFieldChange("businessEmail", e.target.value)}
-            placeholder="business@example.com"
+            placeholder="chylau12@gmail.com"
             required
           />
         </div>
@@ -101,12 +109,11 @@ export function BusinessDetailsStep() {
 
       <FormSection title="Business Commencement Date" isRequired>
         <FormInput
-          label="Proposed Commencement Date"
+          label="Business Commencement Date"
           type="date"
           value={store.commencementDate}
           onChange={(e) => handleFieldChange("commencementDate", e.target.value)}
           required
-          tooltip="The date you plan to officially start business operations"
         />
       </FormSection>
     </div>

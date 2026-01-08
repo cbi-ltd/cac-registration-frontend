@@ -35,14 +35,14 @@ export function PaymentGatewayStep() {
         return
       }
 
-      if (cardNumber.length !== 16) {
-        setPaymentError({
-          type: "validation",
-          message: "Card number must be 16 digits",
-        })
-        setIsProcessing(false)
-        return
-      }
+      // if (cardNumber.length !== 16) {
+      //   setPaymentError({
+      //     type: "validation",
+      //     message: "Card number must be 16 digits",
+      //   })
+      //   setIsProcessing(false)
+      //   return
+      // }
 
       if (!/^\d{2}\/\d{2}$/.test(expiry)) {
         setPaymentError({
@@ -95,7 +95,9 @@ export function PaymentGatewayStep() {
 
       try {
         // submit registration to backend after successful payment
-        await store.submitRegistration()
+        // pass a serialized copy of current store so backend receives latest user info
+        const payload = JSON.parse(JSON.stringify(store))
+        await store.submitRegistration(payload)
         setPaymentSuccess(true)
 
         // Auto move to next step after success
@@ -155,9 +157,7 @@ export function PaymentGatewayStep() {
           </div>
           <h2 className="text-3xl font-bold text-foreground mb-3">Payment Successful!</h2>
           <p className="text-muted-foreground mb-2">Your registration payment has been processed successfully.</p>
-          <p className="text-sm text-muted-foreground mb-6">
-            Reference: <span className="font-mono font-semibold text-foreground">{store.paymentReference}</span>
-          </p>
+          <p className="text-sm text-muted-foreground mb-6">A payment reference has been recorded and will be included in your confirmation email.</p>
 
           <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-6 text-left max-w-md mx-auto">
             <h3 className="font-semibold text-green-900 dark:text-green-100 mb-3">What Happens Next?</h3>
@@ -168,7 +168,7 @@ export function PaymentGatewayStep() {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-600 dark:text-green-400 font-bold">2.</span>
-                <span>You'll receive a confirmation email shortly</span>
+                <span>You'll receive a confirmation email</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-600 dark:text-green-400 font-bold">3.</span>
@@ -197,11 +197,11 @@ export function PaymentGatewayStep() {
         <div className="p-4 rounded-lg bg-secondary/50 border border-border mb-6">
           <div className="flex justify-between items-center mb-3">
             <span className="text-muted-foreground">Amount to Pay:</span>
-            <span className="text-3xl font-bold text-primary">₦12,900</span>
+            <span className="text-3xl font-bold text-primary">₦29,000</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          {/* <p className="text-xs text-muted-foreground">
             Includes CAC Registration (₦10,000) + Service Charge (₦2,000) + VAT (₦900)
-          </p>
+          </p> */}
         </div>
 
         {/* Payment Form */}

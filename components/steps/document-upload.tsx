@@ -22,38 +22,36 @@ export function DocumentUploadStep() {
 
   const documents: DocumentInfo[] = [
     {
-      name: "Identification Document",
-      description: "Your valid ID (NIN, Passport, Driver's License, or Voter's Card)",
-      fieldName: "idDocument",
+      name: "Supporting Document",
+      description: "Any supporting document (ID copy or company document).",
+      fieldName: "supportingDocBase64",
       required: true,
       accepted: ["application/pdf", "image/jpeg", "image/png"],
       maxSize: 5 * 1024 * 1024,
-      // initially not uploaded
     },
     {
-      name: "Passport Photograph",
-      description: "Recent passport-size photograph (4x6cm recommended)",
-      fieldName: "passportPhoto",
+      name: "Signature (scanned)",
+      description: "Scanned signature image",
+      fieldName: "signatureBase64",
       required: true,
       accepted: ["image/jpeg", "image/png"],
-      maxSize: 5 * 1024 * 1024,
-      // initially not uploaded
+      maxSize: 2 * 1024 * 1024,
     },
     {
-      name: "Proof of Address",
-      description: "Utility bill, bank statement, or rental agreement (dated within last 6 months)",
-      fieldName: "proofOfAddress",
+      name: "Means of ID (front)",
+      description: "Photo or scan of the ID used",
+      fieldName: "meansOfIdBase64",
       required: true,
       accepted: ["application/pdf", "image/jpeg", "image/png"],
       maxSize: 5 * 1024 * 1024,
     },
     {
-      name: "Consent Letter",
-      description: "Signed consent letter (template available for download)",
-      fieldName: "consentLetter",
+      name: "Passport Photo",
+      description: "Recent passport-size photograph",
+      fieldName: "passportBase64",
       required: true,
-      accepted: ["application/pdf", "image/jpeg", "image/png"],
-      maxSize: 5 * 1024 * 1024,
+      accepted: ["image/jpeg", "image/png"],
+      maxSize: 2 * 1024 * 1024,
     },
   ]
 
@@ -80,8 +78,18 @@ export function DocumentUploadStep() {
       return
     }
 
-    store.updateField(fieldName, file)
-    setUploadErrors({ ...uploadErrors, [fieldName]: "" })
+    // convert to base64 and store into corresponding base64 field so payload can include it
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = reader.result as string
+      // store base64 string
+      store.updateField(fieldName, result)
+      setUploadErrors({ ...uploadErrors, [fieldName]: "" })
+    }
+    reader.onerror = () => {
+      setUploadErrors({ ...uploadErrors, [fieldName]: "Failed to read file" })
+    }
+    reader.readAsDataURL(file)
   }
 
   const downloadConsentLetter = () => {
@@ -144,7 +152,7 @@ NOTE: This letter must be signed in the presence of a witness.`
     document.body.removeChild(a)
   }
 
-  const uploadedCount = documents.filter((doc) => (store as any)[doc.fieldName] !== null).length
+  const uploadedCount = documents.filter((doc) => !!(store as any)[doc.fieldName]).length
 
   return (
     <div className="space-y-6 animate-slide-up">
@@ -172,7 +180,7 @@ NOTE: This letter must be signed in the presence of a witness.`
         <div className="space-y-4">
           {documents.map((doc) => {
             const fieldKey = doc.fieldName as keyof typeof store
-            const file = (store as any)[fieldKey] as File | null
+            const value = (store as any)[fieldKey] as string | null
             const error = uploadErrors[doc.fieldName]
 
             return (
@@ -182,18 +190,17 @@ NOTE: This letter must be signed in the presence of a witness.`
                     <h3 className="font-medium text-foreground flex items-center gap-2">
                       {doc.name}
                       {doc.required && <span className="text-destructive">*</span>}
-                      {file && <CheckCircle2 className="w-4 h-4 text-green-600" />}
+                      {value && <CheckCircle2 className="w-4 h-4 text-green-600" />}
                     </h3>
                     <p className="text-sm text-muted-foreground mt-1">{doc.description}</p>
                   </div>
                 </div>
 
-                {file ? (
+                {value ? (
                   <div className="flex items-center justify-between p-3 rounded-lg bg-secondary">
                     <div className="flex items-center gap-2">
                       <File className="w-4 h-4 text-primary" />
-                      <span className="text-sm text-foreground font-medium">{file.name}</span>
-                      <span className="text-xs text-muted-foreground">({(file.size / 1024 / 1024).toFixed(2)}MB)</span>
+                      <span className="text-sm text-foreground font-medium">Uploaded</span>
                     </div>
                     <button
                       onClick={() => {
@@ -235,7 +242,7 @@ NOTE: This letter must be signed in the presence of a witness.`
           })}
         </div>
 
-        <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 mt-4">
+        {/* <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 mt-4">
           <div className="flex items-center justify-between">
             <p className="text-sm text-amber-900 dark:text-amber-100">Need a consent letter template?</p>
             <button
@@ -246,7 +253,7 @@ NOTE: This letter must be signed in the presence of a witness.`
               Download Template
             </button>
           </div>
-        </div>
+        </div> */}
       </FormSection>
 
       <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />

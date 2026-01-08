@@ -116,6 +116,49 @@ const initialState: RegistrationData = {
   passportBase64: null,
 }
 
+// Helper to build backend payload from store data (steps 2-4)
+function buildSubmissionPayload(storeObj: any) {
+  // Helper to extract street number if available from an address string
+  const extractStreetNumber = (addr: string) => {
+    if (!addr || typeof addr !== "string") return ""
+    const parts = addr.trim().split(/\s+/)
+    return parts.length && /^\d+/.test(parts[0]) ? parts[0] : ""
+  }
+
+  const body: any = {
+    lineOfBusiness: storeObj.businessActivity ?? storeObj.natureOfBusiness ?? "",
+    proprietorCity: storeObj.proprietorCity ?? storeObj.proprietorCity ?? storeObj.residentialCity ?? "",
+    companyCity: storeObj.companyCity ?? storeObj.companyCity ?? "",
+    proprietorPhonenumber: storeObj.phone ?? storeObj.proprietorPhonenumber ?? "",
+    businessCommencementDate: storeObj.commencementDate ?? storeObj.commencementDate ?? "",
+    companyState: storeObj.companyState ?? "",
+    proprietorNationality: storeObj.nationality ?? storeObj.proprietorNationality ?? "",
+    proprietorState: storeObj.proprietorState ?? "",
+    proprietorDob: storeObj.dateOfBirth ?? storeObj.proprietorDob ?? "",
+    proprietorFirstname: storeObj.firstName ?? "",
+    proprietorOthername: storeObj.middleName ?? storeObj.proprietorOthername ?? "",
+    proprietorSurname: storeObj.lastName ?? "",
+    proposedOption1: storeObj.selectedBusinessName ?? storeObj.preferredNames?.[0] ?? "",
+    proprietorGender: (storeObj.gender ?? "").toString().toUpperCase() ?? "",
+    proprietorStreetNumber: storeObj.proprietorStreetNumber ?? extractStreetNumber(storeObj.residentialAddress ?? ""),
+    proprietorServiceAddress: storeObj.residentialAddress ?? "",
+    companyEmail: storeObj.businessEmail ?? storeObj.companyEmail ?? "",
+    companyStreetNumber: storeObj.companyStreetNumber ?? extractStreetNumber(storeObj.businessAddress ?? ""),
+    proprietorEmail: storeObj.email ?? storeObj.proprietorEmail ?? "",
+    companyAddress: storeObj.businessAddress ?? "",
+    proprietorPostcode: storeObj.proprietorPostcode ?? "",
+    proprietorLga: storeObj.proprietorLga ?? "",
+    // transactionRef will be populated from paymentReference/applicationReference but should not be exposed in UI
+    transactionRef: storeObj.paymentReference ?? storeObj.applicationReference ?? "VAS34500236",
+    supportingDoc: storeObj.supportingDocBase64 ?? storeObj.supportingDoc ?? null,
+    signature: storeObj.signatureBase64 ?? storeObj.signature ?? null,
+    meansOfId: storeObj.meansOfIdBase64 ?? storeObj.meansOfId ?? null,
+    passport: storeObj.passportBase64 ?? storeObj.passport ?? null,
+  }
+
+  return body
+}
+
 export const useRegistrationStore = create<
   RegistrationData & {
     updateField: (field: string, value: any) => void
@@ -124,7 +167,7 @@ export const useRegistrationStore = create<
     markStepComplete: (step: number) => void
     reset: () => void
     loadFromApi: (data: any) => void
-    submitRegistration: () => Promise<any>
+    submitRegistration: (overridePayload?: Partial<RegistrationData>) => Promise<any>
   }
 >(
   persist(
@@ -159,49 +202,26 @@ export const useRegistrationStore = create<
         })),
 
       // Submit registration payload to backend endpoint
-      submitRegistration: async () => {
+      submitRegistration: async (overridePayload?: Partial<RegistrationData>) => {
         let result: any = null
         try {
-          // read persisted store from localStorage
-          const raw = localStorage.getItem("cbi-registration")
-          let storeObj: any = {}
-          if (raw) {
-            try {
-              storeObj = JSON.parse(raw)
-            } catch (e) {
-              storeObj = {}
+          // If an override payload is provided, prefer it. Otherwise read persisted store from localStorage
+          let storeObj: any = overridePayload ? { ...overridePayload } : {}
+
+          if (!overridePayload) {
+            const raw = localStorage.getItem("cbi-registration")
+            let parsed: any = {}
+            if (raw) {
+              try {
+                parsed = JSON.parse(raw)
+              } catch (e) {
+                parsed = {}
+              }
             }
+            storeObj = parsed
           }
 
-          const body = {
-            lineOfBusiness: storeObj.businessActivity ?? storeObj.natureOfBusiness ?? "",
-            proprietorCity: storeObj.proprietorCity ?? storeObj.proprietorCity ?? "",
-            companyCity: storeObj.companyCity ?? "",
-            proprietorPhonenumber: storeObj.phone ?? storeObj.proprietorPhonenumber ?? "",
-            businessCommencementDate: storeObj.commencementDate ?? "",
-            companyState: storeObj.companyState ?? "",
-            proprietorNationality: storeObj.nationality ?? "",
-            proprietorState: storeObj.proprietorState ?? "",
-            proprietorDob: storeObj.dateOfBirth ?? "",
-            proprietorFirstname: storeObj.firstName ?? "",
-            proprietorOthername: storeObj.middleName ?? "",
-            proprietorSurname: storeObj.lastName ?? "",
-            proposedOption1: storeObj.selectedBusinessName ?? "",
-            proprietorGender: (storeObj.gender ?? "").toUpperCase() ?? "",
-            proprietorStreetNumber: storeObj.proprietorStreetNumber ?? "",
-            proprietorServiceAddress: storeObj.residentialAddress ?? "",
-            companyEmail: storeObj.businessEmail ?? storeObj.companyEmail ?? "",
-            companyStreetNumber: storeObj.companyStreetNumber ?? "",
-            proprietorEmail: storeObj.email ?? "",
-            companyAddress: storeObj.businessAddress ?? "",
-            proprietorPostcode: storeObj.proprietorPostcode ?? "",
-            proprietorLga: storeObj.proprietorLga ?? "",
-            transactionRef: storeObj.paymentReference ?? storeObj.applicationReference ?? "",
-            supportingDoc: storeObj.supportingDocBase64 ?? null,
-            signature: storeObj.signatureBase64 ?? null,
-            meansOfId: storeObj.meansOfIdBase64 ?? null,
-            passport: storeObj.passportBase64 ?? null,
-          }
+          const body = buildSubmissionPayload(storeObj)
 
           const resp = await fetch(`${API_BASE_URL}reg-bn`, {
             method: "POST",
