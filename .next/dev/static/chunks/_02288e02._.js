@@ -1062,6 +1062,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/clock.js [app-client] (ecmascript) <export default as Clock>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-client] (ecmascript) <export default as CheckCircle2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-alert.js [app-client] (ecmascript) <export default as AlertCircle>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/download.js [app-client] (ecmascript) <export default as Download>");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -1074,10 +1075,46 @@ var _s = __turbopack_context__.k.signature();
 ;
 function StatusPage() {
     _s();
+    const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
     const [reference, setReference] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
     const [status, setStatus] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(null);
     const [isLoading, setIsLoading] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [error, setError] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
+    const downloadBlob = async (endpoint, transactionRef, filename)=>{
+        if (!transactionRef) {
+            setError("Transaction reference is required");
+            return;
+        }
+        setIsLoading(true);
+        setError("");
+        try {
+            const resp = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_BASE_URL"]}${endpoint}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    transactionRef
+                })
+            });
+            if (!resp.ok) {
+                throw new Error("Download failed");
+            }
+            const blob = await resp.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            URL.revokeObjectURL(url);
+            a.remove();
+        } catch (err) {
+            setError(err?.message || "Download failed");
+        } finally{
+            setIsLoading(false);
+        }
+    };
     const handleSearch = async ()=>{
         if (!reference.trim()) {
             setError("Please enter an application reference");
@@ -1135,7 +1172,7 @@ function StatusPage() {
                     className: "w-6 h-6 text-green-600"
                 }, void 0, false, {
                     fileName: "[project]/app/status/page.tsx",
-                    lineNumber: 79,
+                    lineNumber: 115,
                     columnNumber: 16
                 }, this);
             case "pending":
@@ -1143,7 +1180,7 @@ function StatusPage() {
                     className: "w-6 h-6 text-amber-600"
                 }, void 0, false, {
                     fileName: "[project]/app/status/page.tsx",
-                    lineNumber: 81,
+                    lineNumber: 117,
                     columnNumber: 16
                 }, this);
             case "rejected":
@@ -1151,7 +1188,7 @@ function StatusPage() {
                     className: "w-6 h-6 text-destructive"
                 }, void 0, false, {
                     fileName: "[project]/app/status/page.tsx",
-                    lineNumber: 83,
+                    lineNumber: 119,
                     columnNumber: 16
                 }, this);
             default:
@@ -1159,7 +1196,7 @@ function StatusPage() {
                     className: "w-6 h-6 text-blue-600"
                 }, void 0, false, {
                     fileName: "[project]/app/status/page.tsx",
-                    lineNumber: 85,
+                    lineNumber: 121,
                     columnNumber: 16
                 }, this);
         }
@@ -1169,7 +1206,7 @@ function StatusPage() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Header"], {}, void 0, false, {
                 fileName: "[project]/app/status/page.tsx",
-                lineNumber: 91,
+                lineNumber: 127,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -1185,7 +1222,7 @@ function StatusPage() {
                                     children: "Check Application Status"
                                 }, void 0, false, {
                                     fileName: "[project]/app/status/page.tsx",
-                                    lineNumber: 96,
+                                    lineNumber: 132,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1193,13 +1230,13 @@ function StatusPage() {
                                     children: "Enter your application reference number to view the status of your CAC registration"
                                 }, void 0, false, {
                                     fileName: "[project]/app/status/page.tsx",
-                                    lineNumber: 97,
+                                    lineNumber: 133,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/status/page.tsx",
-                            lineNumber: 95,
+                            lineNumber: 131,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -1215,7 +1252,7 @@ function StatusPage() {
                                         onKeyPress: (e)=>e.key === "Enter" && handleSearch()
                                     }, void 0, false, {
                                         fileName: "[project]/app/status/page.tsx",
-                                        lineNumber: 104,
+                                        lineNumber: 140,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1227,25 +1264,72 @@ function StatusPage() {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 116,
+                                                lineNumber: 152,
                                                 columnNumber: 17
                                             }, this),
                                             isLoading ? "Searching..." : "Search"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/status/page.tsx",
-                                        lineNumber: 111,
+                                        lineNumber: 147,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex gap-2 sm:ml-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: ()=>downloadBlob("download-status-report", reference.trim(), `status-report-${reference.trim() || "report"}.pdf`),
+                                                disabled: isLoading || !reference.trim(),
+                                                className: "flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
+                                                        className: "w-4 h-4"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/status/page.tsx",
+                                                        lineNumber: 161,
+                                                        columnNumber: 19
+                                                    }, this),
+                                                    "Download Status Report"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/status/page.tsx",
+                                                lineNumber: 156,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: ()=>downloadBlob("download-cert", reference.trim(), `certificate-${reference.trim() || "cert"}.pdf`),
+                                                disabled: isLoading || !reference.trim(),
+                                                className: "flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
+                                                        className: "w-4 h-4"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/status/page.tsx",
+                                                        lineNumber: 169,
+                                                        columnNumber: 19
+                                                    }, this),
+                                                    "Download Certificate"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/status/page.tsx",
+                                                lineNumber: 164,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/app/status/page.tsx",
+                                        lineNumber: 155,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/status/page.tsx",
-                                lineNumber: 103,
+                                lineNumber: 139,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/status/page.tsx",
-                            lineNumber: 102,
+                            lineNumber: 138,
                             columnNumber: 11
                         }, this),
                         error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1255,7 +1339,7 @@ function StatusPage() {
                                     className: "w-5 h-5 text-destructive flex-shrink-0 mt-0.5"
                                 }, void 0, false, {
                                     fileName: "[project]/app/status/page.tsx",
-                                    lineNumber: 124,
+                                    lineNumber: 178,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1263,13 +1347,13 @@ function StatusPage() {
                                     children: error
                                 }, void 0, false, {
                                     fileName: "[project]/app/status/page.tsx",
-                                    lineNumber: 125,
+                                    lineNumber: 179,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/status/page.tsx",
-                            lineNumber: 123,
+                            lineNumber: 177,
                             columnNumber: 13
                         }, this),
                         status && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1289,7 +1373,7 @@ function StatusPage() {
                                                         children: "Application Status"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 136,
+                                                        lineNumber: 190,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1297,7 +1381,7 @@ function StatusPage() {
                                                         children: capitalize(status.status)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 137,
+                                                        lineNumber: 191,
                                                         columnNumber: 21
                                                     }, this),
                                                     status.message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1305,24 +1389,24 @@ function StatusPage() {
                                                         children: status.message
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 138,
+                                                        lineNumber: 192,
                                                         columnNumber: 40
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 135,
+                                                lineNumber: 189,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/status/page.tsx",
-                                        lineNumber: 133,
+                                        lineNumber: 187,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/status/page.tsx",
-                                    lineNumber: 132,
+                                    lineNumber: 186,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -1337,7 +1421,7 @@ function StatusPage() {
                                                         children: "Reference / Transaction"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 147,
+                                                        lineNumber: 201,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1345,13 +1429,13 @@ function StatusPage() {
                                                         children: status.transactionRef
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 148,
+                                                        lineNumber: 202,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 200,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1361,7 +1445,7 @@ function StatusPage() {
                                                         children: "Entity Name"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 151,
+                                                        lineNumber: 205,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1369,13 +1453,13 @@ function StatusPage() {
                                                         children: status.entity?.entityName
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 152,
+                                                        lineNumber: 206,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 150,
+                                                lineNumber: 204,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1385,7 +1469,7 @@ function StatusPage() {
                                                         children: "Entity Type"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 155,
+                                                        lineNumber: 209,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1393,13 +1477,13 @@ function StatusPage() {
                                                         children: status.entity?.entityType
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 156,
+                                                        lineNumber: 210,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 154,
+                                                lineNumber: 208,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1409,7 +1493,7 @@ function StatusPage() {
                                                         children: "RC Number"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 159,
+                                                        lineNumber: 213,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1417,13 +1501,13 @@ function StatusPage() {
                                                         children: status.entity?.rcNumber ?? "-"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 160,
+                                                        lineNumber: 214,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 158,
+                                                lineNumber: 212,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1433,7 +1517,7 @@ function StatusPage() {
                                                         children: "Registration Date"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 163,
+                                                        lineNumber: 217,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1441,13 +1525,13 @@ function StatusPage() {
                                                         children: status.entity?.registrationDate ? new Date(status.entity.registrationDate).toLocaleDateString() : "-"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 164,
+                                                        lineNumber: 218,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 162,
+                                                lineNumber: 216,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1457,7 +1541,7 @@ function StatusPage() {
                                                         children: "TIN"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 169,
+                                                        lineNumber: 223,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1465,24 +1549,24 @@ function StatusPage() {
                                                         children: status.entity?.tin ?? "-"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/status/page.tsx",
-                                                        lineNumber: 170,
+                                                        lineNumber: 224,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 168,
+                                                lineNumber: 222,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/status/page.tsx",
-                                        lineNumber: 145,
+                                        lineNumber: 199,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/status/page.tsx",
-                                    lineNumber: 144,
+                                    lineNumber: 198,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1493,12 +1577,12 @@ function StatusPage() {
                                             "Have questions? Contact our support team at",
                                             ' ',
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                                href: "mailto:support@cbi.ng",
+                                                href: "mailto:support@cbitechnologiesltd.com",
                                                 className: "font-medium underline",
-                                                children: "support@cbi.ng"
+                                                children: "support@cbitechnologiesltd.com"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 179,
+                                                lineNumber: 233,
                                                 columnNumber: 19
                                             }, this),
                                             ' ',
@@ -1510,50 +1594,54 @@ function StatusPage() {
                                                 children: "+234 800 000 0000"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/status/page.tsx",
-                                                lineNumber: 183,
+                                                lineNumber: 237,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/status/page.tsx",
-                                        lineNumber: 177,
+                                        lineNumber: 231,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/status/page.tsx",
-                                    lineNumber: 176,
+                                    lineNumber: 230,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/status/page.tsx",
-                            lineNumber: 130,
+                            lineNumber: 184,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/status/page.tsx",
-                    lineNumber: 94,
+                    lineNumber: 130,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/status/page.tsx",
-                lineNumber: 93,
+                lineNumber: 129,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$footer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Footer"], {}, void 0, false, {
                 fileName: "[project]/app/status/page.tsx",
-                lineNumber: 193,
+                lineNumber: 247,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/status/page.tsx",
-        lineNumber: 90,
+        lineNumber: 126,
         columnNumber: 5
     }, this);
 }
-_s(StatusPage, "6BDQiCx2zorDOOSgSSaIXySIqUI=");
+_s(StatusPage, "s3sbNjPy0MvNgEYwW65mkheMHuo=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"]
+    ];
+});
 _c = StatusPage;
 var _c;
 __turbopack_context__.k.register(_c, "StatusPage");

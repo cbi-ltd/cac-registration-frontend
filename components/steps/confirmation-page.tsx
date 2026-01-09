@@ -178,6 +178,15 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
           </button>
           <Link
             href="/"
+            onClick={() => {
+              try {
+                localStorage.clear()
+                sessionStorage.clear()
+              } catch (e) {
+                // ignore storage clearing errors
+              }
+              store.reset()
+            }}
             className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
           >
             Back to Home

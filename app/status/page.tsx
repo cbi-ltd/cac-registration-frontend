@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { API_BASE_URL } from "@/lib/store"
+import { API_BASE_URL, useRegistrationStore } from "@/lib/store"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { FormInput } from "@/components/form-input"
@@ -9,10 +9,46 @@ import { FormSection } from "@/components/form-section"
 import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
 
 export default function StatusPage() {
-  const [reference, setReference] = React.useState("")
+  const store = useRegistrationStore()
+  const [reference, setReference] = React.useState<string>("")
   const [status, setStatus] = React.useState<any>(null)
   const [isLoading, setIsLoading] = React.useState(false)
   const [error, setError] = React.useState("")
+
+  const downloadBlob = async (endpoint: string, transactionRef: string, filename: string) => {
+    if (!transactionRef) {
+      setError("Transaction reference is required")
+      return
+    }
+
+    setIsLoading(true)
+    setError("")
+    try {
+      const resp = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ transactionRef }),
+      })
+
+      if (!resp.ok) {
+        throw new Error("Download failed")
+      }
+
+      const blob = await resp.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      URL.revokeObjectURL(url)
+      a.remove()
+    } catch (err: any) {
+      setError(err?.message || "Download failed")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleSearch = async () => {
     if (!reference.trim()) {
@@ -116,6 +152,24 @@ export default function StatusPage() {
                 <Search className="w-4 h-4" />
                 {isLoading ? "Searching..." : "Search"}
               </button>
+              <div className="flex gap-2 sm:ml-2">
+                <button
+                  onClick={() => downloadBlob("download-status-report", reference.trim(), `status-report-${reference.trim() || "report"}.pdf`)}
+                  disabled={isLoading || !reference.trim()}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Status Report
+                </button>
+                <button
+                  onClick={() => downloadBlob("download-cert", reference.trim(), `certificate-${reference.trim() || "cert"}.pdf`)}
+                  disabled={isLoading || !reference.trim()}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Certificate
+                </button>
+              </div>
             </div>
           </FormSection>
 
@@ -176,8 +230,8 @@ export default function StatusPage() {
               <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800">
                 <p className="text-sm text-blue-900 dark:text-blue-100">
                   Have questions? Contact our support team at{' '}
-                  <a href="mailto:support@cbi.ng" className="font-medium underline">
-                    support@cbi.ng
+                  <a href="mailto:support@cbitechnologiesltd.com" className="font-medium underline">
+                    support@cbitechnologiesltd.com
                   </a>{' '}
                   or call{' '}
                   <a href="tel:+234800000000" className="font-medium underline">

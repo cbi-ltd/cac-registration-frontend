@@ -1592,10 +1592,6 @@
     justify-content: center;
   }
 
-  .justify-end {
-    justify-content: flex-end;
-  }
-
   .justify-start {
     justify-content: flex-start;
   }
@@ -2524,10 +2520,6 @@
 
   .break-words {
     overflow-wrap: break-word;
-  }
-
-  .break-all {
-    word-break: break-all;
   }
 
   .whitespace-nowrap {
@@ -3502,6 +3494,18 @@
     @supports (color: color-mix(in lab, red, red)) {
       .hover\:bg-secondary\/80:hover {
         background-color: color-mix(in oklab, var(--secondary) 80%, transparent);
+      }
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:bg-secondary\/90:hover {
+      background-color: var(--secondary);
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:bg-secondary\/90:hover {
+        background-color: color-mix(in oklab, var(--secondary) 90%, transparent);
       }
     }
   }
@@ -4829,6 +4833,12 @@
   @media (min-width: 40rem) {
     .sm\:mt-10 {
       margin-top: calc(var(--spacing) * 10);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .sm\:ml-2 {
+      margin-left: calc(var(--spacing) * 2);
     }
   }
 

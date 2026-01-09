@@ -4706,6 +4706,15 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             href: "/",
+                            onClick: ()=>{
+                                try {
+                                    localStorage.clear();
+                                    sessionStorage.clear();
+                                } catch (e) {
+                                // ignore storage clearing errors
+                                }
+                                store.reset();
+                            },
                             className: "flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors",
                             children: [
                                 "Back to Home",
@@ -4713,7 +4722,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     className: "w-5 h-5"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 184,
+                                    lineNumber: 193,
                                     columnNumber: 13
                                 }, this)
                             ]
