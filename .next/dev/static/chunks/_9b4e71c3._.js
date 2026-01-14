@@ -48,7 +48,7 @@ const initialState = {
     businessEmail: "",
     commencementDate: "",
     proofOfAddress: null,
-    consentLetter: null,
+    // consentLetter: null,
     paymentStatus: "pending",
     paymentReference: "",
     paymentError: "",
@@ -133,12 +133,12 @@ const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f
         submitRegistration: async (overridePayload)=>{
             let result = null;
             try {
-                // If an override payload is provided, prefer it. Otherwise read persisted store from localStorage
+                // If an override payload is provided, prefer it. Otherwise read persisted store from sessionStorage
                 let storeObj = overridePayload ? {
                     ...overridePayload
                 } : {};
                 if (!overridePayload) {
-                    const raw = localStorage.getItem("cbi-registration");
+                    const raw = sessionStorage.getItem("cbi-registration");
                     let parsed = {};
                     if (raw) {
                         try {
@@ -861,71 +861,7 @@ function ProgressIndicator({ currentStep, totalSteps, stepNames }) {
         lineNumber: 15,
         columnNumber: 5
     }, this);
-} // "use client"
- // import { CheckCircle2 } from "lucide-react"
- // interface ProgressIndicatorProps {
- //   currentStep: number
- //   number: number
- //   totalSteps: number
- //   stepNames: string[]
- // }
- // export function ProgressIndicator({ currentStep, totalSteps, stepNames }: ProgressIndicatorProps) {
- //   const progressPercentage = totalSteps === 1 ? 100 : ((currentStep - 1) / (totalSteps - 1)) * 100
- //   return (
- //     <div className="w-full py-8 px-4 sm:px-6">
- //       <div className="relative max-w-4xl md:mx-auto ">
- //         {/* Background Line */}
- //         <div className="absolute left-0 right-0 top-5 h-1 bg-muted/60 rounded-full" />
- //         {/* Progress Fill */}
- //         <div
- //           className="absolute left-0 top-5 h-1 bg-primary rounded-full transition-all duration-500 ease-out"
- //           style={{ width: `${progressPercentage}%` }}
- //         />
- //         {/* Steps */}
- //         <div className="relative flex justify-between">
- //           {Array.from({ length: totalSteps }).map((_, index) => {
- //             const stepNum = index + 1
- //             const isComplete = stepNum < currentStep
- //             const isCurrent = stepNum === currentStep
- //             return (
- //               <div key={stepNum} className="flex flex-col items-center flex-1 max-w-[140px]">
- //                 <div className="relative">
- //                   {/* Pulse effect for current step */}
- //                   {isCurrent && (
- //                     <div className="absolute inset-0 rounded-full animate-ping bg-primary/30 -z-[-1]" />
- //                   )}
- //                   <div
- //                     className={`relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-lg ${
- //                       isComplete
- //                         ? "bg-primary text-primary-foreground"
- //                         : isCurrent
- //                           ? "bg-primary text-primary-foreground ring-4 ring-primary/30 scale-110"
- //                           : "bg-background text-muted-foreground border-2 border-muted"
- //                     }`}
- //                   >
- //                     {isComplete ? <CheckCircle2 className="w-6 h-6" /> : stepNum}
- //                   </div>
- //                 </div>
- //                 {/* Step Label - responsive & wraps nicely */}
- //                 <span
- //                   className={`mt-3 text-xs sm:text-sm font-medium text-center leading-tight px-1 transition-colors ${
- //                     isComplete || isCurrent ? "text-foreground" : "text-muted-foreground"
- //                   }`}
- //                 >
- //                   {stepNames[index]}
- //                 </span>
- //               </div>
- //             )
- //           })}
- //         </div>
- //       </div>
- //       {/* Step Counter - hidden on very small screens if needed */}
- //       <div className="mt-10 text-center text-sm text-muted-foreground">
- //         Step <span className="font-semibold text-foreground">{currentStep}</span> of {totalSteps}
- //       </div>
- //     </div>
- //   )
- // }
+}
 _c = ProgressIndicator;
 var _c;
 __turbopack_context__.k.register(_c, "ProgressIndicator");
@@ -1277,6 +1213,14 @@ function NameAvailabilityStep() {
     const [error, setError] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
     const [proposedName, setProposedName] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
     const [lineOfBusiness, setLineOfBusiness] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
+    const [recommendedMessage, setRecommendedMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
+    const [recommendedKeywords, setRecommendedKeywords] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState([]);
+    // Feature toggle:
+    // For production uncomment the next line to REQUIRE the API responseMessage
+    // "Proceed to filing" before enabling the Next button.
+    // const REQUIRE_RESPONSE_FOR_NEXT = true
+    const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
+    ;
     const handleProposedNameChange = (value)=>setProposedName(value);
     const handleLineOfBusinessChange = (value)=>setLineOfBusiness(value);
     const checkAvailability = async ()=>{
@@ -1303,11 +1247,22 @@ function NameAvailabilityStep() {
                 return;
             }
             const json = await resp.json();
-            const message = json?.data?.message ?? "";
-            setResponseMessage(message);
-            // If backend indicates the name is unique (but suggests checking similarity),
-            // treat the name as available and auto-select it so the user can proceed.
-            if (message === "Name is unique but check the similarity details") {
+            // Attempt to locate recommendedActions in the nested response structure.
+            const recActions = json?.data?.data?.data?.recommendedActions ?? json?.data?.data?.recommendedActions ?? json?.data?.recommendedActions ?? null;
+            if (recActions && Array.isArray(recActions) && recActions.length > 0) {
+                const msg = recActions[0].message ?? "";
+                setRecommendedMessage(msg);
+                setRecommendedKeywords(recActions[0].keywords ?? []);
+            } else {
+                setRecommendedMessage("");
+                setRecommendedKeywords([]);
+            }
+            // Optionally surface a short status message from the API (if present)
+            const statusMessage = json?.data?.data?.message ?? json?.data?.message ?? "";
+            const finalResponse = statusMessage || recActions && recActions[0]?.message || "Proceed to filing";
+            setResponseMessage(finalResponse);
+            // Auto-select name when backend indicates proceed (or when there were no recommendations)
+            if (!recActions || finalResponse === "Proceed to filing") {
                 store.updateField("selectedBusinessName", proposedName.trim());
             }
         } catch (err) {
@@ -1316,14 +1271,18 @@ function NameAvailabilityStep() {
             setIsChecking(false);
         }
     };
-    const handleSelectName = (name)=>store.updateField("selectedBusinessName", name);
-    const canProceed = store.selectedBusinessName !== "";
+    // const handleSelectName = (name: string) => store.updateField("selectedBusinessName", name)
+    // canProceed logic:
+    // - In development we allow proceeding as soon as the name check returns (responseMessage is set)
+    // - For production you can enable `REQUIRE_RESPONSE_FOR_NEXT` to require the API to return
+    //   the explicit responseMessage "Proceed to filing" before enabling Next.
+    const canProceed = ("TURBOPACK compile-time falsy", 0) ? "TURBOPACK unreachable" : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
                 title: "Business Name Availability Check",
-                description: "Enter up to 2 preferred business names in order of preference. We'll check their availability against CAC records.",
+                description: "Enter up to 1 preferred business names. We'll check their availability against CAC records.",
                 isRequired: true,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1338,7 +1297,7 @@ function NameAvailabilityStep() {
                                 tooltip: "Enter the exact proposed business name to check"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 71,
+                                lineNumber: 101,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormInput"], {
@@ -1350,13 +1309,13 @@ function NameAvailabilityStep() {
                                 tooltip: "Provide the business activity or industry"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 80,
+                                lineNumber: 110,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 70,
+                        lineNumber: 100,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1369,20 +1328,20 @@ function NameAvailabilityStep() {
                                 className: "w-4 h-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 96,
+                                lineNumber: 126,
                                 columnNumber: 11
                             }, this),
                             isChecking ? "Checking Availability..." : "Check Availability"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 90,
+                        lineNumber: 120,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 65,
+                lineNumber: 95,
                 columnNumber: 7
             }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1392,7 +1351,7 @@ function NameAvailabilityStep() {
                         className: "w-5 h-5 text-destructive flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 103,
+                        lineNumber: 133,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1400,13 +1359,13 @@ function NameAvailabilityStep() {
                         children: error
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 104,
+                        lineNumber: 134,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 102,
+                lineNumber: 132,
                 columnNumber: 9
             }, this),
             responseMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -1416,30 +1375,70 @@ function NameAvailabilityStep() {
                     className: "p-4 rounded-lg bg-muted/5 border border-muted/20",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         className: "text-sm",
-                        children: responseMessage === "Name is unique but check the similarity details" ? "Name is unique" : responseMessage
+                        children: responseMessage === "Proceed to filing" ? "Proceed to filing" : responseMessage
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 111,
+                        lineNumber: 142,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/steps/name-availability.tsx",
-                    lineNumber: 110,
+                    lineNumber: 140,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 109,
+                lineNumber: 139,
                 columnNumber: 9
             }, this),
-            responseMessage === "Name is unique but check the similarity details" && canProceed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            (recommendedMessage || recommendedKeywords && recommendedKeywords.length > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
+                title: "Recommendations",
+                description: "",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "p-4 rounded-lg bg-muted/5 border border-muted/20 space-y-2",
+                    children: [
+                        recommendedMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-sm",
+                            children: recommendedMessage
+                        }, void 0, false, {
+                            fileName: "[project]/components/steps/name-availability.tsx",
+                            lineNumber: 150,
+                            columnNumber: 36
+                        }, this),
+                        recommendedKeywords && recommendedKeywords.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex flex-wrap gap-2 mt-2",
+                            children: recommendedKeywords.map((k)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "text-xs px-2 py-1 rounded bg-secondary/10 border border-secondary/20",
+                                    children: k
+                                }, k, false, {
+                                    fileName: "[project]/components/steps/name-availability.tsx",
+                                    lineNumber: 154,
+                                    columnNumber: 19
+                                }, this))
+                        }, void 0, false, {
+                            fileName: "[project]/components/steps/name-availability.tsx",
+                            lineNumber: 152,
+                            columnNumber: 15
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/steps/name-availability.tsx",
+                    lineNumber: 149,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/steps/name-availability.tsx",
+                lineNumber: 148,
+                columnNumber: 9
+            }, this),
+            canProceed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
                         className: "w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 118,
+                        lineNumber: 164,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1449,7 +1448,7 @@ function NameAvailabilityStep() {
                                 children: "Name Selected"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 120,
+                                lineNumber: 166,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1464,36 +1463,36 @@ function NameAvailabilityStep() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/steps/name-availability.tsx",
-                                        lineNumber: 122,
+                                        lineNumber: 168,
                                         columnNumber: 31
                                     }, this),
                                     ". Click Next to continue with applicant information."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 121,
+                                lineNumber: 167,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 119,
+                        lineNumber: 165,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 117,
+                lineNumber: 163,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/name-availability.tsx",
-        lineNumber: 64,
+        lineNumber: 94,
         columnNumber: 5
     }, this);
 }
-_s(NameAvailabilityStep, "Mwwo2gEzWjUa8HFenTYvaNUCp9w=", false, function() {
+_s(NameAvailabilityStep, "zv0oN00HtP5j5fTfBt/KV6Y5kjE=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"]
     ];
@@ -2140,7 +2139,7 @@ function ApplicantInfoStep() {
                                         label: "LGA",
                                         value: store.proprietorLga || "",
                                         onChange: (e)=>handleFieldChange("proprietorLga", e.target.value),
-                                        placeholder: "municipal"
+                                        placeholder: "lagos mainland"
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/applicant-info.tsx",
                                         lineNumber: 147,
@@ -3090,6 +3089,8 @@ function ReviewSummaryStep() {
     const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
     const [termsAccepted, setTermsAccepted] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [errors, setErrors] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState([]);
+    const amount = 29000;
+    const [isProcessingPayment, setIsProcessingPayment] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
     const validateSubmission = ()=>{
         const newErrors = [];
         if (!store.selectedBusinessName) newErrors.push("Business name not selected");
@@ -3107,6 +3108,63 @@ function ReviewSummaryStep() {
         if (!termsAccepted) newErrors.push("Terms and conditions must be accepted");
         setErrors(newErrors);
         return newErrors.length === 0;
+    };
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "ReviewSummaryStep.useEffect": ()=>{
+        // Navigation handled centrally by RegistrationForm; remove local auto-advance.
+        }
+    }["ReviewSummaryStep.useEffect"], [
+        store
+    ]);
+    const initiatePayment = async ()=>{
+        setErrors([]);
+        if (!validateSubmission()) return;
+        setIsProcessingPayment(true);
+        try {
+            const payload = {
+                amount: amount,
+                walletId: "master",
+                currency: "NGN",
+                metdata: {}
+            };
+            const resp = await fetch("https://cac-registration-backend.onrender.com/api/payments/initialize", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            if (!resp.ok) {
+                const text = await resp.text();
+                setErrors([
+                    `Payment initialization failed: ${resp.status} ${text}`
+                ]);
+                return;
+            }
+            const json = await resp.json();
+            const authUrl = json?.checkout?.data?.authorization_url;
+            store.paymentReference = json?.checkout?.data?.reference;
+            if (!authUrl) {
+                setErrors([
+                    "Payment initialization failed: missing authorization URL"
+                ]);
+                return;
+            }
+            // Mark that an external payment flow is in progress so we can resume after redirect
+            try {
+                sessionStorage.setItem("externalPaymentPending", "true");
+            } catch (e) {
+            // ignore
+            }
+            // Redirect user to the payment provider
+            window.location.href = authUrl;
+        } catch (err) {
+            setErrors([
+                "Unable to initialize payment. Please try again."
+            ]);
+        } finally{
+            setIsProcessingPayment(false);
+        }
     };
     const summaryData = [
         {
@@ -3205,7 +3263,7 @@ function ReviewSummaryStep() {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 81,
+                lineNumber: 138,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3215,7 +3273,7 @@ function ReviewSummaryStep() {
                     className: "w-5 h-5 text-primary"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 86,
+                    lineNumber: 143,
                     columnNumber: 15
                 }, void 0),
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3229,7 +3287,7 @@ function ReviewSummaryStep() {
                                         children: section.section
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                        lineNumber: 91,
+                                        lineNumber: 148,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3242,7 +3300,7 @@ function ReviewSummaryStep() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                                        lineNumber: 95,
+                                                        lineNumber: 152,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3250,24 +3308,24 @@ function ReviewSummaryStep() {
                                                         children: item.value || "Not provided"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                                        lineNumber: 96,
+                                                        lineNumber: 153,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, item.label, true, {
                                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                                lineNumber: 94,
+                                                lineNumber: 151,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                        lineNumber: 92,
+                                        lineNumber: 149,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, section.section, true, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 90,
+                                lineNumber: 147,
                                 columnNumber: 13
                             }, this)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3278,7 +3336,7 @@ function ReviewSummaryStep() {
                                     children: "Documents Uploaded"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 161,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3307,7 +3365,7 @@ function ReviewSummaryStep() {
                                                     className: `w-2 h-2 rounded-full ${doc.uploaded ? "bg-green-600" : "bg-destructive"}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                                    lineNumber: 113,
+                                                    lineNumber: 170,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3315,90 +3373,48 @@ function ReviewSummaryStep() {
                                                     children: doc.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                                    lineNumber: 114,
+                                                    lineNumber: 171,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, doc.name, true, {
                                             fileName: "[project]/components/steps/review-summary.tsx",
-                                            lineNumber: 112,
+                                            lineNumber: 169,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 105,
+                                    lineNumber: 162,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 103,
+                            lineNumber: 160,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 88,
+                    lineNumber: 145,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 83,
+                lineNumber: 140,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
-                title: "Fee Summary",
+                title: "Total Amount Due",
+                description: "Make use of bank transfer where possible and not card payment.",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "space-y-3",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between text-sm",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-muted-foreground",
-                                    children: "CAC Registration Fee"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 126,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "font-medium text-foreground",
-                                    children: "₦28,000.00"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 127,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
+                            className: "flex justify-between text-sm"
+                        }, void 0, false, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 125,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between text-sm",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-muted-foreground",
-                                    children: "VAT (7.5%)"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 134,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "font-medium text-foreground",
-                                    children: "₦900.00"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 135,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 133,
+                            lineNumber: 182,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3406,35 +3422,38 @@ function ReviewSummaryStep() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     className: "font-semibold text-foreground",
-                                    children: "Total Amount Due"
+                                    children: "CAC Registration Fee"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 138,
+                                    lineNumber: 195,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     className: "font-bold text-lg text-primary",
-                                    children: "₦29,000.00"
-                                }, void 0, false, {
+                                    children: [
+                                        "₦",
+                                        amount
+                                    ]
+                                }, void 0, true, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 139,
+                                    lineNumber: 196,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 137,
+                            lineNumber: 194,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 124,
+                    lineNumber: 181,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 123,
+                lineNumber: 180,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3458,7 +3477,7 @@ function ReviewSummaryStep() {
                                     className: "w-4 h-4 mt-1"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 155,
+                                    lineNumber: 213,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3466,23 +3485,23 @@ function ReviewSummaryStep() {
                                     children: term
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 161,
+                                    lineNumber: 219,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, index, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 154,
+                            lineNumber: 212,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 146,
+                    lineNumber: 204,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 145,
+                lineNumber: 203,
                 columnNumber: 7
             }, this),
             errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3495,7 +3514,7 @@ function ReviewSummaryStep() {
                                 className: "w-5 h-5 text-destructive"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 171,
+                                lineNumber: 229,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3503,13 +3522,13 @@ function ReviewSummaryStep() {
                                 children: "Please fix the following before submitting:"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 172,
+                                lineNumber: 230,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 170,
+                        lineNumber: 228,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -3519,18 +3538,18 @@ function ReviewSummaryStep() {
                                 children: error
                             }, index, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 176,
+                                lineNumber: 234,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 174,
+                        lineNumber: 232,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 169,
+                lineNumber: 227,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3540,29 +3559,59 @@ function ReviewSummaryStep() {
                     children: "After clicking Next, you'll be redirected to secure payment. Your application will be submitted to CAC after successful payment."
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 186,
+                    lineNumber: 244,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 185,
+                lineNumber: 243,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex gap-3",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        type: "button",
+                        onClick: ()=>store.previousStep(),
+                        className: "flex-1 px-4 py-2 rounded-lg border border-border bg-transparent text-foreground",
+                        children: "Previous"
+                    }, void 0, false, {
+                        fileName: "[project]/components/steps/review-summary.tsx",
+                        lineNumber: 251,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        type: "button",
+                        onClick: initiatePayment,
+                        disabled: isProcessingPayment,
+                        className: "flex-1 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium disabled:opacity-50",
+                        children: isProcessingPayment ? "Redirecting to payment..." : `Pay ₦${amount}`
+                    }, void 0, false, {
+                        fileName: "[project]/components/steps/review-summary.tsx",
+                        lineNumber: 259,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/steps/review-summary.tsx",
+                lineNumber: 250,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 192,
+                lineNumber: 269,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/review-summary.tsx",
-        lineNumber: 80,
+        lineNumber: 137,
         columnNumber: 5
     }, this);
 }
-_s(ReviewSummaryStep, "mLhhaSDwQObRLGjszUtmqtATlZ0=", false, function() {
+_s(ReviewSummaryStep, "Hg0lwbdczGxcgOHCr0LR52+uLDc=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"]
     ];
@@ -3586,10 +3635,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/form-section.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$credit$2d$card$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CreditCard$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/credit-card.js [app-client] (ecmascript) <export default as CreditCard>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-alert.js [app-client] (ecmascript) <export default as AlertCircle>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-client] (ecmascript) <export default as CheckCircle2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/triangle-alert.js [app-client] (ecmascript) <export default as AlertTriangle>");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -3600,290 +3645,53 @@ var _s = __turbopack_context__.k.signature();
 function PaymentGatewayStep() {
     _s();
     const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
-    const [cardNumber, setCardNumber] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
-    const [expiry, setExpiry] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
-    const [cvv, setCvv] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
-    const [cardholderName, setCardholderName] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
-    const [isProcessing, setIsProcessing] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
-    const [paymentError, setPaymentError] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(null);
-    const [paymentSuccess, setPaymentSuccess] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
-    const processPayment = async ()=>{
-        setIsProcessing(true);
-        setPaymentError(null);
+    const [checking, setChecking] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
+    const [checkMessage, setCheckMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
+    const [checkError, setCheckError] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState("");
+    const [submitted, setSubmitted] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState({
+        "PaymentGatewayStep.useState": ()=>!!store.applicationId
+    }["PaymentGatewayStep.useState"]);
+    const checkPaymentStatus = async ()=>{
+        setCheckError("");
+        setCheckMessage("");
+        if (!store.paymentReference) {
+            setCheckError("No payment reference available. Complete payment first.");
+            return;
+        }
+        setChecking(true);
         try {
-            // Validate inputs
-            if (!cardNumber || !expiry || !cvv || !cardholderName) {
-                setPaymentError({
-                    type: "validation",
-                    message: "Please fill in all payment details"
-                });
-                setIsProcessing(false);
-                return;
+            const resp = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_BASE_URL"]}payments/checkout/status/${store.paymentReference}`);
+            if (!resp.ok) throw new Error("Failed to fetch payment status");
+            const json = await resp.json();
+            const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase();
+            if (status) {
+                store.updateField("paymentStatus", status);
+                setCheckMessage(`Payment status: ${status}`);
+                if (status === "success") {
+                    // submit registration payload to backend, then mark submitted and advance
+                    try {
+                        const payload = JSON.parse(JSON.stringify(store));
+                        await store.submitRegistration(payload);
+                        setSubmitted(true);
+                        try {
+                            store.nextStep();
+                        } catch (e) {
+                        // ignore
+                        }
+                    } catch (err) {
+                        setCheckError(err?.message || "Submission after payment failed");
+                        store.updateField("paymentStatus", "failed");
+                    }
+                }
+            } else {
+                setCheckError("Payment status not available");
             }
-            // if (cardNumber.length !== 16) {
-            //   setPaymentError({
-            //     type: "validation",
-            //     message: "Card number must be 16 digits",
-            //   })
-            //   setIsProcessing(false)
-            //   return
-            // }
-            if (!/^\d{2}\/\d{2}$/.test(expiry)) {
-                setPaymentError({
-                    type: "validation",
-                    message: "Expiry date must be MM/YY"
-                });
-                setIsProcessing(false);
-                return;
-            }
-            if (cvv.length !== 3 && cvv.length !== 4) {
-                setPaymentError({
-                    type: "validation",
-                    message: "CVV must be 3 or 4 digits"
-                });
-                setIsProcessing(false);
-                return;
-            }
-            // Simulate network delay
-            await new Promise((resolve)=>setTimeout(resolve, 2000));
-            // Simulate random payment scenarios (80% success rate for demo)
-            const randomFail = Math.random();
-            if (randomFail < 0.05) {
-                // Network error (5%)
-                throw new Error("Network timeout. Please check your connection and try again.");
-            } else if (randomFail < 0.08) {
-                // Server error (3%)
-                throw new Error("Payment server temporarily unavailable. Please try again later.");
-            } else if (randomFail < 0.12) {
-                // Declined card (4%)
-                setPaymentError({
-                    type: "declined",
-                    message: "Your card was declined. Please check your card details and try again."
-                });
-                setIsProcessing(false);
-                return;
-            } else if (randomFail < 0.15) {
-                // Timeout (3%)
-                throw new Error("Payment processing timeout. Please try again.");
-            }
-            // Success (75%)
-            const reference = `CBI-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-            store.updateField("paymentStatus", "success");
-            store.updateField("paymentReference", reference);
-            store.updateField("applicationReference", reference);
-            try {
-                // submit registration to backend after successful payment
-                // pass a serialized copy of current store so backend receives latest user info
-                const payload = JSON.parse(JSON.stringify(store));
-                await store.submitRegistration(payload);
-                setPaymentSuccess(true);
-                // Auto move to next step after success
-                setTimeout(()=>{
-                    store.nextStep();
-                }, 2000);
-            } catch (err) {
-                setPaymentError({
-                    type: "server",
-                    message: err?.message || "Submission failed"
-                });
-                store.updateField("paymentStatus", "failed");
-            }
-        } catch (error) {
-            const errorMessage = error.message || "An unexpected error occurred";
-            // Determine error type
-            let errorType = "server";
-            if (errorMessage.includes("Network") || errorMessage.includes("connection")) {
-                errorType = "network";
-            } else if (errorMessage.includes("timeout")) {
-                errorType = "timeout";
-            }
-            setPaymentError({
-                type: errorType,
-                message: errorMessage
-            });
+        } catch (err) {
+            setCheckError(err?.message || "Unable to check payment status");
         } finally{
-            setIsProcessing(false);
+            setChecking(false);
         }
     };
-    const handleCardNumberChange = (value)=>{
-        const digits = value.replace(/\D/g, "").slice(0, 16);
-        // Add spaces every 4 digits for readability
-        const formatted = digits.replace(/(\d{4})(?=\d)/g, "$1 ");
-        setCardNumber(formatted);
-    };
-    const handleExpiryChange = (value)=>{
-        const digits = value.replace(/\D/g, "").slice(0, 4);
-        if (digits.length >= 2) {
-            setExpiry(`${digits.slice(0, 2)}/${digits.slice(2, 4)}`);
-        } else {
-            setExpiry(digits);
-        }
-    };
-    const handleCvvChange = (value)=>{
-        setCvv(value.replace(/\D/g, "").slice(0, 4));
-    };
-    if (paymentSuccess) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "space-y-6 animate-slide-up",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "text-center py-12",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 animate-pulse",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
-                            className: "w-12 h-12 text-green-600"
-                        }, void 0, false, {
-                            fileName: "[project]/components/steps/payment-gateway.tsx",
-                            lineNumber: 156,
-                            columnNumber: 13
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 155,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                        className: "text-3xl font-bold text-foreground mb-3",
-                        children: "Payment Successful!"
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 158,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-muted-foreground mb-2",
-                        children: "Your registration payment has been processed successfully."
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 159,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-sm text-muted-foreground mb-6",
-                        children: "A payment reference has been recorded and will be included in your confirmation email."
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 160,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-6 text-left max-w-md mx-auto",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "font-semibold text-green-900 dark:text-green-100 mb-3",
-                                children: "What Happens Next?"
-                            }, void 0, false, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 163,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                                className: "space-y-2 text-sm text-green-800 dark:text-green-200",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        className: "flex items-start gap-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-green-600 dark:text-green-400 font-bold",
-                                                children: "1."
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 166,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Your application will be submitted to the CAC"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 167,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 165,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        className: "flex items-start gap-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-green-600 dark:text-green-400 font-bold",
-                                                children: "2."
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 170,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "You'll receive a confirmation email"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 171,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 169,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        className: "flex items-start gap-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-green-600 dark:text-green-400 font-bold",
-                                                children: "3."
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 174,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                children: "Your application status will be updated regularly"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 175,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 173,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 164,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 162,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "text-xs text-muted-foreground mt-8",
-                        children: "Redirecting to confirmation page..."
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 180,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 154,
-                columnNumber: 9
-            }, this)
-        }, void 0, false, {
-            fileName: "[project]/components/steps/payment-gateway.tsx",
-            lineNumber: 153,
-            columnNumber: 7
-        }, this);
-    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
         children: [
@@ -3891,315 +3699,137 @@ function PaymentGatewayStep() {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 188,
+                lineNumber: 65,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
-                title: "Payment - CBI Monie",
-                description: "Secure payment processing powered by CBI Monie",
+                title: "Payment Status",
+                description: "Check your payment and submission status.",
                 icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$credit$2d$card$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CreditCard$3e$__["CreditCard"], {
                     className: "w-5 h-5 text-primary"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/payment-gateway.tsx",
-                    lineNumber: 193,
+                    lineNumber: 70,
                     columnNumber: 15
                 }, void 0),
-                isRequired: true,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "p-4 rounded-lg bg-secondary/50 border border-border mb-6",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-between items-center mb-3",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-muted-foreground",
-                                    children: "Amount to Pay:"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/payment-gateway.tsx",
-                                    lineNumber: 199,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-3xl font-bold text-primary",
-                                    children: "₦29,000"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/payment-gateway.tsx",
-                                    lineNumber: 200,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/steps/payment-gateway.tsx",
-                            lineNumber: 198,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
+                        className: "p-4 rounded-lg bg-secondary/50 border border-border mb-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-xs text-muted-foreground",
+                                children: "Payment status"
+                            }, void 0, false, {
+                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                lineNumber: 73,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm font-medium text-foreground",
+                                children: store.paymentStatus || "not started"
+                            }, void 0, false, {
+                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                lineNumber: 74,
+                                columnNumber: 11
+                            }, this),
+                            store.paymentReference && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-xs text-muted-foreground mt-1",
+                                children: [
+                                    "Reference: ",
+                                    store.paymentReference
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                lineNumber: 75,
+                                columnNumber: 38
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 197,
+                        lineNumber: 72,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "space-y-4",
+                        className: "p-4 rounded-lg bg-secondary/50 border border-border mb-4",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                        className: "block text-sm font-medium text-foreground mb-2",
-                                        children: "Cardholder Name *"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 210,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                        type: "text",
-                                        value: cardholderName,
-                                        onChange: (e)=>setCardholderName(e.target.value),
-                                        placeholder: "Enter name as shown on card",
-                                        className: "w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50",
-                                        disabled: isProcessing
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 211,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-xs text-muted-foreground",
+                                children: "Document submitted"
+                            }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 209,
+                                lineNumber: 79,
                                 columnNumber: 11
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                        className: "block text-sm font-medium text-foreground mb-2",
-                                        children: "Card Number *"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 222,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                        type: "text",
-                                        value: cardNumber,
-                                        onChange: (e)=>handleCardNumberChange(e.target.value),
-                                        placeholder: "1234 5678 9012 3456",
-                                        maxLength: 19,
-                                        className: "w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono",
-                                        disabled: isProcessing
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 223,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-xs text-muted-foreground mt-1",
-                                        children: "Demo: Use any 16 digits (e.g., 4532015112830366)"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 232,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm font-medium text-foreground",
+                                children: submitted ? "Yes" : "No"
+                            }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 221,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "grid grid-cols-2 gap-4",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "block text-sm font-medium text-foreground mb-2",
-                                                children: "Expiry Date *"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 237,
-                                                columnNumber: 15
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                type: "text",
-                                                value: expiry,
-                                                onChange: (e)=>handleExpiryChange(e.target.value),
-                                                placeholder: "MM/YY",
-                                                className: "w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono",
-                                                disabled: isProcessing
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 238,
-                                                columnNumber: 15
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 236,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "block text-sm font-medium text-foreground mb-2",
-                                                children: "CVV *"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 248,
-                                                columnNumber: 15
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                type: "text",
-                                                value: cvv,
-                                                onChange: (e)=>handleCvvChange(e.target.value),
-                                                placeholder: "123",
-                                                maxLength: 4,
-                                                className: "w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono",
-                                                disabled: isProcessing
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                                lineNumber: 249,
-                                                columnNumber: 15
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                                        lineNumber: 247,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 235,
+                                lineNumber: 80,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 208,
+                        lineNumber: 78,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: checkPaymentStatus,
+                                disabled: checking,
+                                className: "px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50",
+                                children: checking ? "Checking..." : "Check Payment Status"
+                            }, void 0, false, {
+                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                lineNumber: 84,
+                                columnNumber: 11
+                            }, this),
+                            checkMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm text-foreground",
+                                children: checkMessage
+                            }, void 0, false, {
+                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                lineNumber: 91,
+                                columnNumber: 28
+                            }, this),
+                            checkError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-sm text-destructive",
+                                children: checkError
+                            }, void 0, false, {
+                                fileName: "[project]/components/steps/payment-gateway.tsx",
+                                lineNumber: 92,
+                                columnNumber: 26
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/steps/payment-gateway.tsx",
+                        lineNumber: 83,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 190,
-                columnNumber: 7
-            }, this),
-            paymentError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: `p-4 rounded-lg border flex items-start gap-3 ${paymentError.type === "declined" ? "bg-yellow-50 dark:bg-yellow-950 border-yellow-200 dark:border-yellow-800" : "bg-destructive/10 border-destructive/20"}`,
-                children: [
-                    paymentError.type === "declined" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__["AlertTriangle"], {
-                        className: "w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5"
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 273,
-                        columnNumber: 13
-                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
-                        className: "w-5 h-5 text-destructive flex-shrink-0 mt-0.5"
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 275,
-                        columnNumber: 13
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: `font-medium ${paymentError.type === "declined" ? "text-yellow-900 dark:text-yellow-100" : "text-destructive"}`,
-                                children: paymentError.type === "network" ? "Network Error" : paymentError.type === "server" ? "Server Error" : paymentError.type === "timeout" ? "Request Timeout" : "Payment Declined"
-                            }, void 0, false, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 278,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: `text-sm mt-1 ${paymentError.type === "declined" ? "text-yellow-800 dark:text-yellow-200" : "text-destructive/80"}`,
-                                children: paymentError.message
-                            }, void 0, false, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 291,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-xs mt-2 opacity-75",
-                                children: paymentError.type === "network" ? "Please check your internet connection and try again." : paymentError.type === "server" ? "The payment server is experiencing issues. Please try again in a few moments." : paymentError.type === "timeout" ? "The request took too long. Please try again." : "Verify your card details and try a different card."
-                            }, void 0, false, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 298,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 277,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 265,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "p-4 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    className: "text-xs text-blue-900 dark:text-blue-100",
-                    children: "🔒 Your payment information is encrypted and secure. This is a demo gateway - no actual charges will be made."
-                }, void 0, false, {
-                    fileName: "[project]/components/steps/payment-gateway.tsx",
-                    lineNumber: 313,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 312,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                onClick: processPayment,
-                disabled: isProcessing || !cardNumber || !expiry || !cvv || !cardholderName,
-                className: "w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
-                children: isProcessing ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
-                            className: "w-5 h-5 animate-spin"
-                        }, void 0, false, {
-                            fileName: "[project]/components/steps/payment-gateway.tsx",
-                            lineNumber: 326,
-                            columnNumber: 13
-                        }, this),
-                        "Processing Payment..."
-                    ]
-                }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$credit$2d$card$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CreditCard$3e$__["CreditCard"], {
-                            className: "w-5 h-5"
-                        }, void 0, false, {
-                            fileName: "[project]/components/steps/payment-gateway.tsx",
-                            lineNumber: 331,
-                            columnNumber: 13
-                        }, this),
-                        "Pay ₦12,900"
-                    ]
-                }, void 0, true)
-            }, void 0, false, {
-                fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 319,
+                lineNumber: 67,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 337,
+                lineNumber: 96,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/payment-gateway.tsx",
-        lineNumber: 187,
+        lineNumber: 64,
         columnNumber: 5
     }, this);
 }
-_s(PaymentGatewayStep, "/ghIVTxXwZjghAuhwvCkgLd8MuM=", false, function() {
+_s(PaymentGatewayStep, "T5ewpBAISgAlyEtgr5YLO7bSZn8=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"]
     ];
@@ -4813,6 +4443,22 @@ function RegistrationForm() {
     const { currentStep, nextStep, previousStep } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
     const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
     const [isLoading, setIsLoading] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState(false);
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useEffect({
+        "RegistrationForm.useEffect": ()=>{
+            // If an external payment flow was in progress, centralize the resume logic here
+            try {
+                const pending = sessionStorage.getItem("externalPaymentPending");
+                if (pending === "true") {
+                    sessionStorage.removeItem("externalPaymentPending");
+                    nextStep();
+                }
+            } catch (e) {
+            // ignore
+            }
+        }
+    }["RegistrationForm.useEffect"], [
+        nextStep
+    ]);
     const isStepValid = ()=>{
         switch(currentStep){
             case 1:
@@ -4857,43 +4503,43 @@ function RegistrationForm() {
             case 1:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$steps$2f$name$2d$availability$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["NameAvailabilityStep"], {}, void 0, false, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 99,
+                    lineNumber: 112,
                     columnNumber: 16
                 }, this);
             case 2:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$steps$2f$applicant$2d$info$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ApplicantInfoStep"], {}, void 0, false, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 101,
+                    lineNumber: 114,
                     columnNumber: 16
                 }, this);
             case 3:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$steps$2f$business$2d$details$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BusinessDetailsStep"], {}, void 0, false, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 103,
+                    lineNumber: 116,
                     columnNumber: 16
                 }, this);
             case 4:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$steps$2f$document$2d$upload$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DocumentUploadStep"], {}, void 0, false, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 105,
+                    lineNumber: 118,
                     columnNumber: 16
                 }, this);
             case 5:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$steps$2f$review$2d$summary$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ReviewSummaryStep"], {}, void 0, false, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 107,
+                    lineNumber: 120,
                     columnNumber: 16
                 }, this);
             case 6:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$steps$2f$payment$2d$gateway$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PaymentGatewayStep"], {}, void 0, false, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 109,
+                    lineNumber: 122,
                     columnNumber: 16
                 }, this);
             case 7:
                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$steps$2f$confirmation$2d$page$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ConfirmationPageStep"], {}, void 0, false, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 111,
+                    lineNumber: 124,
                     columnNumber: 16
                 }, this);
             default:
@@ -4907,7 +4553,7 @@ function RegistrationForm() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$header$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Header"], {}, void 0, false, {
                 fileName: "[project]/components/registration-form.tsx",
-                lineNumber: 129,
+                lineNumber: 142,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -4921,7 +4567,7 @@ function RegistrationForm() {
                             stepNames: STEPS
                         }, void 0, false, {
                             fileName: "[project]/components/registration-form.tsx",
-                            lineNumber: 134,
+                            lineNumber: 147,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4929,7 +4575,7 @@ function RegistrationForm() {
                             children: renderStep()
                         }, void 0, false, {
                             fileName: "[project]/components/registration-form.tsx",
-                            lineNumber: 137,
+                            lineNumber: 150,
                             columnNumber: 11
                         }, this),
                         !isLastStep && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4944,14 +4590,14 @@ function RegistrationForm() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 147,
+                                            lineNumber: 160,
                                             columnNumber: 17
                                         }, this),
                                         "Previous"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/registration-form.tsx",
-                                    lineNumber: 142,
+                                    lineNumber: 155,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4964,52 +4610,52 @@ function RegistrationForm() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 157,
+                                            lineNumber: 170,
                                             columnNumber: 32
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/registration-form.tsx",
-                                    lineNumber: 151,
+                                    lineNumber: 164,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/registration-form.tsx",
-                            lineNumber: 141,
+                            lineNumber: 154,
                             columnNumber: 13
                         }, this),
                         isLastStep && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mt-12 flex justify-center"
                         }, void 0, false, {
                             fileName: "[project]/components/registration-form.tsx",
-                            lineNumber: 163,
+                            lineNumber: 176,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/registration-form.tsx",
-                    lineNumber: 132,
+                    lineNumber: 145,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/registration-form.tsx",
-                lineNumber: 131,
+                lineNumber: 144,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$footer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Footer"], {}, void 0, false, {
                 fileName: "[project]/components/registration-form.tsx",
-                lineNumber: 170,
+                lineNumber: 183,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/registration-form.tsx",
-        lineNumber: 128,
+        lineNumber: 141,
         columnNumber: 5
     }, this);
 }
-_s(RegistrationForm, "6ehu/2D0+wYfHoSt8IZLpFt2WzI=", false, function() {
+_s(RegistrationForm, "8JzWBD90Hr0xEZNGlX/h30UqC68=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"],
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"]

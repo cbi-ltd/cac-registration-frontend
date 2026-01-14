@@ -20,7 +20,7 @@ export default function HomePage() {
                   Business Registration Portal
                 </h1>
                 <p className="text-balance text-xl text-muted-foreground max-w-2xl">
-                  Register your business with CAC to qualify for PoS terminal deployment. Fast, secure, and compliant
+                  Register your business name with CAC to qualify for PoS terminal deployment. Fast, secure, and compliant
                   registration for Nigerian merchants and agents.
                 </p>
               </div>
@@ -66,7 +66,7 @@ export default function HomePage() {
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground">How It Works</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Complete your CAC business registration in 7 simple steps
+                Complete your CAC business name registration in 7 simple steps
               </p>
             </div>
 
@@ -156,11 +156,11 @@ export default function HomePage() {
                       title: "Bank-Level Security",
                       description: "SSL/TLS encryption and GDPR/NDPR compliance for all data",
                     },
-                    {
-                      icon: TrendingUp,
-                      title: "95% Success Rate",
-                      description: "High API integration success rate with CAC through Oasis VAS",
-                    },
+                    // {
+                    //   icon: TrendingUp,
+                    //   title: "95% Success Rate",
+                    //   description: "High API integration success rate with CAC through Oasis VAS",
+                    // },
                     {
                       icon: CheckCircle2,
                       title: "Complete Guidance",
@@ -203,7 +203,7 @@ export default function HomePage() {
         <section className="px-4 sm:px-6 lg:px-8 py-20 sm:py-32 bg-primary">
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <h2 className="text-3xl sm:text-4xl font-bold text-primary-foreground text-balance">
-              Ready to Register Your Business?
+              Ready to Register Your Business New?
             </h2>
             <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
               Join hundreds of merchants and agents who have successfully registered with CAC through our portal.
@@ -239,7 +239,7 @@ export default function HomePage() {
                 },
                 {
                   q: "What are the registration fees?",
-                  a: "CAC Registration Fee: ₦10,000 | Service Charge: ₦2,000 | VAT: As applicable. Total varies based on your location.",
+                  a: "CAC Registration Fee: ₦29,000 | VAT: As applicable. Total varies based on your location.",
                 },
                 {
                   q: "Can I edit my information after submission?",

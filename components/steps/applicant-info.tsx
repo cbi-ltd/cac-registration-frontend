@@ -148,7 +148,7 @@ export function ApplicantInfoStep() {
                 label="LGA"
                 value={(store as any).proprietorLga || ""}
                 onChange={(e) => handleFieldChange("proprietorLga", e.target.value)}
-                placeholder="municipal"
+                placeholder="lagos mainland"
               />
             </div>
 

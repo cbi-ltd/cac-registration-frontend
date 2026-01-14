@@ -13,6 +13,14 @@ export function NameAvailabilityStep() {
   const [error, setError] = React.useState("")
   const [proposedName, setProposedName] = React.useState("")
   const [lineOfBusiness, setLineOfBusiness] = React.useState("")
+  const [recommendedMessage, setRecommendedMessage] = React.useState("")
+  const [recommendedKeywords, setRecommendedKeywords] = React.useState<string[]>([])
+
+  // Feature toggle:
+  // For production uncomment the next line to REQUIRE the API responseMessage
+  // "Proceed to filing" before enabling the Next button.
+  // const REQUIRE_RESPONSE_FOR_NEXT = true
+  const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
 
   const handleProposedNameChange = (value: string) => setProposedName(value)
   const handleLineOfBusinessChange = (value: string) => setLineOfBusiness(value)
@@ -41,13 +49,29 @@ export function NameAvailabilityStep() {
 
       const json = await resp.json()
 
-      const message = json?.data?.message ?? ""
+      // Attempt to locate recommendedActions in the nested response structure.
+      const recActions =
+        json?.data?.data?.data?.recommendedActions ??
+        json?.data?.data?.recommendedActions ??
+        json?.data?.recommendedActions ??
+        null
 
-      setResponseMessage(message)
+      if (recActions && Array.isArray(recActions) && recActions.length > 0) {
+        const msg = recActions[0].message ?? ""
+        setRecommendedMessage(msg)
+        setRecommendedKeywords(recActions[0].keywords ?? [])
+      } else {
+        setRecommendedMessage("")
+        setRecommendedKeywords([])
+      }
 
-      // If backend indicates the name is unique (but suggests checking similarity),
-      // treat the name as available and auto-select it so the user can proceed.
-      if (message === "Name is unique but check the similarity details") {
+      // Optionally surface a short status message from the API (if present)
+      const statusMessage = json?.data?.data?.message ?? json?.data?.message ?? ""
+      const finalResponse = statusMessage || (recActions && recActions[0]?.message) || "Proceed to filing"
+      setResponseMessage(finalResponse)
+
+      // Auto-select name when backend indicates proceed (or when there were no recommendations)
+      if (!recActions || finalResponse === "Proceed to filing") {
         store.updateField("selectedBusinessName", proposedName.trim())
       }
     } catch (err) {
@@ -57,14 +81,20 @@ export function NameAvailabilityStep() {
     }
   }
 
-  const handleSelectName = (name: string) => store.updateField("selectedBusinessName", name)
-  const canProceed = store.selectedBusinessName !== ""
+  // const handleSelectName = (name: string) => store.updateField("selectedBusinessName", name)
+  // canProceed logic:
+  // - In development we allow proceeding as soon as the name check returns (responseMessage is set)
+  // - For production you can enable `REQUIRE_RESPONSE_FOR_NEXT` to require the API to return
+  //   the explicit responseMessage "Proceed to filing" before enabling Next.
+  const canProceed = REQUIRE_RESPONSE_FOR_NEXT
+    ? responseMessage === "Proceed to filing"
+    : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing"
 
   return (
     <div className="space-y-6 animate-slide-up">
       <FormSection
         title="Business Name Availability Check"
-        description="Enter up to 2 preferred business names in order of preference. We'll check their availability against CAC records."
+        description="Enter up to 1 preferred business names. We'll check their availability against CAC records."
         isRequired
       >
         <div className="space-y-3">
@@ -108,12 +138,28 @@ export function NameAvailabilityStep() {
       {responseMessage && (
         <FormSection title="Availability Results" description="">
           <div className="p-4 rounded-lg bg-muted/5 border border-muted/20">
-            <p className="text-sm">{responseMessage === "Name is unique but check the similarity details" ? "Name is unique" : responseMessage}</p>
+            {/* <p className="text-sm">{responseMessage === "Name is unique but check the similarity details" ? "Name is unique" : responseMessage}</p> */}
+            <p className="text-sm">{responseMessage === "Proceed to filing" ? "Proceed to filing" : responseMessage}</p>
           </div>
         </FormSection>
       )}
 
-      {responseMessage === "Name is unique but check the similarity details" && canProceed && (
+      {(recommendedMessage || (recommendedKeywords && recommendedKeywords.length > 0)) && (
+        <FormSection title="Recommendations" description="">
+          <div className="p-4 rounded-lg bg-muted/5 border border-muted/20 space-y-2">
+            {recommendedMessage && <p className="text-sm">{recommendedMessage}</p>}
+            {recommendedKeywords && recommendedKeywords.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {recommendedKeywords.map((k) => (
+                  <span key={k} className="text-xs px-2 py-1 rounded bg-secondary/10 border border-secondary/20">{k}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </FormSection>
+      )}
+
+      {canProceed && (
         <div className="p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3">
           <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
           <div>

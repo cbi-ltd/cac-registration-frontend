@@ -527,7 +527,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/zap.js [app-ssr] (ecmascript) <export default as Zap>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield.js [app-ssr] (ecmascript) <export default as Shield>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/clock.js [app-ssr] (ecmascript) <export default as Clock>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trending-up.js [app-ssr] (ecmascript) <export default as TrendingUp>");
 "use client";
 ;
 ;
@@ -566,7 +565,7 @@ function HomePage() {
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-balance text-xl text-muted-foreground max-w-2xl",
-                                                children: "Register your business with CAC to qualify for PoS terminal deployment. Fast, secure, and compliant registration for Nigerian merchants and agents."
+                                                children: "Register your business name with CAC to qualify for PoS terminal deployment. Fast, secure, and compliant registration for Nigerian merchants and agents."
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
                                                 lineNumber: 22,
@@ -721,7 +720,7 @@ function HomePage() {
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-lg text-muted-foreground max-w-2xl mx-auto",
-                                            children: "Complete your CAC business registration in 7 simple steps"
+                                            children: "Complete your CAC business name registration in 7 simple steps"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
                                             lineNumber: 68,
@@ -906,11 +905,11 @@ function HomePage() {
                                                         title: "Bank-Level Security",
                                                         description: "SSL/TLS encryption and GDPR/NDPR compliance for all data"
                                                     },
-                                                    {
-                                                        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"],
-                                                        title: "95% Success Rate",
-                                                        description: "High API integration success rate with CAC through Oasis VAS"
-                                                    },
+                                                    // {
+                                                    //   icon: TrendingUp,
+                                                    //   title: "95% Success Rate",
+                                                    //   description: "High API integration success rate with CAC through Oasis VAS",
+                                                    // },
                                                     {
                                                         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"],
                                                         title: "Complete Guidance",
@@ -1055,7 +1054,7 @@ function HomePage() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                     className: "text-3xl sm:text-4xl font-bold text-primary-foreground text-balance",
-                                    children: "Ready to Register Your Business?"
+                                    children: "Ready to Register Your Business New?"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
                                     lineNumber: 205,
@@ -1133,7 +1132,7 @@ function HomePage() {
                                         },
                                         {
                                             q: "What are the registration fees?",
-                                            a: "CAC Registration Fee: ₦10,000 | Service Charge: ₦2,000 | VAT: As applicable. Total varies based on your location."
+                                            a: "CAC Registration Fee: ₦29,000 | VAT: As applicable. Total varies based on your location."
                                         },
                                         {
                                             q: "Can I edit my information after submission?",
