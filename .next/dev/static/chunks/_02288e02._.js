@@ -48,7 +48,7 @@ const initialState = {
     businessEmail: "",
     commencementDate: "",
     proofOfAddress: null,
-    consentLetter: null,
+    // consentLetter: null,
     paymentStatus: "pending",
     paymentReference: "",
     paymentError: "",
@@ -133,12 +133,12 @@ const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f
         submitRegistration: async (overridePayload)=>{
             let result = null;
             try {
-                // If an override payload is provided, prefer it. Otherwise read persisted store from localStorage
+                // If an override payload is provided, prefer it. Otherwise read persisted store from sessionStorage
                 let storeObj = overridePayload ? {
                     ...overridePayload
                 } : {};
                 if (!overridePayload) {
-                    const raw = localStorage.getItem("cbi-registration");
+                    const raw = sessionStorage.getItem("cbi-registration");
                     let parsed = {};
                     if (raw) {
                         try {

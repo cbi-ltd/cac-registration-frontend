@@ -9,6 +9,8 @@ export function ReviewSummaryStep() {
   const store = useRegistrationStore()
   const [termsAccepted, setTermsAccepted] = React.useState(false)
   const [errors, setErrors] = React.useState<string[]>([])
+  const amount: number = 29000
+  const [isProcessingPayment, setIsProcessingPayment] = React.useState(false)
 
   const validateSubmission = (): boolean => {
     const newErrors: string[] = []
@@ -31,6 +33,61 @@ export function ReviewSummaryStep() {
 
     setErrors(newErrors)
     return newErrors.length === 0
+  }
+
+  React.useEffect(() => {
+    // Navigation handled centrally by RegistrationForm; remove local auto-advance.
+  }, [store])
+
+  const initiatePayment = async () => {
+    setErrors([])
+
+    if (!validateSubmission()) return
+
+    setIsProcessingPayment(true)
+    try {
+      const payload = {
+        amount: amount,
+        walletId: "master",
+        currency: "NGN",
+        metdata: {},
+      }
+
+      const resp = await fetch("https://cac-registration-backend.onrender.com/api/payments/initialize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+
+      if (!resp.ok) {
+        const text = await resp.text()
+        setErrors([`Payment initialization failed: ${resp.status} ${text}`])
+        return
+      }
+
+      const json = await resp.json()
+      const authUrl = json?.checkout?.data?.authorization_url
+      store.paymentReference = json?.checkout?.data?.reference
+
+      if (!authUrl) {
+        setErrors(["Payment initialization failed: missing authorization URL"]) 
+        return
+      }
+
+      // Mark that an external payment flow is in progress so we can resume after redirect
+      try {
+        sessionStorage.setItem("externalPaymentPending", "true")
+      } catch (e) {
+        // ignore
+      }
+
+      // Redirect user to the payment provider
+      window.location.href = authUrl
+    } catch (err: any) {
+      setErrors(["Unable to initialize payment. Please try again."])
+    } finally {
+      setIsProcessingPayment(false)
+    }
   }
 
   const summaryData = [
@@ -120,23 +177,24 @@ export function ReviewSummaryStep() {
       </FormSection>
 
       {/* Fee Summary */}
-      <FormSection title="Fee Summary">
+      <FormSection title="Total Amount Due" description="Make use of bank transfer where possible and not card payment.">
         <div className="space-y-3">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">CAC Registration Fee</span>
-            <span className="font-medium text-foreground">₦28,000.00</span>
+            {/* <span className="text-muted-foreground">CAC Registration Fee</span> */}
+            {/* <span className="font-medium text-foreground">₦28,000.00</span> */}
           </div>
           {/* <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Service Charge</span>
             <span className="font-medium text-foreground">₦2,000.00</span>
           </div> */}
-          <div className="flex justify-between text-sm">
+          {/* <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">VAT (7.5%)</span>
             <span className="font-medium text-foreground">₦900.00</span>
-          </div>
+          </div> */}
           <div className="border-t border-border pt-3 flex justify-between">
-            <span className="font-semibold text-foreground">Total Amount Due</span>
-            <span className="font-bold text-lg text-primary">₦29,000.00</span>
+            <span className="font-semibold text-foreground">CAC Registration Fee</span>
+            <span className="font-bold text-lg text-primary">₦{amount}</span>
+            {/* <span className="font-bold text-lg text-primary">₦29,000.00</span> */}
           </div>
         </div>
       </FormSection>
@@ -187,6 +245,25 @@ export function ReviewSummaryStep() {
           After clicking Next, you'll be redirected to secure payment. Your application will be submitted to CAC after
           successful payment.
         </p>
+      </div>
+
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={() => store.previousStep()}
+          className="flex-1 px-4 py-2 rounded-lg border border-border bg-transparent text-foreground"
+        >
+          Previous
+        </button>
+
+        <button
+          type="button"
+          onClick={initiatePayment}
+          disabled={isProcessingPayment}
+          className="flex-1 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium disabled:opacity-50"
+        >
+          {isProcessingPayment ? "Redirecting to payment..." : `Pay ₦${amount}`}
+        </button>
       </div>
 
       <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />

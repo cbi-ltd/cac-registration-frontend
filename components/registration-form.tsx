@@ -21,6 +21,19 @@ export function RegistrationForm() {
   const store = useRegistrationStore()
   const [isLoading, setIsLoading] = React.useState(false)
 
+  React.useEffect(() => {
+    // If an external payment flow was in progress, centralize the resume logic here
+    try {
+      const pending = sessionStorage.getItem("externalPaymentPending")
+      if (pending === "true") {
+        sessionStorage.removeItem("externalPaymentPending")
+        nextStep()
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [nextStep])
+
   const isStepValid = (): boolean => {
     switch (currentStep) {
       case 1: // Business Name

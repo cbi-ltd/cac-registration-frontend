@@ -51,10 +51,10 @@ export interface RegistrationData {
 
   // Step 5: Documents
   proofOfAddress: File | null
-  consentLetter: File | null
+  // consentLetter: File | null
 
   // Step 6: Payment
-  paymentStatus: "pending" | "processing" | "success" | "failed"
+  paymentStatus: "pending"|"initiating" | "success" | "failed"
   paymentReference: string
   paymentError: string
 
@@ -102,7 +102,7 @@ const initialState: RegistrationData = {
   businessEmail: "",
   commencementDate: "",
   proofOfAddress: null,
-  consentLetter: null,
+  // consentLetter: null,
   paymentStatus: "pending",
   paymentReference: "",
   paymentError: "",
@@ -205,11 +205,11 @@ export const useRegistrationStore = create<
       submitRegistration: async (overridePayload?: Partial<RegistrationData>) => {
         let result: any = null
         try {
-          // If an override payload is provided, prefer it. Otherwise read persisted store from localStorage
+          // If an override payload is provided, prefer it. Otherwise read persisted store from sessionStorage
           let storeObj: any = overridePayload ? { ...overridePayload } : {}
 
           if (!overridePayload) {
-            const raw = localStorage.getItem("cbi-registration")
+            const raw = sessionStorage.getItem("cbi-registration")
             let parsed: any = {}
             if (raw) {
               try {
