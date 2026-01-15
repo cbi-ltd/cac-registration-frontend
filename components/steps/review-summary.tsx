@@ -9,7 +9,8 @@ export function ReviewSummaryStep() {
   const store = useRegistrationStore()
   const [termsAccepted, setTermsAccepted] = React.useState(false)
   const [errors, setErrors] = React.useState<string[]>([])
-  const amount: number = 29000
+  const amount: number = 500
+  // const amount: number = 29000
   const [isProcessingPayment, setIsProcessingPayment] = React.useState(false)
 
   const validateSubmission = (): boolean => {
@@ -59,9 +60,10 @@ export function ReviewSummaryStep() {
         body: JSON.stringify(payload),
       })
 
-      if (!resp.ok) {
-        const text = await resp.text()
-        setErrors([`Payment initialization failed: ${resp.status} ${text}`])
+      if (!resp.ok ) {
+        // const text = await resp.text()
+        setErrors([`Payment initialization failed: ${resp.status}`])
+        // setErrors([`Payment initialization failed: ${resp.status} ${text}`])
         return
       }
 
@@ -82,10 +84,11 @@ export function ReviewSummaryStep() {
       }
 
       // Redirect user to the payment provider
-      window.location.href = authUrl
+      // window.location.href = authUrl
+      window.open(authUrl, "_blank")
+      // Note: Page will unload, so finally block won't execute as expected
     } catch (err: any) {
       setErrors(["Unable to initialize payment. Please try again."])
-    } finally {
       setIsProcessingPayment(false)
     }
   }

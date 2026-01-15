@@ -46,7 +46,9 @@ export function NameAvailabilityStep() {
         setError("Name check failed. Please try again.")
         return
       }
-
+      store.updateField("selectedBusinessName", proposedName.trim())
+      console.log("selectedBusinessName:", store.selectedBusinessName)     
+      
       const json = await resp.json()
 
       // Attempt to locate recommendedActions in the nested response structure.
