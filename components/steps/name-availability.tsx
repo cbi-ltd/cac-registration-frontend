@@ -22,7 +22,7 @@ export function NameAvailabilityStep() {
   // const REQUIRE_RESPONSE_FOR_NEXT = true
   const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
 
-  const handleProposedNameChange = (value: string) => setProposedName(value)
+  const handleProposedNameChange = (value: string) => setProposedName(value.toLocaleUpperCase())
   const handleLineOfBusinessChange = (value: string) => setLineOfBusiness(value)
 
   const checkAvailability = async () => {
@@ -47,7 +47,6 @@ export function NameAvailabilityStep() {
         return
       }
       store.updateField("selectedBusinessName", proposedName.trim())
-      console.log("selectedBusinessName:", store.selectedBusinessName)     
       
       const json = await resp.json()
 

@@ -69,36 +69,44 @@ function buildSubmissionPayload(storeObj) {
         const parts = addr.trim().split(/\s+/);
         return parts.length && /^\d+/.test(parts[0]) ? parts[0] : "";
     };
-    const body = {
-        lineOfBusiness: storeObj.businessActivity ?? storeObj.natureOfBusiness ?? "",
-        proprietorCity: storeObj.proprietorCity ?? storeObj.proprietorCity ?? storeObj.residentialCity ?? "",
-        companyCity: storeObj.companyCity ?? storeObj.companyCity ?? "",
-        proprietorPhonenumber: storeObj.phone ?? storeObj.proprietorPhonenumber ?? "",
-        businessCommencementDate: storeObj.commencementDate ?? storeObj.commencementDate ?? "",
-        companyState: storeObj.companyState ?? "",
-        proprietorNationality: storeObj.nationality ?? storeObj.proprietorNationality ?? "",
-        proprietorState: storeObj.proprietorState ?? "",
-        proprietorDob: storeObj.dateOfBirth ?? storeObj.proprietorDob ?? "",
-        proprietorFirstname: storeObj.firstName ?? "",
-        proprietorOthername: storeObj.middleName ?? storeObj.proprietorOthername ?? "",
-        proprietorSurname: storeObj.lastName ?? "",
-        proposedOption1: storeObj.selectedBusinessName ?? storeObj.preferredNames?.[0] ?? "",
-        proprietorGender: (storeObj.gender ?? "").toString().toUpperCase() ?? "",
-        proprietorStreetNumber: storeObj.proprietorStreetNumber ?? extractStreetNumber(storeObj.residentialAddress ?? ""),
-        proprietorServiceAddress: storeObj.residentialAddress ?? "",
-        companyEmail: storeObj.businessEmail ?? storeObj.companyEmail ?? "",
-        companyStreetNumber: storeObj.companyStreetNumber ?? extractStreetNumber(storeObj.businessAddress ?? ""),
-        proprietorEmail: storeObj.email ?? storeObj.proprietorEmail ?? "",
-        companyAddress: storeObj.businessAddress ?? "",
-        proprietorPostcode: storeObj.proprietorPostcode ?? "",
-        proprietorLga: storeObj.proprietorLga ?? "",
-        // transactionRef will be populated from paymentReference/applicationReference but should not be exposed in UI
-        transactionRef: storeObj.paymentReference ?? storeObj.applicationReference ?? "VAS34500236",
-        supportingDoc: storeObj.supportingDocBase64 ?? storeObj.supportingDoc ?? null,
-        signature: storeObj.signatureBase64 ?? storeObj.signature ?? null,
-        meansOfId: storeObj.meansOfIdBase64 ?? storeObj.meansOfId ?? null,
-        passport: storeObj.passportBase64 ?? storeObj.passport ?? null
-    };
+    const body = new FormData();
+    // Text fields
+    body.append("lineOfBusiness", storeObj.businessActivity ?? storeObj.natureOfBusiness ?? "");
+    body.append("proprietorCity", storeObj.proprietorCity ?? storeObj.residentialCity ?? "");
+    body.append("companyCity", storeObj.companyCity ?? "");
+    body.append("proprietorPhonenumber", storeObj.phone ?? storeObj.proprietorPhonenumber ?? "");
+    body.append("businessCommencementDate", storeObj.commencementDate ?? "");
+    body.append("companyState", storeObj.companyState ?? "");
+    body.append("proprietorNationality", storeObj.nationality ?? storeObj.proprietorNationality ?? "");
+    body.append("proprietorState", storeObj.proprietorState ?? "");
+    body.append("proprietorDob", storeObj.dateOfBirth ?? storeObj.proprietorDob ?? "");
+    body.append("proprietorFirstname", storeObj.firstName ?? "");
+    body.append("proprietorOthername", storeObj.middleName ?? storeObj.proprietorOthername ?? "");
+    body.append("proprietorSurname", storeObj.lastName ?? "");
+    body.append("proposedOption1", storeObj.selectedBusinessName ?? storeObj.preferredNames?.[0] ?? "");
+    body.append("proprietorGender", (storeObj.gender ?? "").toUpperCase());
+    body.append("proprietorStreetNumber", storeObj.proprietorStreetNumber ?? extractStreetNumber(storeObj.residentialAddress ?? ""));
+    body.append("proprietorServiceAddress", storeObj.residentialAddress ?? "");
+    body.append("companyEmail", storeObj.businessEmail ?? storeObj.companyEmail ?? "");
+    body.append("companyStreetNumber", storeObj.companyStreetNumber ?? extractStreetNumber(storeObj.businessAddress ?? ""));
+    body.append("proprietorEmail", storeObj.email ?? storeObj.proprietorEmail ?? "");
+    body.append("companyAddress", storeObj.businessAddress ?? "");
+    body.append("proprietorPostcode", storeObj.proprietorPostcode ?? "");
+    body.append("proprietorLga", storeObj.proprietorLga ?? "");
+    body.append("transactionRef", storeObj.paymentReference ?? storeObj.applicationReference ?? "VAS34500236");
+    // File fields
+    if (storeObj.supportingDocBase64 ?? storeObj.supportingDoc) {
+        body.append("supportingDoc", storeObj.supportingDocBase64 ?? storeObj.supportingDoc);
+    }
+    if (storeObj.signatureBase64 ?? storeObj.signature) {
+        body.append("signature", storeObj.signatureBase64 ?? storeObj.signature);
+    }
+    if (storeObj.meansOfIdBase64 ?? storeObj.meansOfId) {
+        body.append("meansOfId", storeObj.meansOfIdBase64 ?? storeObj.meansOfId);
+    }
+    if (storeObj.passportBase64 ?? storeObj.passport) {
+        body.append("passport", storeObj.passportBase64 ?? storeObj.passport);
+    }
     return body;
 }
 const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$react$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["create"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["persist"])((set)=>({
@@ -1176,7 +1184,7 @@ function NameAvailabilityStep() {
     // const REQUIRE_RESPONSE_FOR_NEXT = true
     const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
     ;
-    const handleProposedNameChange = (value)=>setProposedName(value);
+    const handleProposedNameChange = (value)=>setProposedName(value.toLocaleUpperCase());
     const handleLineOfBusinessChange = (value)=>setLineOfBusiness(value);
     const checkAvailability = async ()=>{
         if (!proposedName.trim()) {
@@ -3465,30 +3473,18 @@ function ReviewSummaryStep() {
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex gap-3",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        type: "button",
-                        onClick: ()=>store.previousStep(),
-                        className: "flex-1 px-4 py-2 rounded-lg border border-border bg-transparent text-foreground",
-                        children: "Previous"
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 254,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        type: "button",
-                        onClick: initiatePayment,
-                        disabled: isProcessingPayment,
-                        className: "flex-1 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium disabled:opacity-50",
-                        children: isProcessingPayment ? "Redirecting to payment..." : `Pay ₦${amount}`
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 262,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    type: "button",
+                    onClick: initiatePayment,
+                    disabled: isProcessingPayment,
+                    className: "flex-1 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium disabled:opacity-50",
+                    children: isProcessingPayment ? "Redirecting to payment..." : `Pay ₦${amount}`
+                }, void 0, false, {
+                    fileName: "[project]/components/steps/review-summary.tsx",
+                    lineNumber: 262,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
                 lineNumber: 253,
                 columnNumber: 7
@@ -3532,7 +3528,7 @@ function PaymentGatewayStep() {
     const [checkMessage, setCheckMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState("");
     const [checkError, setCheckError] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState("");
     const [submitted, setSubmitted] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(()=>!!store.applicationId);
-    const checkPaymentStatus = async ()=>{
+    const checkPaymentStatus = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback(async ()=>{
         setCheckError("");
         setCheckMessage("");
         if (!store.paymentReference) {
@@ -3541,7 +3537,8 @@ function PaymentGatewayStep() {
         }
         setChecking(true);
         try {
-            const resp = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_BASE_URL"]}payments/checkout/status/${store.paymentReference}`);
+            // const resp = await fetch(`${API_BASE_URL}payments/checkout/status/${store.paymentReference}`)
+            const resp = await fetch(`https://cac-registration-backend.onrender.com/api/payments/checkout/status/${store.paymentReference}`);
             if (!resp.ok) throw new Error("Failed to fetch payment status");
             const json = await resp.json();
             const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase();
@@ -3572,7 +3569,24 @@ function PaymentGatewayStep() {
         } finally{
             setChecking(false);
         }
-    };
+    }, [
+        store.paymentReference,
+        store.updateField,
+        store.submitRegistration,
+        store.nextStep
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useEffect(()=>{
+        if (submitted || !store.paymentReference || store.paymentStatus === "success") return;
+        const interval = setInterval(()=>{
+            checkPaymentStatus();
+        }, 5000);
+        return ()=>clearInterval(interval);
+    }, [
+        submitted,
+        store.paymentReference,
+        store.paymentStatus,
+        checkPaymentStatus
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
         children: [
@@ -3580,17 +3594,17 @@ function PaymentGatewayStep() {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 65,
+                lineNumber: 76,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
                 title: "Payment Status",
-                description: "Check your payment and submission status.",
+                description: "We are automatically checking your payment status. Once payment is confirmed, your registration will be submitted.",
                 icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$credit$2d$card$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CreditCard$3e$__["CreditCard"], {
                     className: "w-5 h-5 text-primary"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/payment-gateway.tsx",
-                    lineNumber: 70,
+                    lineNumber: 81,
                     columnNumber: 15
                 }, void 0),
                 children: [
@@ -3602,32 +3616,21 @@ function PaymentGatewayStep() {
                                 children: "Payment status"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 73,
+                                lineNumber: 84,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-sm font-medium text-foreground",
-                                children: store.paymentStatus || "not started"
+                                children: store.paymentStatus || "checking..."
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 74,
+                                lineNumber: 85,
                                 columnNumber: 11
-                            }, this),
-                            store.paymentReference && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-xs text-muted-foreground mt-1",
-                                children: [
-                                    "Reference: ",
-                                    store.paymentReference
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 75,
-                                columnNumber: 38
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 72,
+                        lineNumber: 83,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3638,7 +3641,7 @@ function PaymentGatewayStep() {
                                 children: "Document submitted"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 79,
+                                lineNumber: 90,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3646,67 +3649,40 @@ function PaymentGatewayStep() {
                                 children: submitted ? "Yes" : "No"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 80,
+                                lineNumber: 91,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 78,
+                        lineNumber: 89,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: checkPaymentStatus,
-                                disabled: checking,
-                                className: "px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50",
-                                children: checking ? "Checking..." : "Check Payment Status"
-                            }, void 0, false, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 84,
-                                columnNumber: 11
-                            }, this),
-                            checkMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-foreground",
-                                children: checkMessage
-                            }, void 0, false, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 91,
-                                columnNumber: 28
-                            }, this),
-                            checkError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-destructive",
-                                children: checkError
-                            }, void 0, false, {
-                                fileName: "[project]/components/steps/payment-gateway.tsx",
-                                lineNumber: 92,
-                                columnNumber: 26
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                    checkError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-sm text-destructive",
+                        children: checkError
+                    }, void 0, false, {
                         fileName: "[project]/components/steps/payment-gateway.tsx",
-                        lineNumber: 83,
-                        columnNumber: 9
+                        lineNumber: 101,
+                        columnNumber: 24
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 67,
+                lineNumber: 78,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/payment-gateway.tsx",
-                lineNumber: 96,
+                lineNumber: 104,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/payment-gateway.tsx",
-        lineNumber: 64,
+        lineNumber: 75,
         columnNumber: 5
     }, this);
 }

@@ -11,10 +11,9 @@ import { ApplicantInfoStep } from "@/components/steps/applicant-info"
 import { BusinessDetailsStep } from "@/components/steps/business-details"
 import { DocumentUploadStep } from "@/components/steps/document-upload"
 import { ReviewSummaryStep } from "@/components/steps/review-summary"
-import { PaymentGatewayStep } from "@/components/steps/payment-gateway"
 import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
 
-const STEPS = ["Business Name", "Applicant Info", "Business Details", "Documents", "Review", "Payment", "Confirmation"]
+const STEPS = ["Business Name", "Applicant Info", "Business Details", "Documents", "Review", "Confirmation"]
 
 export function RegistrationForm() {
   const { currentStep, nextStep, previousStep } = useRegistrationStore()
@@ -77,12 +76,8 @@ export function RegistrationForm() {
         )
 
       case 5: // Review
-        // Review page validation handled internally
-        return true
-
-      case 6: // Payment
-        // Allow navigation to confirmation even if paymentStatus isn't marked 'success'
-        return true
+        // Review page validation handled internally, but require successful payment and submission
+        return store.paymentStatus === "success" && store.submitted
 
       default:
         return true
@@ -119,23 +114,19 @@ export function RegistrationForm() {
       case 5:
         return <ReviewSummaryStep />
       case 6:
-        return <PaymentGatewayStep />
-      case 7:
         return <ConfirmationPageStep />
       default:
         return null
     }
   }
 
-  const isLastStep = currentStep === 7
+  const isLastStep = currentStep === 6
   const nextButtonText =
     currentStep === 5
-      ? "Proceed to Payment"
-      : currentStep === 6
-        ? "Complete Registration"
-        : isLastStep
-          ? "Back to Home"
-          : "Next"
+      ? "Complete Registration"
+      : isLastStep
+        ? "Back to Home"
+        : "Next"
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -144,7 +135,7 @@ export function RegistrationForm() {
       <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
           {/* Progress Indicator */}
-          <ProgressIndicator currentStep={currentStep} totalSteps={7} stepNames={STEPS} />
+          <ProgressIndicator currentStep={currentStep} totalSteps={6} stepNames={STEPS} />
 
           {/* Form Content */}
           <div className="mt-12 animate-fade-in">{renderStep()}</div>

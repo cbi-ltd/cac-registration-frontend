@@ -17,7 +17,7 @@ export function PaymentGatewayStep() {
   const [checkError, setCheckError] = React.useState("")
   const [submitted, setSubmitted] = React.useState<boolean>(() => !!store.applicationId)
 
-  const checkPaymentStatus = async () => {
+  const checkPaymentStatus = React.useCallback(async () => {
     setCheckError("")
     setCheckMessage("")
     if (!store.paymentReference) {
@@ -27,7 +27,8 @@ export function PaymentGatewayStep() {
 
     setChecking(true)
     try {
-      const resp = await fetch(`${API_BASE_URL}payments/checkout/status/${store.paymentReference}`)
+      // const resp = await fetch(`${API_BASE_URL}payments/checkout/status/${store.paymentReference}`)
+      const resp = await fetch(`https://cac-registration-backend.onrender.com/api/payments/checkout/status/${store.paymentReference}`)
       if (!resp.ok) throw new Error("Failed to fetch payment status")
       const json = await resp.json()
       const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase()
@@ -58,7 +59,17 @@ export function PaymentGatewayStep() {
     } finally {
       setChecking(false)
     }
-  }
+  }, [store.paymentReference, store.updateField, store.submitRegistration, store.nextStep])
+
+  React.useEffect(() => {
+    if (submitted || !store.paymentReference || store.paymentStatus === "success") return
+
+    const interval = setInterval(() => {
+      checkPaymentStatus()
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [submitted, store.paymentReference, store.paymentStatus, checkPaymentStatus])
 
   return (
     <div className="space-y-6 animate-slide-up">
@@ -66,13 +77,13 @@ export function PaymentGatewayStep() {
 
       <FormSection
         title="Payment Status"
-        description="Check your payment and submission status."
+        description="We are automatically checking your payment status. Once payment is confirmed, your registration will be submitted."
         icon={<CreditCard className="w-5 h-5 text-primary" />}
       >
         <div className="p-4 rounded-lg bg-secondary/50 border border-border mb-4">
           <p className="text-xs text-muted-foreground">Payment status</p>
-          <p className="text-sm font-medium text-foreground">{store.paymentStatus || "not started"}</p>
-          {store.paymentReference && <p className="text-xs text-muted-foreground mt-1">Reference: {store.paymentReference}</p>}
+          <p className="text-sm font-medium text-foreground">{store.paymentStatus || "checking..."}</p>
+          {/* {store.paymentReference && <p className="text-xs text-muted-foreground mt-1">Reference: {store.paymentReference}</p>} */}
         </div>
 
         <div className="p-4 rounded-lg bg-secondary/50 border border-border mb-4">
@@ -80,17 +91,14 @@ export function PaymentGatewayStep() {
           <p className="text-sm font-medium text-foreground">{submitted ? "Yes" : "No"}</p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={checkPaymentStatus}
-            disabled={checking}
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 disabled:opacity-50"
-          >
-            {checking ? "Checking..." : "Check Payment Status"}
-          </button>
-          {checkMessage && <p className="text-sm text-foreground">{checkMessage}</p>}
-          {checkError && <p className="text-sm text-destructive">{checkError}</p>}
-        </div>
+        {/* {checking && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+            Checking payment status...
+          </div>
+        )} */}
+
+        {checkError && <p className="text-sm text-destructive">{checkError}</p>}
       </FormSection>
 
       <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />

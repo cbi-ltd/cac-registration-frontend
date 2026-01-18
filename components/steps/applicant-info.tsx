@@ -1,6 +1,6 @@
 "use client"
 
-import { useRegistrationStore } from "@/lib/store"
+import { RegistrationData, useRegistrationStore } from "@/lib/store"
 import { FormSection } from "@/components/form-section"
 import { FormInput } from "@/components/form-input"
 import { FormSelect } from "@/components/form-select"
@@ -16,7 +16,7 @@ export function ApplicantInfoStep() {
   ]
   const nationalities = countries
 
-  const handleFieldChange = (field: string, value: string) => {
+  const handleFieldChange = (field: keyof RegistrationData, value: string) => {
     store.updateField(field, value)
   }
 
@@ -110,7 +110,7 @@ export function ApplicantInfoStep() {
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <FormInput
                 label="Street Number"
-                value={(store as any).proprietorStreetNumber || ""}
+                value={store.proprietorStreetNumber}
                 onChange={(e) => handleFieldChange("proprietorStreetNumber", e.target.value)}
                 placeholder="41"
               />
@@ -125,13 +125,13 @@ export function ApplicantInfoStep() {
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <FormInput
                 label="City"
-                value={(store as any).proprietorCity || ""}
+                value={store.proprietorCity}
                 onChange={(e) => handleFieldChange("proprietorCity", e.target.value)}
                 placeholder="Abuja"
               />
               <FormInput
                 label="State"
-                value={(store as any).proprietorState || ""}
+                value={store.proprietorState}
                 onChange={(e) => handleFieldChange("proprietorState", e.target.value)}
                 placeholder="F.C.T"
               />
@@ -140,13 +140,13 @@ export function ApplicantInfoStep() {
             <div className="grid md:grid-cols-2 gap-4 mt-4">
               <FormInput
                 label="Postcode"
-                value={(store as any).proprietorPostcode || ""}
+                value={store.proprietorPostcode}
                 onChange={(e) => handleFieldChange("proprietorPostcode", e.target.value)}
                 placeholder="900108"
               />
               <FormInput
                 label="LGA"
-                value={(store as any).proprietorLga || ""}
+                value={store.proprietorLga}
                 onChange={(e) => handleFieldChange("proprietorLga", e.target.value)}
                 placeholder="lagos mainland"
               />

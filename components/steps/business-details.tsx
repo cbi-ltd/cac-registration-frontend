@@ -1,6 +1,6 @@
 "use client"
 
-import { useRegistrationStore } from "@/lib/store"
+import { RegistrationData, useRegistrationStore } from "@/lib/store"
 import { FormSection } from "@/components/form-section"
 import { FormInput } from "@/components/form-input"
 import { FormSelect } from "@/components/form-select"
@@ -11,7 +11,7 @@ export function BusinessDetailsStep() {
 
   // Simplified: map user-entered lineOfBusiness and company address fields
 
-  const handleFieldChange = (field: string, value: any) => {
+  const handleFieldChange = (field: keyof RegistrationData, value: string) => {
     store.updateField(field, value)
   }
 
@@ -28,7 +28,7 @@ export function BusinessDetailsStep() {
         <div className="grid md:grid-cols-2 gap-4">
           <FormInput
             label="Line of Business"
-            value={(store as any).businessActivity || ""}
+            value={store.businessActivity}
             onChange={(e) => handleFieldChange("businessActivity", e.target.value)}
             placeholder="fashion"
             required
@@ -59,7 +59,7 @@ export function BusinessDetailsStep() {
         <div className="grid md:grid-cols-2 gap-4">
           <FormInput
             label="Business Street Number"
-            value={(store as any).companyStreetNumber || ""}
+            value={store.companyStreetNumber}
             onChange={(e) => handleFieldChange("companyStreetNumber", e.target.value)}
             placeholder="41"
           />
@@ -73,13 +73,13 @@ export function BusinessDetailsStep() {
         <div className="grid md:grid-cols-2 gap-4 mt-4">
           <FormInput
             label="City"
-            value={(store as any).companyCity || ""}
+            value={store.companyCity}
             onChange={(e) => handleFieldChange("companyCity", e.target.value)}
             placeholder="Abuja"
           />
           <FormInput
             label="State"
-            value={(store as any).companyState || ""}
+            value={store.companyState}
             onChange={(e) => handleFieldChange("companyState", e.target.value)}
             placeholder="F.C.T"
           />

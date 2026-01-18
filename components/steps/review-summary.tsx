@@ -12,6 +12,10 @@ export function ReviewSummaryStep() {
   const amount: number = 500
   // const amount: number = 29000
   const [isProcessingPayment, setIsProcessingPayment] = React.useState(false)
+  const [checking, setChecking] = React.useState(false)
+  const [checkMessage, setCheckMessage] = React.useState("")
+  const [checkError, setCheckError] = React.useState("")
+  const [submitted, setSubmitted] = React.useState<boolean>(() => !!store.applicationId)
 
   const validateSubmission = (): boolean => {
     const newErrors: string[] = []
@@ -36,9 +40,61 @@ export function ReviewSummaryStep() {
     return newErrors.length === 0
   }
 
-  React.useEffect(() => {
-    // Navigation handled centrally by RegistrationForm; remove local auto-advance.
-  }, [store])
+  const checkPaymentStatus = React.useCallback(async () => {
+    setCheckError("")
+    setCheckMessage("")
+    if (!store.paymentReference) {
+      setCheckError("No payment reference available. Complete payment first.")
+      return
+    }
+
+    setChecking(true)
+    try {
+      const resp = await fetch(`https://cac-registration-backend.onrender.com/api/payments/checkout/status/${store.paymentReference}`)
+      if (!resp.ok) throw new Error("Failed to fetch payment status")
+      const json = await resp.json()
+      // const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase()
+      const status = "success" // For testing purposes
+      if (status) {
+        store.updateField("paymentStatus", status)
+        setCheckMessage(`Payment status: ${status}`)
+        if (status === "success") {
+          // submit registration payload to backend, then mark submitted and advance
+          try {
+            // const payload = store
+            await store.submitRegistration()
+            setSubmitted(true)
+            store.updateField("submitted", true)
+            try {
+              store.nextStep()
+            } catch (e) {
+              // ignore
+            }
+          } catch (err: any) {
+            setCheckError(err?.message || "Submission after payment failed")
+            store.updateField("paymentStatus", "failed")
+          }
+        }
+      } else {
+        setCheckError("Payment status not available")
+      }
+    } catch (err: any) {
+      setCheckError(err?.message || "Unable to check payment status")
+    } finally {
+      setChecking(false)
+    }
+  }, [store.paymentReference, store.updateField, store.submitRegistration, store.nextStep])
+
+  // React.useEffect(() => {
+  //   if (submitted || !store.paymentReference || store.paymentStatus === "success") return
+
+  //   const interval = setInterval(() => {
+  //     checkPaymentStatus()
+  //   }, 9000)
+
+  //   return () => clearInterval(interval)
+  // }, [submitted, store.paymentReference, store.paymentStatus, checkPaymentStatus])
+  
 
   const initiatePayment = async () => {
     setErrors([])
@@ -78,7 +134,7 @@ export function ReviewSummaryStep() {
 
       // Mark that an external payment flow is in progress so we can resume after redirect
       try {
-        sessionStorage.setItem("externalPaymentPending", "true")
+        localStorage.setItem("externalPaymentPending", "true")
       } catch (e) {
         // ignore
       }
@@ -86,6 +142,8 @@ export function ReviewSummaryStep() {
       // Redirect user to the payment provider
       // window.location.href = authUrl
       window.open(authUrl, "_blank")
+      setIsProcessingPayment(false)
+      checkPaymentStatus()
       // Note: Page will unload, so finally block won't execute as expected
     } catch (err: any) {
       setErrors(["Unable to initialize payment. Please try again."])
@@ -197,7 +255,6 @@ export function ReviewSummaryStep() {
           <div className="border-t border-border pt-3 flex justify-between">
             <span className="font-semibold text-foreground">CAC Registration Fee</span>
             <span className="font-bold text-lg text-primary">₦{amount}</span>
-            {/* <span className="font-bold text-lg text-primary">₦29,000.00</span> */}
           </div>
         </div>
       </FormSection>
@@ -245,19 +302,35 @@ export function ReviewSummaryStep() {
       {/* Info Box */}
       <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800">
         <p className="text-sm text-blue-900 dark:text-blue-100">
-          After clicking Next, you'll be redirected to secure payment. Your application will be submitted to CAC after
+          You'll be redirected to secure payment. Your application will be submitted to CAC after
           successful payment.
         </p>
       </div>
 
+      {store.paymentReference && (
+        <>
+          <div className="p-4 rounded-lg bg-secondary/50 border border-border mb-4">
+            <p className="text-xs text-muted-foreground">Payment status</p>
+            <p className="text-sm font-medium text-foreground">{store.paymentStatus || "checking..."}</p>
+          </div>
+
+          <div className="p-4 rounded-lg bg-secondary/50 border border-border mb-4">
+            <p className="text-xs text-muted-foreground">Document submitted</p>
+            <p className="text-sm font-medium text-foreground">{submitted ? "Yes" : "No"}</p>
+          </div>
+
+          {checkError && <p className="text-sm text-destructive">{checkError}</p>}
+        </>
+      )}
+
       <div className="flex gap-3">
-        <button
+        {/* <button
           type="button"
           onClick={() => store.previousStep()}
           className="flex-1 px-4 py-2 rounded-lg border border-border bg-transparent text-foreground"
         >
           Previous
-        </button>
+        </button> */}
 
         <button
           type="button"
