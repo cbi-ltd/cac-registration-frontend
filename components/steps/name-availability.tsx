@@ -22,7 +22,7 @@ export function NameAvailabilityStep() {
   // const REQUIRE_RESPONSE_FOR_NEXT = true
   const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
 
-  const handleProposedNameChange = (value: string) => setProposedName(value)
+  const handleProposedNameChange = (value: string) => setProposedName(value.toLocaleUpperCase())
   const handleLineOfBusinessChange = (value: string) => setLineOfBusiness(value)
 
   const checkAvailability = async () => {
@@ -46,7 +46,8 @@ export function NameAvailabilityStep() {
         setError("Name check failed. Please try again.")
         return
       }
-
+      store.updateField("selectedBusinessName", proposedName.trim())
+      
       const json = await resp.json()
 
       // Attempt to locate recommendedActions in the nested response structure.
