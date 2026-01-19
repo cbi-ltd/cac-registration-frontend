@@ -20,7 +20,7 @@ export function NameAvailabilityStep() {
   // For production uncomment the next line to REQUIRE the API responseMessage
   // "Proceed to filing" before enabling the Next button.
   // const REQUIRE_RESPONSE_FOR_NEXT = true
-  const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
+  // const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
 
   const handleProposedNameChange = (value: string) => setProposedName(value.toLocaleUpperCase())
   const handleLineOfBusinessChange = (value: string) => setLineOfBusiness(value)
@@ -87,8 +87,7 @@ export function NameAvailabilityStep() {
   // - In development we allow proceeding as soon as the name check returns (responseMessage is set)
   // - For production you can enable `REQUIRE_RESPONSE_FOR_NEXT` to require the API to return
   //   the explicit responseMessage "Proceed to filing" before enabling Next.
-  const canProceed = REQUIRE_RESPONSE_FOR_NEXT
-    ? responseMessage === "Proceed to filing"
+  const canProceed = responseMessage ? "Proceed to filing"
     : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing"
 
   return (

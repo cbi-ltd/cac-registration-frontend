@@ -176,6 +176,13 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
             <Download className="w-5 h-5" />
             Download Receipt
           </button>
+          <button
+          type="button"
+          onClick={() => store.previousStep()}
+          className="flex-1 px-4 py-2 rounded-lg border border-border bg-transparent text-foreground"
+        >
+          Previous
+        </button>
           <Link
             href="/"
             onClick={() => {

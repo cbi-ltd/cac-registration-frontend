@@ -38,13 +38,16 @@ export function PaymentGatewayStep() {
         if (status === "success") {
           // submit registration payload to backend, then mark submitted and advance
           try {
-            const payload = JSON.parse(JSON.stringify(store))
-            await store.submitRegistration(payload)
-            setSubmitted(true)
-            try {
-              store.nextStep()
-            } catch (e) {
-              // ignore
+            const result = await store.submitRegistration()
+            if (result?.data?.message === "application received") {
+              setSubmitted(true)
+              try {
+                store.nextStep()
+              } catch (e) {
+                // ignore
+              }
+            } else {
+              setCheckError("Submission failed: " + (result?.data?.message || "Unknown error"))
             }
           } catch (err: any) {
             setCheckError(err?.message || "Submission after payment failed")

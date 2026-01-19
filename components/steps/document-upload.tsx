@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { useRegistrationStore } from "@/lib/store"
+import { useRegistrationStore,RegistrationData } from "@/lib/store"
 import { FormSection } from "@/components/form-section"
 import { Upload, File, X, CheckCircle2, Download } from "lucide-react"
 
@@ -26,8 +26,9 @@ export function DocumentUploadStep() {
       description: "Any supporting document (ID copy or company document).",
       fieldName: "supportingDocBase64",
       required: true,
-      accepted: ["application/pdf", "image/jpeg", "image/png"],
-      maxSize: 5 * 1024 * 1024,
+      // accepted: ["application/pdf", "image/jpeg", "image/png"],
+      accepted: ["image/jpeg", "image/png"],
+      maxSize: 1 * 1024 * 1024,
     },
     {
       name: "Signature (scanned)",
@@ -35,7 +36,7 @@ export function DocumentUploadStep() {
       fieldName: "signatureBase64",
       required: true,
       accepted: ["image/jpeg", "image/png"],
-      maxSize: 2 * 1024 * 1024,
+      maxSize: 1 * 1024 * 1024,
     },
     {
       name: "Means of ID (front)",
@@ -51,13 +52,14 @@ export function DocumentUploadStep() {
       fieldName: "passportBase64",
       required: true,
       accepted: ["image/jpeg", "image/png"],
-      maxSize: 2 * 1024 * 1024,
+      // maxSize: 2 * 1024 * 1024,
+      maxSize: 1 * 1024 * 1024,
     },
   ]
 
   const handleFileChange = (fieldName: string, file: File | null, docInfo: DocumentInfo) => {
     if (!file) {
-      store.updateField(fieldName, null)
+      store.updateField(fieldName as keyof RegistrationData, null)
       setUploadErrors({ ...uploadErrors, [fieldName]: "" })
       return
     }
@@ -83,7 +85,7 @@ export function DocumentUploadStep() {
     reader.onload = () => {
       const result = reader.result as string
       // store base64 string
-      store.updateField(fieldName, result)
+      store.updateField(fieldName as keyof RegistrationData, result)
       setUploadErrors({ ...uploadErrors, [fieldName]: "" })
     }
     reader.onerror = () => {
@@ -200,7 +202,8 @@ NOTE: This letter must be signed in the presence of a witness.`
                   <div className="flex items-center justify-between p-3 rounded-lg bg-secondary">
                     <div className="flex items-center gap-2">
                       <File className="w-4 h-4 text-primary" />
-                      <span className="text-sm text-foreground font-medium">Uploaded</span>
+                      {/* <span className="text-sm text-foreground font-medium">Uploaded</span> */}
+                      <span className="text-sm text-foreground font-medium">{doc.name} {doc.maxSize /1024 }MB</span>
                     </div>
                     <button
                       onClick={() => {
@@ -222,7 +225,7 @@ NOTE: This letter must be signed in the presence of a witness.`
                     <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
                     <p className="text-sm font-medium text-foreground">Click to upload</p>
                     <p className="text-xs text-muted-foreground mt-1">or drag and drop</p>
-                    <p className="text-xs text-muted-foreground mt-2">Max 5MB • PDF, JPG, PNG</p>
+                    <p className="text-xs text-muted-foreground mt-2">Max 1MB • JPG, PNG</p>
                   </div>
                 )}
 
