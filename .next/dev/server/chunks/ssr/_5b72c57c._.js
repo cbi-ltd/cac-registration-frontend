@@ -2803,12 +2803,13 @@ function DocumentUploadStep() {
             description: "Any supporting document (ID copy or company document).",
             fieldName: "supportingDocBase64",
             required: true,
-            // accepted: ["application/pdf", "image/jpeg", "image/png"],
             accepted: [
+                "application/pdf",
                 "image/jpeg",
                 "image/png"
             ],
-            maxSize: 1 * 1024 * 1024
+            // accepted: ["image/jpeg", "image/png"],
+            maxSize: 5 * 1024 * 1024
         },
         {
             name: "Signature (scanned)",
@@ -2819,7 +2820,7 @@ function DocumentUploadStep() {
                 "image/jpeg",
                 "image/png"
             ],
-            maxSize: 1 * 1024 * 1024
+            maxSize: 5 * 1024 * 1024
         },
         {
             name: "Means of ID (front)",
@@ -2842,8 +2843,7 @@ function DocumentUploadStep() {
                 "image/jpeg",
                 "image/png"
             ],
-            // maxSize: 2 * 1024 * 1024,
-            maxSize: 1 * 1024 * 1024
+            maxSize: 5 * 1024 * 1024
         }
     ];
     const handleFileChange = (fieldName, file, docInfo)=>{
@@ -2888,68 +2888,44 @@ function DocumentUploadStep() {
         };
         reader.readAsDataURL(file);
     };
-    const downloadConsentLetter = ()=>{
-        const consentTemplate = `CONSENT LETTER FOR CAC BUSINESS NAME REGISTRATION
-
-Date: ${new Date().toLocaleDateString()}
-
-TO: CORPORATE AFFAIRS COMMISSION (CAC)
-
-RE: CONSENT TO BUSINESS NAME REGISTRATION
-
-Dear Sir/Madam,
-
-I, ___________________________________ (Full Name), hereby give my consent to the registration of the business name:
-
-"${store.selectedBusinessName || "[Business Name]"}"
-
-as a proprietorship/partnership in my name. I confirm that:
-
-1. I am the authorized person to sign this document on behalf of the business
-2. All information provided in the registration application is accurate and complete
-3. I understand the implications of business name registration
-4. I consent to the processing of my personal data as required by law
-5. I acknowledge that this registration is with the Corporate Affairs Commission (CAC)
-
-I further declare that the information contained in this application is true to the best of my knowledge and belief.
-
-Signed:
-
-__________________________                    Date: ________________
-Signature of Applicant
-
-Printed Name: ________________________
-
-I.D. Type: ________________________    I.D. Number: ________________
-
-Phone: ________________________        Email: ________________
-
-Address: ________________________________________________________
-
-Witnessed by:
-
-__________________________                    Date: ________________
-Witness Signature
-
-Witness Name: ________________________
-
-I.D. Type: ________________________    I.D. Number: ________________
-
-NOTE: This letter must be signed in the presence of a witness.`;
-        const blob = new Blob([
-            consentTemplate
-        ], {
-            type: "text/plain"
-        });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "CAC_Consent_Letter_Template.txt";
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-    };
+    // const downloadConsentLetter = () => {
+    //   const consentTemplate = `CONSENT LETTER FOR CAC BUSINESS NAME REGISTRATION
+    //   Date: ${new Date().toLocaleDateString()}
+    //   TO: CORPORATE AFFAIRS COMMISSION (CAC)
+    //   RE: CONSENT TO BUSINESS NAME REGISTRATION
+    //   Dear Sir/Madam,
+    //   I, ___________________________________ (Full Name), hereby give my consent to the registration of the business name:
+    //   "${store.selectedBusinessName || "[Business Name]"}"
+    //   as a proprietorship/partnership in my name. I confirm that:
+    //   1. I am the authorized person to sign this document on behalf of the business
+    //   2. All information provided in the registration application is accurate and complete
+    //   3. I understand the implications of business name registration
+    //   4. I consent to the processing of my personal data as required by law
+    //   5. I acknowledge that this registration is with the Corporate Affairs Commission (CAC)
+    //   I further declare that the information contained in this application is true to the best of my knowledge and belief.
+    //   Signed:
+    //   __________________________                    Date: ________________
+    //   Signature of Applicant
+    //   Printed Name: ________________________
+    //   I.D. Type: ________________________    I.D. Number: ________________
+    //   Phone: ________________________        Email: ________________
+    //   Address: ________________________________________________________
+    //   Witnessed by:
+    //   __________________________                    Date: ________________
+    //   Witness Signature
+    //   Witness Name: ________________________
+    //   I.D. Type: ________________________    I.D. Number: ________________
+    //   NOTE: This letter must be signed in the presence of a witness.`
+    //   const blob = new Blob([consentTemplate], { type: "text/plain" })
+    //   const url = window.URL.createObjectURL(blob)
+    //   const a = document.createElement("a")
+    //   a.href = url
+    //   a.download = "CAC_Consent_Letter_Template.txt"
+    //   document.body.appendChild(a)
+    //   a.click()
+    //   window.URL.revokeObjectURL(url)
+    //   document.body.removeChild(a)
+    // }
     const uploadedCount = documents.filter((doc)=>!!store[doc.fieldName]).length;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
@@ -2958,7 +2934,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/document-upload.tsx",
-                lineNumber: 161,
+                lineNumber: 160,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -2968,7 +2944,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                     className: "w-5 h-5 text-primary"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/document-upload.tsx",
-                    lineNumber: 166,
+                    lineNumber: 165,
                     columnNumber: 15
                 }, void 0),
                 isRequired: true,
@@ -2985,7 +2961,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                         children: uploadedCount
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 170,
                                         columnNumber: 33
                                     }, this),
                                     " of",
@@ -2995,13 +2971,13 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                         children: documents.length
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 171,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                lineNumber: 170,
+                                lineNumber: 169,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3013,18 +2989,18 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/document-upload.tsx",
-                                    lineNumber: 175,
+                                    lineNumber: 174,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                lineNumber: 174,
+                                lineNumber: 173,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/document-upload.tsx",
-                        lineNumber: 169,
+                        lineNumber: 168,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3050,20 +3026,20 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                             children: "*"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/steps/document-upload.tsx",
-                                                            lineNumber: 194,
+                                                            lineNumber: 193,
                                                             columnNumber: 40
                                                         }, this),
                                                         value && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
                                                             className: "w-4 h-4 text-green-600"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/steps/document-upload.tsx",
-                                                            lineNumber: 195,
+                                                            lineNumber: 194,
                                                             columnNumber: 33
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/steps/document-upload.tsx",
-                                                    lineNumber: 192,
+                                                    lineNumber: 191,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3071,18 +3047,18 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                     children: doc.description
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/document-upload.tsx",
-                                                    lineNumber: 197,
+                                                    lineNumber: 196,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/steps/document-upload.tsx",
-                                            lineNumber: 191,
+                                            lineNumber: 190,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 190,
+                                        lineNumber: 189,
                                         columnNumber: 17
                                     }, this),
                                     value ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3095,7 +3071,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                         className: "w-4 h-4 text-primary"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                                        lineNumber: 204,
+                                                        lineNumber: 203,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3108,13 +3084,13 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                                        lineNumber: 206,
+                                                        lineNumber: 205,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 203,
+                                                lineNumber: 202,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3129,18 +3105,18 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                     className: "w-4 h-4 text-muted-foreground"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/document-upload.tsx",
-                                                    lineNumber: 217,
+                                                    lineNumber: 216,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 208,
+                                                lineNumber: 207,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 202,
+                                        lineNumber: 201,
                                         columnNumber: 19
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         onClick: ()=>fileInputRefs.current[doc.fieldName]?.click(),
@@ -3150,7 +3126,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                 className: "w-8 h-8 text-muted-foreground mx-auto mb-2"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 225,
+                                                lineNumber: 224,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3158,7 +3134,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                 children: "Click to upload"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 226,
+                                                lineNumber: 225,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3166,7 +3142,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                 children: "or drag and drop"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 227,
+                                                lineNumber: 226,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3174,13 +3150,13 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                                 children: "Max 1MB • JPG, PNG"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 228,
+                                                lineNumber: 227,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 221,
+                                        lineNumber: 220,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -3193,7 +3169,7 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                         className: "hidden"
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 232,
+                                        lineNumber: 231,
                                         columnNumber: 17
                                     }, this),
                                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3201,38 +3177,38 @@ NOTE: This letter must be signed in the presence of a witness.`;
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 242,
+                                        lineNumber: 241,
                                         columnNumber: 27
                                     }, this)
                                 ]
                             }, doc.fieldName, true, {
                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                lineNumber: 189,
+                                lineNumber: 188,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/components/steps/document-upload.tsx",
-                        lineNumber: 182,
+                        lineNumber: 181,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/document-upload.tsx",
-                lineNumber: 163,
+                lineNumber: 162,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/document-upload.tsx",
-                lineNumber: 262,
+                lineNumber: 261,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/document-upload.tsx",
-        lineNumber: 160,
+        lineNumber: 159,
         columnNumber: 5
     }, this);
 }
@@ -3297,13 +3273,12 @@ function ReviewSummaryStep() {
             const resp = await fetch(`https://cac-registration-backend.onrender.com/api/payments/checkout/status/${store.paymentReference}`);
             if (!resp.ok) throw new Error("Failed to fetch payment status");
             const json = await resp.json();
-            // const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase()
-            const status = "success" // For testing purposes
-            ;
-            if ("TURBOPACK compile-time truthy", 1) {
+            const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase();
+            // const status = "success" // For testing purposes
+            if (status) {
                 store.updateField("paymentStatus", status);
                 setCheckMessage(`Payment status: ${status}`);
-                if ("TURBOPACK compile-time truthy", 1) {
+                if (status === "success") {
                     // submit registration payload to backend, then mark submitted and advance
                     try {
                         const result = await store.submitRegistration();
@@ -3323,8 +3298,9 @@ function ReviewSummaryStep() {
                         store.updateField("paymentStatus", "failed");
                     }
                 }
-            } else //TURBOPACK unreachable
-            ;
+            } else {
+                setCheckError("Payment status not available");
+            }
         } catch (err) {
             setCheckError(err?.message || "Unable to check payment status");
         } finally{
@@ -3385,8 +3361,8 @@ function ReviewSummaryStep() {
             // ignore
             }
             // Redirect user to the payment provider
-            // window.location.href = authUrl
-            window.open(authUrl, "_blank");
+            window.location.href = authUrl;
+            // window.open(authUrl, "_blank")
             setIsProcessingPayment(false);
             checkPaymentStatus();
         // Note: Page will unload, so finally block won't execute as expected
@@ -3905,7 +3881,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/store.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-ssr] (ecmascript) <export default as CheckCircle2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$copy$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Copy$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/copy.js [app-ssr] (ecmascript) <export default as Copy>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/download.js [app-ssr] (ecmascript) <export default as Download>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-ssr] (ecmascript) <export default as ArrowRight>");
 "use client";
@@ -3927,36 +3902,35 @@ function ConfirmationPageStep() {
     const downloadReceipt = ()=>{
         const receipt = `CAC BUSINESS REGISTRATION - RECEIPT
 
-Date: ${new Date().toLocaleDateString()}
-Time: ${new Date().toLocaleTimeString()}
+    Date: ${new Date().toLocaleDateString()}
+    Time: ${new Date().toLocaleTimeString()}
 
-REGISTERED DETAILS
-==================
-Business Name: ${store.selectedBusinessName}
-Applicant Type: ${store.applicantType.toUpperCase()}
-${store.applicantType === "individual" ? `Applicant Name: ${store.firstName} ${store.lastName}` : `Organization: ${store.organizationName}`}
-Business Activity: ${store.businessActivity}
+    REGISTERED DETAILS
+    ==================
+    Business Name: ${store.selectedBusinessName}
+    Applicant Type: ${store.applicantType.toUpperCase()}
+    ${store.applicantType === "individual" ? `Applicant Name: ${store.firstName} ${store.lastName}` : `Organization: ${store.organizationName}`}
+    Business Activity: ${store.businessActivity}
 
-PAYMENT INFORMATION
-===================
-Total Paid: ₦29,000.00
-Payment Status: SUCCESS
+    PAYMENT INFORMATION
+    ===================
+    Total Paid: ₦29,000.00
+    Payment Status: SUCCESS
 
-NEXT STEPS
-==========
-1. Your application has been successfully submitted to CAC
-2. You will receive email updates on your application status
-3. Check your application status via the support channels provided
-4. Expected processing time: 2-5 working days
+    NEXT STEPS
+    ==========
+    1. Your application has been successfully submitted to CAC
+    2. Check your application status via the support channels provided
+    3. Expected processing time: 2-5 working days
 
-IMPORTANT NOTES
-===============
-- Keep this receipt for your records
-- Do not share sensitive transaction information
-- For inquiries, contact support@cbi.ng or call +234 (0) 800 000 0000
+    IMPORTANT NOTES
+    ===============
+    - Keep this receipt for your records
+    - Do not share sensitive transaction information
+    - For inquiries, contact support@cbitechnologiesltd.ng or call +234 (0) 800 000 0000
 
----
-This is an automated receipt. For questions, please contact CBI Technologies support.`;
+    ---
+    This is an automated receipt. For questions, please contact CBI Technologies support.`;
         const blob = new Blob([
             receipt
         ], {
@@ -3982,12 +3956,12 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                         className: "w-12 h-12 text-green-600"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/confirmation-page.tsx",
-                        lineNumber: 73,
+                        lineNumber: 72,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 72,
+                    lineNumber: 71,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -3995,7 +3969,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                     children: "Registration Successful!"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 76,
+                    lineNumber: 75,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4003,65 +3977,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                     children: "Your business registration application has been submitted to CAC successfully."
                 }, void 0, false, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 77,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-secondary rounded-lg p-6 mb-8 max-w-md mx-auto",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-sm text-muted-foreground mb-2 uppercase font-semibold",
-                            children: "Application Reference"
-                        }, void 0, false, {
-                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 83,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex items-center justify-between gap-3 mb-3",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-sm text-muted-foreground",
-                                    children: "A unique reference has been recorded and sent to your email."
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 85,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: handleCopyReference,
-                                    className: "p-2 hover:bg-secondary-dark rounded-lg transition-colors",
-                                    title: "Copy info",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$copy$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Copy$3e$__["Copy"], {
-                                        className: "w-5 h-5 text-primary"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/confirmation-page.tsx",
-                                        lineNumber: 91,
-                                        columnNumber: 15
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 86,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 84,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-xs text-muted-foreground",
-                            children: copied ? "✓ Copied to clipboard!" : "Check your email for the reference number"
-                        }, void 0, false, {
-                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 94,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 82,
+                    lineNumber: 76,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4075,7 +3991,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: "Business Name"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 100,
+                                    lineNumber: 99,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4083,13 +3999,13 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: store.selectedBusinessName
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 101,
+                                    lineNumber: 100,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 99,
+                            lineNumber: 98,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4100,7 +4016,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: "Total Amount Paid"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 103,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4108,13 +4024,13 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: "₦29,000.00"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 105,
+                                    lineNumber: 104,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 103,
+                            lineNumber: 102,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4125,7 +4041,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: "Applicant"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 108,
+                                    lineNumber: 107,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4133,13 +4049,13 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: store.applicantType === "individual" ? `${store.firstName} ${store.lastName}` : store.organizationName
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 109,
+                                    lineNumber: 108,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 107,
+                            lineNumber: 106,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4150,7 +4066,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: "Submission Date"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 114,
+                                    lineNumber: 113,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4158,19 +4074,19 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     children: new Date().toLocaleDateString()
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 115,
+                                    lineNumber: 114,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 113,
+                            lineNumber: 112,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 98,
+                    lineNumber: 97,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4181,7 +4097,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                             children: "What Happens Next?"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 121,
+                            lineNumber: 120,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4195,37 +4111,37 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                             children: "1"
                                         }, void 0, false, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 124,
+                                            lineNumber: 134,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "font-medium text-blue-900 dark:text-blue-100",
-                                                    children: "Confirmation Email"
+                                                    children: "CAC Processing"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 128,
+                                                    lineNumber: 138,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "text-sm text-blue-800 dark:text-blue-200",
-                                                    children: "Check your email for a detailed confirmation and receipt"
+                                                    children: "CAC will process your application (typically 2-5 working days)"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 129,
+                                                    lineNumber: 139,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 127,
+                                            lineNumber: 137,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 123,
+                                    lineNumber: 133,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4236,89 +4152,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                             children: "2"
                                         }, void 0, false, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 135,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "font-medium text-blue-900 dark:text-blue-100",
-                                                    children: "CAC Processing"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 139,
-                                                    columnNumber: 17
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-sm text-blue-800 dark:text-blue-200",
-                                                    children: "CAC will process your application (typically 2-5 working days)"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 140,
-                                                    columnNumber: 17
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 138,
-                                            columnNumber: 15
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 134,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex gap-3",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0",
-                                            children: "3"
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 146,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "font-medium text-blue-900 dark:text-blue-100",
-                                                    children: "Status Updates"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 150,
-                                                    columnNumber: 17
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-sm text-blue-800 dark:text-blue-200",
-                                                    children: "You'll receive status updates via email. You can also check status using the reference above"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 151,
-                                                    columnNumber: 17
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 149,
-                                            columnNumber: 15
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 145,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex gap-3",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0",
-                                            children: "4"
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 157,
+                                            lineNumber: 156,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4328,7 +4162,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                                     children: "Certificate Download"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 161,
+                                                    lineNumber: 160,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4336,31 +4170,31 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                                     children: "Once approved, download your CAC certificate and proceed with PoS setup"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 162,
+                                                    lineNumber: 161,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 160,
+                                            lineNumber: 159,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 156,
+                                    lineNumber: 155,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 122,
+                            lineNumber: 121,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 120,
+                    lineNumber: 119,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4374,14 +4208,14 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     className: "w-5 h-5"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 176,
+                                    lineNumber: 175,
                                     columnNumber: 13
                                 }, this),
                                 "Download Receipt"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 172,
+                            lineNumber: 171,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4391,7 +4225,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                             children: "Previous"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 179,
+                            lineNumber: 178,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -4412,30 +4246,30 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                                     className: "w-5 h-5"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 200,
+                                    lineNumber: 199,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 186,
+                            lineNumber: 185,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 171,
+                    lineNumber: 170,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/steps/confirmation-page.tsx",
-            lineNumber: 71,
+            lineNumber: 70,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/steps/confirmation-page.tsx",
-        lineNumber: 70,
+        lineNumber: 69,
         columnNumber: 5
     }, this);
 }
