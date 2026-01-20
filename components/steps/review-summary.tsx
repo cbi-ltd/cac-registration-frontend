@@ -53,8 +53,8 @@ export function ReviewSummaryStep() {
       const resp = await fetch(`https://cac-registration-backend.onrender.com/api/payments/checkout/status/${store.paymentReference}`)
       if (!resp.ok) throw new Error("Failed to fetch payment status")
       const json = await resp.json()
-      // const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase()
-      const status = "success" // For testing purposes
+      const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase()
+      // const status = "success" // For testing purposes
       if (status) {
         store.updateField("paymentStatus", status)
         setCheckMessage(`Payment status: ${status}`)
@@ -143,8 +143,8 @@ export function ReviewSummaryStep() {
       }
 
       // Redirect user to the payment provider
-      // window.location.href = authUrl
-      window.open(authUrl, "_blank")
+      window.location.href = authUrl
+      // window.open(authUrl, "_blank")
       setIsProcessingPayment(false)
       checkPaymentStatus()
       // Note: Page will unload, so finally block won't execute as expected

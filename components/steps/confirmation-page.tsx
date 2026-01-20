@@ -20,40 +20,39 @@ export function ConfirmationPageStep() {
   const downloadReceipt = () => {
     const receipt = `CAC BUSINESS REGISTRATION - RECEIPT
 
-Date: ${new Date().toLocaleDateString()}
-Time: ${new Date().toLocaleTimeString()}
+    Date: ${new Date().toLocaleDateString()}
+    Time: ${new Date().toLocaleTimeString()}
 
-REGISTERED DETAILS
-==================
-Business Name: ${store.selectedBusinessName}
-Applicant Type: ${store.applicantType.toUpperCase()}
-${
-  store.applicantType === "individual"
-    ? `Applicant Name: ${store.firstName} ${store.lastName}`
-    : `Organization: ${store.organizationName}`
-}
-Business Activity: ${store.businessActivity}
+    REGISTERED DETAILS
+    ==================
+    Business Name: ${store.selectedBusinessName}
+    Applicant Type: ${store.applicantType.toUpperCase()}
+    ${
+      store.applicantType === "individual"
+        ? `Applicant Name: ${store.firstName} ${store.lastName}`
+        : `Organization: ${store.organizationName}`
+    }
+    Business Activity: ${store.businessActivity}
 
-PAYMENT INFORMATION
-===================
-Total Paid: ₦29,000.00
-Payment Status: SUCCESS
+    PAYMENT INFORMATION
+    ===================
+    Total Paid: ₦29,000.00
+    Payment Status: SUCCESS
 
-NEXT STEPS
-==========
-1. Your application has been successfully submitted to CAC
-2. You will receive email updates on your application status
-3. Check your application status via the support channels provided
-4. Expected processing time: 2-5 working days
+    NEXT STEPS
+    ==========
+    1. Your application has been successfully submitted to CAC
+    2. Check your application status via the support channels provided
+    3. Expected processing time: 2-5 working days
 
-IMPORTANT NOTES
-===============
-- Keep this receipt for your records
-- Do not share sensitive transaction information
-- For inquiries, contact support@cbi.ng or call +234 (0) 800 000 0000
+    IMPORTANT NOTES
+    ===============
+    - Keep this receipt for your records
+    - Do not share sensitive transaction information
+    - For inquiries, contact support@cbitechnologiesltd.ng or call +234 (0) 800 000 0000
 
----
-This is an automated receipt. For questions, please contact CBI Technologies support.`
+    ---
+    This is an automated receipt. For questions, please contact CBI Technologies support.`
 
     const blob = new Blob([receipt], { type: "text/plain" })
     const url = window.URL.createObjectURL(blob)
@@ -79,10 +78,10 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
         </p>
 
         {/* Reference Notice (hidden transactionRef) */}
-        <div className="bg-secondary rounded-lg p-6 mb-8 max-w-md mx-auto">
+        {/* <div className="bg-secondary rounded-lg p-6 mb-8 max-w-md mx-auto">
           <p className="text-sm text-muted-foreground mb-2 uppercase font-semibold">Application Reference</p>
           <div className="flex items-center justify-between gap-3 mb-3">
-            <span className="text-sm text-muted-foreground">A unique reference has been recorded and sent to your email.</span>
+            <span className="text-sm text-muted-foreground">A unique reference has been recorded and ${store.transactionRef}.</span>
             <button
               onClick={handleCopyReference}
               className="p-2 hover:bg-secondary-dark rounded-lg transition-colors"
@@ -92,7 +91,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
             </button>
           </div>
           <p className="text-xs text-muted-foreground">{copied ? "✓ Copied to clipboard!" : "Check your email for the reference number"}</p>
-        </div>
+        </div> */}
 
         {/* Confirmation Details */}
         <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
@@ -120,7 +119,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
         <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-8 max-w-2xl mx-auto text-left">
           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-4">What Happens Next?</h3>
           <div className="space-y-3">
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
                 1
               </span>
@@ -130,10 +129,10 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                   Check your email for a detailed confirmation and receipt
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className="flex gap-3">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
-                2
+                1
               </span>
               <div>
                 <p className="font-medium text-blue-900 dark:text-blue-100">CAC Processing</p>
@@ -142,7 +141,7 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                 </p>
               </div>
             </div>
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
                 3
               </span>
@@ -152,10 +151,10 @@ This is an automated receipt. For questions, please contact CBI Technologies sup
                   You'll receive status updates via email. You can also check status using the reference above
                 </p>
               </div>
-            </div>
+            </div> */}
             <div className="flex gap-3">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
-                4
+                2
               </span>
               <div>
                 <p className="font-medium text-blue-900 dark:text-blue-100">Certificate Download</p>

@@ -78,6 +78,29 @@ const appendIfExists = (fd, key, value)=>{
         fd.append(key, value);
     }
 };
+const generateApplicationReference = (length = 9)=>{
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for(let i = 0; i < length; i++){
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+};
+console.log("Generated application reference:", generateApplicationReference(9));
+const base64ToFile = (base64, filename)=>{
+    const [meta, data] = base64.split(",");
+    const mime = meta.match(/:(.*?);/)?.[1] || "application/octet-stream";
+    const binary = atob(data);
+    const array = new Uint8Array(binary.length);
+    for(let i = 0; i < binary.length; i++){
+        array[i] = binary.charCodeAt(i);
+    }
+    return new File([
+        array
+    ], filename, {
+        type: mime
+    });
+};
 /* ===================== FORM DATA BUILDER ===================== */ const buildSubmissionPayload = (data)=>{
     const fd = new FormData();
     appendIfExists(fd, "lineOfBusiness", data.businessActivity || data.natureOfBusiness);
@@ -89,7 +112,7 @@ const appendIfExists = (fd, key, value)=>{
     appendIfExists(fd, "proprietorNationality", data.nationality);
     appendIfExists(fd, "proprietorDob", data.dateOfBirth);
     appendIfExists(fd, "proprietorGender", data.gender?.toUpperCase());
-    appendIfExists(fd, "proprietorStreetNumber", extractStreetNumber(data.residentialAddress));
+    appendIfExists(fd, "proprietorStreetNumber", extractStreetNumber(data.proprietorStreetNumber));
     appendIfExists(fd, "proprietorServiceAddress", data.residentialAddress);
     appendIfExists(fd, "companyAddress", data.businessAddress);
     appendIfExists(fd, "companyEmail", data.businessEmail);
@@ -97,17 +120,36 @@ const appendIfExists = (fd, key, value)=>{
     appendIfExists(fd, "companyState", data.companyState);
     appendIfExists(fd, "companyStreetNumber", data.companyStreetNumber);
     appendIfExists(fd, "businessCommencementDate", data.commencementDate);
-    // appendIfExists(fd, "companyCity", data.businessAddress) // assuming city is part of address
     appendIfExists(fd, "proposedOption1", data.selectedBusinessName || data.preferredNames?.[0]);
-    appendIfExists(fd, "transactionRef", data.paymentReference || data.applicationReference);
+    // appendIfExists(
+    //   fd,
+    //   "transactionRef",
+    //   data.paymentReference || data.applicationReference
+    // )
+    const transactionRef = // data.paymentReference ||
+    // data.applicationReference ||
+    generateApplicationReference(9);
+    appendIfExists(fd, "transactionRef", transactionRef);
     appendIfExists(fd, "proprietorCity", data.proprietorCity);
     appendIfExists(fd, "proprietorState", data.proprietorState);
     appendIfExists(fd, "proprietorPostcode", data.proprietorPostcode);
     appendIfExists(fd, "proprietorLga", data.proprietorLga);
-    appendIfExists(fd, "supportingDoc", data.supportingDocBase64);
-    appendIfExists(fd, "signature", data.signatureBase64);
-    appendIfExists(fd, "meansOfId", data.meansOfIdBase64);
-    appendIfExists(fd, "passport", data.passportBase64);
+    // appendIfExists(fd, "supportingDoc", data.supportingDocBase64)
+    // appendIfExists(fd, "signature", data.signatureBase64)
+    // appendIfExists(fd, "meansOfId", data.meansOfIdBase64)
+    // appendIfExists(fd, "passport", data.passportBase64)
+    if (data.supportingDocBase64) {
+        fd.append("supportingDoc", base64ToFile(data.supportingDocBase64, "supporting-doc.png"));
+    }
+    if (data.signatureBase64) {
+        fd.append("signature", base64ToFile(data.signatureBase64, "signature.png"));
+    }
+    if (data.meansOfIdBase64) {
+        fd.append("meansOfId", base64ToFile(data.meansOfIdBase64, "means-of-id.png"));
+    }
+    if (data.passportBase64) {
+        fd.append("passport", base64ToFile(data.passportBase64, "passport.png"));
+    }
     // console.log("FORM DATA:", [...fd.entries()])
     return fd;
 };
@@ -136,11 +178,22 @@ const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f
                 method: "POST",
                 body: formData
             });
-            if (!resp.ok) throw new Error("Submission failed");
+            if (!resp.ok) {
+                let errorMessage = `${resp.status}: ${resp.statusText}`;
+                try {
+                    const errorData = await resp.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    }
+                } catch (e) {
+                // If parsing JSON fails, use the default error message
+                }
+                throw new Error(errorMessage);
+            }
             const result = await resp.json();
             set({
-                applicationId: result?.data?.data?.rcNumber,
-                submitted: true
+                applicationId: result?.data?.transactionRef,
+                applicationReference: result?.data?.transactionRef
             });
             return result;
         },

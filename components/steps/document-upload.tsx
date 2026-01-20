@@ -26,9 +26,9 @@ export function DocumentUploadStep() {
       description: "Any supporting document (ID copy or company document).",
       fieldName: "supportingDocBase64",
       required: true,
-      // accepted: ["application/pdf", "image/jpeg", "image/png"],
-      accepted: ["image/jpeg", "image/png"],
-      maxSize: 1 * 1024 * 1024,
+      accepted: ["application/pdf", "image/jpeg", "image/png"],
+      // accepted: ["image/jpeg", "image/png"],
+      maxSize: 5 * 1024 * 1024,
     },
     {
       name: "Signature (scanned)",
@@ -36,7 +36,7 @@ export function DocumentUploadStep() {
       fieldName: "signatureBase64",
       required: true,
       accepted: ["image/jpeg", "image/png"],
-      maxSize: 1 * 1024 * 1024,
+      maxSize: 5 * 1024 * 1024,
     },
     {
       name: "Means of ID (front)",
@@ -52,8 +52,7 @@ export function DocumentUploadStep() {
       fieldName: "passportBase64",
       required: true,
       accepted: ["image/jpeg", "image/png"],
-      // maxSize: 2 * 1024 * 1024,
-      maxSize: 1 * 1024 * 1024,
+      maxSize: 5 * 1024 * 1024,
     },
   ]
 
@@ -94,65 +93,65 @@ export function DocumentUploadStep() {
     reader.readAsDataURL(file)
   }
 
-  const downloadConsentLetter = () => {
-    const consentTemplate = `CONSENT LETTER FOR CAC BUSINESS NAME REGISTRATION
+  // const downloadConsentLetter = () => {
+  //   const consentTemplate = `CONSENT LETTER FOR CAC BUSINESS NAME REGISTRATION
 
-Date: ${new Date().toLocaleDateString()}
+  //   Date: ${new Date().toLocaleDateString()}
 
-TO: CORPORATE AFFAIRS COMMISSION (CAC)
+  //   TO: CORPORATE AFFAIRS COMMISSION (CAC)
 
-RE: CONSENT TO BUSINESS NAME REGISTRATION
+  //   RE: CONSENT TO BUSINESS NAME REGISTRATION
 
-Dear Sir/Madam,
+  //   Dear Sir/Madam,
 
-I, ___________________________________ (Full Name), hereby give my consent to the registration of the business name:
+  //   I, ___________________________________ (Full Name), hereby give my consent to the registration of the business name:
 
-"${store.selectedBusinessName || "[Business Name]"}"
+  //   "${store.selectedBusinessName || "[Business Name]"}"
 
-as a proprietorship/partnership in my name. I confirm that:
+  //   as a proprietorship/partnership in my name. I confirm that:
 
-1. I am the authorized person to sign this document on behalf of the business
-2. All information provided in the registration application is accurate and complete
-3. I understand the implications of business name registration
-4. I consent to the processing of my personal data as required by law
-5. I acknowledge that this registration is with the Corporate Affairs Commission (CAC)
+  //   1. I am the authorized person to sign this document on behalf of the business
+  //   2. All information provided in the registration application is accurate and complete
+  //   3. I understand the implications of business name registration
+  //   4. I consent to the processing of my personal data as required by law
+  //   5. I acknowledge that this registration is with the Corporate Affairs Commission (CAC)
 
-I further declare that the information contained in this application is true to the best of my knowledge and belief.
+  //   I further declare that the information contained in this application is true to the best of my knowledge and belief.
 
-Signed:
+  //   Signed:
 
-__________________________                    Date: ________________
-Signature of Applicant
+  //   __________________________                    Date: ________________
+  //   Signature of Applicant
 
-Printed Name: ________________________
+  //   Printed Name: ________________________
 
-I.D. Type: ________________________    I.D. Number: ________________
+  //   I.D. Type: ________________________    I.D. Number: ________________
 
-Phone: ________________________        Email: ________________
+  //   Phone: ________________________        Email: ________________
 
-Address: ________________________________________________________
+  //   Address: ________________________________________________________
 
-Witnessed by:
+  //   Witnessed by:
 
-__________________________                    Date: ________________
-Witness Signature
+  //   __________________________                    Date: ________________
+  //   Witness Signature
 
-Witness Name: ________________________
+  //   Witness Name: ________________________
 
-I.D. Type: ________________________    I.D. Number: ________________
+  //   I.D. Type: ________________________    I.D. Number: ________________
 
-NOTE: This letter must be signed in the presence of a witness.`
+  //   NOTE: This letter must be signed in the presence of a witness.`
 
-    const blob = new Blob([consentTemplate], { type: "text/plain" })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "CAC_Consent_Letter_Template.txt"
-    document.body.appendChild(a)
-    a.click()
-    window.URL.revokeObjectURL(url)
-    document.body.removeChild(a)
-  }
+  //   const blob = new Blob([consentTemplate], { type: "text/plain" })
+  //   const url = window.URL.createObjectURL(blob)
+  //   const a = document.createElement("a")
+  //   a.href = url
+  //   a.download = "CAC_Consent_Letter_Template.txt"
+  //   document.body.appendChild(a)
+  //   a.click()
+  //   window.URL.revokeObjectURL(url)
+  //   document.body.removeChild(a)
+  // }
 
   const uploadedCount = documents.filter((doc) => !!(store as any)[doc.fieldName]).length
 
