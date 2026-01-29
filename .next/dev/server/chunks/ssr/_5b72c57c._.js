@@ -86,7 +86,6 @@ const generateApplicationReference = (length = 9)=>{
     }
     return result;
 };
-console.log("Generated application reference:", generateApplicationReference(9));
 const base64ToFile = (base64, filename)=>{
     const [meta, data] = base64.split(",");
     const mime = meta.match(/:(.*?);/)?.[1] || "application/octet-stream";
@@ -153,20 +152,26 @@ const base64ToFile = (base64, filename)=>{
     // console.log("FORM DATA:", [...fd.entries()])
     return fd;
 };
+const noopStorage = {
+    getItem: ()=>null,
+    setItem: ()=>{},
+    removeItem: ()=>{}
+};
 const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$react$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["create"])()((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["persist"])((set, get)=>({
         ...initialState,
-        updateField: (field, value)=>set((state)=>({
-                    ...state,
-                    [field]: value
-                })),
+        hasHydrated: false,
+        updateField: (field, value)=>set({
+                [field]: value
+            }),
+        setHasHydrated: (value)=>set({
+                hasHydrated: value
+            }),
         nextStep: ()=>set((state)=>({
                     currentStep: Math.min(state.currentStep + 1, 7),
-                    completedSteps: [
-                        ...new Set([
-                            ...state.completedSteps,
-                            state.currentStep
-                        ])
-                    ]
+                    completedSteps: Array.from(new Set([
+                        ...state.completedSteps,
+                        state.currentStep
+                    ]))
                 })),
         previousStep: ()=>set((state)=>({
                     currentStep: Math.max(state.currentStep - 1, 1)
@@ -182,12 +187,8 @@ const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f
                 let errorMessage = `${resp.status}: ${resp.statusText}`;
                 try {
                     const errorData = await resp.json();
-                    if (errorData.message) {
-                        errorMessage = errorData.message;
-                    }
-                } catch (e) {
-                // If parsing JSON fails, use the default error message
-                }
+                    if (errorData?.message) errorMessage = errorData.message;
+                } catch  {}
                 throw new Error(errorMessage);
             }
             const result = await resp.json();
@@ -200,272 +201,71 @@ const useRegistrationStore = (0, __TURBOPACK__imported__module__$5b$project$5d2f
         reset: ()=>set(initialState)
     }), {
     name: "cbi-registration",
+    storage: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zustand$2f$esm$2f$middleware$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createJSONStorage"])(()=>("TURBOPACK compile-time falsy", 0) ? "TURBOPACK unreachable" : noopStorage),
+    onRehydrateStorage: ()=>(state)=>{
+            state?.setHasHydrated(true);
+        },
+    // ✅ Persist ONLY serializable, long-lived data
     partialize: (state)=>state
-})) // import { create } from "zustand"
- // import { persist } from "zustand/middleware"
- // // Base API URL for all backend requests
- // export const API_BASE_URL = "https://cac-registration-backend.onrender.com/api/merchant/"
- // export interface RegistrationData {
- //   // Step 1: Name availability
- //   preferredNames: string[]
- //   selectedBusinessName: string
- //   // Step 2: Applicant Information
- //   applicantType: "individual" | "organization"
- //   // Individual fields
- //   title: string
- //   firstName: string
- //   middleName: string
- //   lastName: string
- //   // Organization fields
- //   organizationName: string
- //   rcNumber: string
- //   organizationEmail: string
- //   // Common fields
- //   dateOfBirth: string
- //   gender: "male" | "female" | ""
- //   nationality: string
- //   phone: string
- //   email: string
- //   residentialAddress: string
- //   // Step 3: Identification
- //   idType: string
- //   idNumber: string
- //   idIssueDate: string
- //   idExpiryDate: string
- //   idDocument: File | null
- //   passportPhoto: File | null
- //   // Step 4: Business Details
- //   businessActivity: string
- //   businessActivityCode: string
- //   natureOfBusiness: string
- //   businessAddress: string
- //   sameAsResidential: string
- //   businessPhone: string
- //   businessEmail: string
- //   commencementDate: string
- //   // Step 5: Documents
- //   proofOfAddress: File | null
- //   // consentLetter: File | null
- //   // Step 6: Payment
- //   paymentStatus: "pending"|"initiating" | "success" | "failed"
- //   paymentReference: string
- //   paymentError: string
- //   submitted: boolean
- //   // Meta
- //   currentStep: number
- //   completedSteps: number[]
- //   applicationId: string
- //   applicationReference: string
- //   // optional base64 document fields when backend provides encoded docs
- //   supportingDocBase64?: string | null
- //   signatureBase64?: string | null
- //   meansOfIdBase64?: string | null
- //   passportBase64?: string | null
- // }
- // const initialState: RegistrationData = {
- //   preferredNames: ["", ""],
- //   selectedBusinessName: "",
- //   applicantType: "individual",
- //   title: "",
- //   firstName: "",
- //   middleName: "",
- //   lastName: "",
- //   organizationName: "",
- //   rcNumber: "",
- //   organizationEmail: "",
- //   dateOfBirth: "",
- //   gender: "",
- //   nationality: "",
- //   phone: "",
- //   email: "",
- //   residentialAddress: "",
- //   idType: "",
- //   idNumber: "",
- //   idIssueDate: "",
- //   idExpiryDate: "",
- //   idDocument: null,
- //   passportPhoto: null,
- //   businessActivity: "",
- //   businessActivityCode: "",
- //   natureOfBusiness: "",
- //   businessAddress: "",
- //   sameAsResidential: "",
- //   businessPhone: "",
- //   businessEmail: "",
- //   commencementDate: "",
- //   proofOfAddress: null,
- //   // consentLetter: null,
- //   paymentStatus: "pending",
- //   paymentReference: "",
- //   paymentError: "",
- //   submitted: false,
- //   currentStep: 1,
- //   completedSteps: [],
- //   applicationId: "",
- //   applicationReference: "",
- //   supportingDocBase64: null,
- //   signatureBase64: null,
- //   meansOfIdBase64: null,
- //   passportBase64: null,
- // }
- // // Helper to build backend payload from store data (steps 2-4)
- // function buildSubmissionPayload(storeObj: any) {
- //   // Helper to extract street number if available from an address string
- //   const extractStreetNumber = (addr: string) => {
- //     if (!addr || typeof addr !== "string") return ""
- //     const parts = addr.trim().split(/\s+/)
- //     return parts.length && /^\d+/.test(parts[0]) ? parts[0] : ""
- //   }
- //   const body = new FormData()
- //   // Text fields
- //   body.append("lineOfBusiness", storeObj.businessActivity ?? storeObj.natureOfBusiness ?? "")
- //   console.log("creating:", storeObj.natureOfBusiness);
- //   body.append("proprietorCity", storeObj.proprietorCity ?? storeObj.residentialCity ?? "")
- //   body.append("companyCity", storeObj.companyCity ?? "")
- //   body.append("proprietorPhonenumber", storeObj.phone ?? storeObj.proprietorPhonenumber ?? "")
- //   body.append("businessCommencementDate", storeObj.commencementDate ?? "")
- //   body.append("companyState", storeObj.companyState ?? "")
- //   body.append("proprietorNationality", storeObj.nationality ?? storeObj.proprietorNationality ?? "")
- //   body.append("proprietorState", storeObj.proprietorState ?? "")
- //   body.append("proprietorDob", storeObj.dateOfBirth ?? storeObj.proprietorDob ?? "")
- //   body.append("proprietorFirstname", storeObj.firstName ?? "")
- //   body.append("proprietorOthername", storeObj.middleName ?? storeObj.proprietorOthername ?? "")
- //   body.append("proprietorSurname", storeObj.lastName ?? "")
- //   body.append("proposedOption1", storeObj.selectedBusinessName ?? storeObj.preferredNames?.[0] ?? "")
- //   body.append("proprietorGender", (storeObj.gender ?? "").toUpperCase())
- //   body.append("proprietorStreetNumber", storeObj.proprietorStreetNumber ?? extractStreetNumber(storeObj.residentialAddress ?? ""))
- //   body.append("proprietorServiceAddress", storeObj.residentialAddress ?? "")
- //   body.append("companyEmail", storeObj.businessEmail ?? storeObj.companyEmail ?? "")
- //   body.append("companyStreetNumber", storeObj.companyStreetNumber ?? extractStreetNumber(storeObj.businessAddress ?? ""))
- //   body.append("proprietorEmail", storeObj.email ?? storeObj.proprietorEmail ?? "")
- //   body.append("companyAddress", storeObj.businessAddress ?? "")
- //   body.append("proprietorPostcode", storeObj.proprietorPostcode ?? "")
- //   body.append("proprietorLga", storeObj.proprietorLga ?? "")
- //   body.append("transactionRef", storeObj.paymentReference ?? storeObj.applicationReference ?? "VAS34500236")
- //   // File fields
- //   if (storeObj.supportingDocBase64 ?? storeObj.supportingDoc) {
- //     body.append("supportingDoc", storeObj.supportingDocBase64 ?? storeObj.supportingDoc)
- //   }
- //   if (storeObj.signatureBase64 ?? storeObj.signature) {
- //     body.append("signature", storeObj.signatureBase64 ?? storeObj.signature)
- //   }
- //   if (storeObj.meansOfIdBase64 ?? storeObj.meansOfId) {
- //     body.append("meansOfId", storeObj.meansOfIdBase64 ?? storeObj.meansOfId)
- //   }
- //   if (storeObj.passportBase64 ?? storeObj.passport) {
- //     body.append("passport", storeObj.passportBase64 ?? storeObj.passport)
- //   }
- //   console.log("Submission payload:", body);
- //   return body
- // }
- // export const useRegistrationStore = create<
+})) // export const useRegistrationStore = create<
  //   RegistrationData & {
- //     updateField: (field: string, value: any) => void
+ //     updateField: (field: keyof RegistrationData, value: any) => void
  //     nextStep: () => void
  //     previousStep: () => void
- //     markStepComplete: (step: number) => void
+ //     submitRegistration: () => Promise<any>
  //     reset: () => void
- //     loadFromApi: (data: any) => void
- //     submitRegistration: (overridePayload?: Partial<RegistrationData>) => Promise<any>
  //   }
- // >(
+ // >()(
  //   persist(
- //     (set) => ({
+ //     (set, get) => ({
  //       ...initialState,
- //       // Populate store fields from backend API response shape
- //       loadFromApi: (data: any) =>
- //         set((state: any) => ({
- //           // map known fields from backend response to store
- //           businessActivity: data.lineOfBusiness ?? state.businessActivity,
- //           commencementDate: data.businessCommencementDate ?? state.commencementDate,
- //           businessAddress: data.companyAddress ?? state.businessAddress,
- //           businessEmail: data.companyEmail ?? state.businessEmail,
- //           businessPhone: data.proprietorPhonenumber ?? state.businessPhone,
- //           selectedBusinessName: data.proposedOption1 ?? state.selectedBusinessName,
- //           // proprietor -> applicant fields
- //           firstName: data.proprietorFirstname ?? state.firstName,
- //           middleName: data.proprietorOthername ?? state.middleName,
- //           lastName: data.proprietorSurname ?? state.lastName,
- //           dateOfBirth: data.proprietorDob ?? state.dateOfBirth,
- //           gender: (data.proprietorGender ?? state.gender)?.toLowerCase() === "male" ? "male" : "female",
- //           nationality: data.proprietorNationality ?? state.nationality,
- //           phone: data.proprietorPhonenumber ?? state.phone,
- //           email: data.proprietorEmail ?? state.email,
- //           residentialAddress: `${data.proprietorStreetNumber ?? ""} ${data.proprietorServiceAddress ?? ""} ${data.proprietorCity ?? ""}`.trim(),
- //           // transaction and document base64
- //           applicationReference: data.transactionRef ?? state.applicationReference,
- //           supportingDocBase64: data.supportingDoc ?? state.supportingDocBase64,
- //           signatureBase64: data.signature ?? state.signatureBase64,
- //           meansOfIdBase64: data.meansOfId ?? state.meansOfIdBase64,
- //           passportBase64: data.passport ?? state.passportBase64,
- //           submitted: false,
- //         })),
- //       // Submit registration payload to backend endpoint
- //       submitRegistration: async (overridePayload?: Partial<RegistrationData>) => {
- //         let result: any = null
- //         try {
- //           // If an override payload is provided, prefer it. Otherwise read persisted store from sessionStorage
- //           let storeObj: any = overridePayload ? Object.fromEntries(Object.entries(overridePayload).filter(([key, value]) => typeof value !== 'function')) : {}
- //           if (!overridePayload) {
- //             const raw = localStorage.getItem("cbi-registration")
- //             let parsed: any = {}
- //             if (raw) {
- //               try {
- //                 parsed = JSON.parse(raw)
- //               } catch (e) {
- //                 parsed = {}
- //               }
- //             }
- //             storeObj = parsed
- //           }
- //           const body = buildSubmissionPayload(storeObj)
- //           console.log('storeObj:', storeObj)
- //           console.log('body:', body)
- //           const formData = new FormData()
- //           for (const key in body) {
- //             if (body[key] !== undefined) {
- //               formData.append(key, body[key] ?? "")
- //             }
- //           }
- //           console.log('formData entries:', [...formData.entries()])
- //           console.log("Object.keys(body):",  Object.keys(body))
- //           const resp = await fetch(`${API_BASE_URL}reg-bn`, {
- //             method: "POST",
- //             body: formData,
- //           })
- //           if (!resp.ok) throw new Error("Registration submission failed")
- //           result = await resp.json()
- //           // Optionally update store from response
- //           set((s: any) => ({ applicationId: result?.data?.data?.rcNumber ?? s.applicationId }))
- //         } catch (err) {
- //           throw err
- //         }
- //         return result
- //       },
- //       updateField: (field: any, value: any) =>
- //         set((state: any) => ({
- //           ...state,
- //           [field]: value,
- //         })),
+ //       updateField: (field, value) =>
+ //         set((state) => ({ ...state, [field]: value })),
  //       nextStep: () =>
- //         set((state: any) => ({
+ //         set((state) => ({
  //           currentStep: Math.min(state.currentStep + 1, 7),
  //           completedSteps: [...new Set([...state.completedSteps, state.currentStep])],
  //         })),
  //       previousStep: () =>
- //         set((state: any) => ({
+ //         set((state) => ({
  //           currentStep: Math.max(state.currentStep - 1, 1),
  //         })),
- //       markStepComplete: (step: number) =>
- //         set((state: any) => ({
- //           completedSteps: [...new Set([...state.completedSteps, step])],
- //         })),
+ //       submitRegistration: async () => {
+ //         const state = get()
+ //         const formData = buildSubmissionPayload(state)
+ //         const resp = await fetch(`${API_BASE_URL}reg-bn`, {
+ //           method: "POST",
+ //           body: formData,
+ //         })
+ //         if (!resp.ok) {
+ //           let errorMessage = `${resp.status}: ${resp.statusText}`
+ //           try {
+ //             const errorData = await resp.json()
+ //             if (errorData.message) {
+ //               errorMessage = errorData.message
+ //             }
+ //           } catch (e) {
+ //             // If parsing JSON fails, use the default error message
+ //           }
+ //           throw new Error(errorMessage)
+ //         }
+ //         const result = await resp.json()
+ //         set({
+ //           applicationId: result?.data?.transactionRef,
+ //           applicationReference: result?.data?.transactionRef,
+ //         })
+ //         return result
+ //       },
  //       reset: () => set(initialState),
  //     }),
  //     {
  //       name: "cbi-registration",
- //     },
- //   ) as any,
+ //       storage: createJSONStorage(() =>
+ //         typeof window !== "undefined" ? localStorage : undefined
+ //       ),
+ //       // partialize: (state) => state, // persist full state safely
+ //     }
+ //   )
  // )
 ;
 }),
@@ -1442,13 +1242,55 @@ function NameAvailabilityStep() {
     const [lineOfBusiness, setLineOfBusiness] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState("");
     const [recommendedMessage, setRecommendedMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState("");
     const [recommendedKeywords, setRecommendedKeywords] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState([]);
-    // Feature toggle:
-    // For production uncomment the next line to REQUIRE the API responseMessage
-    // "Proceed to filing" before enabling the Next button.
-    // const REQUIRE_RESPONSE_FOR_NEXT = true
-    // const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
     const handleProposedNameChange = (value)=>setProposedName(value.toLocaleUpperCase());
     const handleLineOfBusinessChange = (value)=>setLineOfBusiness(value);
+    // const checkAvailability = async () => {
+    //   if (!proposedName.trim()) {
+    //     setError("Please enter a proposed business name")
+    //     return
+    //   }
+    //   setIsChecking(true)
+    //   setError("")
+    //   setResponseMessage("")
+    //   try {
+    //     const resp = await fetch(`${API_BASE_URL}check-bn`, {
+    //       method: "POST",
+    //       headers: { "Content-Type": "application/json" },
+    //       body: JSON.stringify({ proposedName: proposedName.trim(), lineOfBusiness: lineOfBusiness.trim() }),
+    //     })
+    //     if (!resp.ok) {
+    //       setError("Name check failed. Please try again.")
+    //       return
+    //     }
+    //     store.updateField("selectedBusinessName", proposedName.trim())
+    //     const json = await resp.json()
+    //     // Attempt to locate recommendedActions in the nested response structure.
+    //     const recActions =
+    //     json?.data?.data?.data?.recommendedActions ??
+    //     json?.data?.data?.recommendedActions ??
+    //     json?.data?.recommendedActions ??
+    //     null
+    //     if (recActions && Array.isArray(recActions) && recActions.length > 0) {
+    //       const msg = recActions[0].message ?? ""
+    //       setRecommendedMessage(msg)
+    //       setRecommendedKeywords(recActions[0].keywords ?? [])
+    //     } else {
+    //       setRecommendedMessage("")
+    //       setRecommendedKeywords([])
+    //     }
+    //     // Optionally surface a short status message from the API (if present)
+    //     const statusMessage = json?.data?.data?.message ?? json?.data?.message ?? ""
+    //     const finalResponse = statusMessage || (recActions && recActions[0]?.message) || "Proceed to filing"
+    //     setResponseMessage(finalResponse)
+    //     // Auto-select name when backend indicates proceed (or when there were no recommendations)
+    //     if (!recActions || finalResponse === "Proceed to filing") {
+    //     }
+    //   } catch (err) {
+    //     setError("Failed to check availability. Please try again.")
+    //   } finally {
+    //     setIsChecking(false)
+    //   }
+    // }
     const checkAvailability = async ()=>{
         if (!proposedName.trim()) {
             setError("Please enter a proposed business name");
@@ -1457,6 +1299,8 @@ function NameAvailabilityStep() {
         setIsChecking(true);
         setError("");
         setResponseMessage("");
+        setRecommendedMessage("");
+        setRecommendedKeywords([]);
         try {
             const resp = await fetch(`${__TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_BASE_URL"]}check-bn`, {
                 method: "POST",
@@ -1469,41 +1313,42 @@ function NameAvailabilityStep() {
                 })
             });
             if (!resp.ok) {
-                setError("Name check failed. Please try again.");
-                return;
+                throw new Error("Name check failed. Please try again.");
             }
-            store.updateField("selectedBusinessName", proposedName.trim());
             const json = await resp.json();
-            // Attempt to locate recommendedActions in the nested response structure.
-            const recActions = json?.data?.data?.data?.recommendedActions ?? json?.data?.data?.recommendedActions ?? json?.data?.recommendedActions ?? null;
-            if (recActions && Array.isArray(recActions) && recActions.length > 0) {
-                const msg = recActions[0].message ?? "";
-                setRecommendedMessage(msg);
-                setRecommendedKeywords(recActions[0].keywords ?? []);
-            } else {
-                setRecommendedMessage("");
-                setRecommendedKeywords([]);
+            /**
+       * Normalize backend response
+       */ const apiMessage = json?.data?.data?.message ?? json?.data?.message ?? "";
+            const recommendedActions = json?.data?.data?.data?.recommendedActions ?? json?.data?.data?.recommendedActions ?? json?.data?.recommendedActions ?? [];
+            /**
+       * Extract recommendations (if any)
+       */ if (Array.isArray(recommendedActions) && recommendedActions.length > 0) {
+                setRecommendedMessage(recommendedActions[0]?.message ?? "");
+                setRecommendedKeywords(recommendedActions[0]?.keywords ?? []);
             }
-            // Optionally surface a short status message from the API (if present)
-            const statusMessage = json?.data?.data?.message ?? json?.data?.message ?? "";
-            const finalResponse = statusMessage || recActions && recActions[0]?.message || "Proceed to filing";
-            setResponseMessage(finalResponse);
-            // Auto-select name when backend indicates proceed (or when there were no recommendations)
-            if (!recActions || finalResponse === "Proceed to filing") {
+            /**
+       * Determine final status
+       */ const finalStatus = apiMessage || recommendedActions?.[0]?.message || "";
+            setResponseMessage(finalStatus);
+            /**
+       * STRICT RULE:
+       * Only store name if explicitly approved
+       */ if (finalStatus === "Proceed to filing") {
+                store.updateField("selectedBusinessName", proposedName.trim());
+            } else {
                 store.updateField("selectedBusinessName", proposedName.trim());
             }
         } catch (err) {
-            setError("Failed to check availability. Please try again.");
+            setError(err.message || "Failed to check availability. Please try again.");
+            store.updateField("selectedBusinessName", "");
         } finally{
             setIsChecking(false);
         }
     };
-    // const handleSelectName = (name: string) => store.updateField("selectedBusinessName", name)
-    // canProceed logic:
-    // - In development we allow proceeding as soon as the name check returns (responseMessage is set)
-    // - For production you can enable `REQUIRE_RESPONSE_FOR_NEXT` to require the API to return
-    //   the explicit responseMessage "Proceed to filing" before enabling Next.
-    const canProceed = responseMessage ? "Proceed to filing" : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing";
+    const canProceed = responseMessage === "Proceed to filing";
+    // store.updateField("selectedBusinessName", proposedName.trim())
+    // const canProceed = responseMessage ? "Proceed to filing"
+    //   : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing"
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
         children: [
@@ -1524,7 +1369,7 @@ function NameAvailabilityStep() {
                                 tooltip: "Enter the exact proposed business name to check"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 101,
+                                lineNumber: 169,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormInput"], {
@@ -1536,13 +1381,13 @@ function NameAvailabilityStep() {
                                 tooltip: "Provide the business activity or industry"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 110,
+                                lineNumber: 178,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 100,
+                        lineNumber: 168,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1555,20 +1400,20 @@ function NameAvailabilityStep() {
                                 className: "w-4 h-4"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 126,
+                                lineNumber: 194,
                                 columnNumber: 11
                             }, this),
                             isChecking ? "Checking Availability..." : "Check Availability"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 120,
+                        lineNumber: 188,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 95,
+                lineNumber: 163,
                 columnNumber: 7
             }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1578,7 +1423,7 @@ function NameAvailabilityStep() {
                         className: "w-5 h-5 text-destructive flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 133,
+                        lineNumber: 201,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1586,13 +1431,13 @@ function NameAvailabilityStep() {
                         children: error
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 134,
+                        lineNumber: 202,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 132,
+                lineNumber: 200,
                 columnNumber: 9
             }, this),
             responseMessage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -1605,17 +1450,17 @@ function NameAvailabilityStep() {
                         children: responseMessage === "Proceed to filing" ? "Proceed to filing" : responseMessage
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 142,
+                        lineNumber: 210,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/steps/name-availability.tsx",
-                    lineNumber: 140,
+                    lineNumber: 208,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 139,
+                lineNumber: 207,
                 columnNumber: 9
             }, this),
             (recommendedMessage || recommendedKeywords && recommendedKeywords.length > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -1629,7 +1474,7 @@ function NameAvailabilityStep() {
                             children: recommendedMessage
                         }, void 0, false, {
                             fileName: "[project]/components/steps/name-availability.tsx",
-                            lineNumber: 150,
+                            lineNumber: 218,
                             columnNumber: 36
                         }, this),
                         recommendedKeywords && recommendedKeywords.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1639,23 +1484,23 @@ function NameAvailabilityStep() {
                                     children: k
                                 }, k, false, {
                                     fileName: "[project]/components/steps/name-availability.tsx",
-                                    lineNumber: 154,
+                                    lineNumber: 222,
                                     columnNumber: 19
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/components/steps/name-availability.tsx",
-                            lineNumber: 152,
+                            lineNumber: 220,
                             columnNumber: 15
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/name-availability.tsx",
-                    lineNumber: 149,
+                    lineNumber: 217,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 148,
+                lineNumber: 216,
                 columnNumber: 9
             }, this),
             canProceed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1665,7 +1510,7 @@ function NameAvailabilityStep() {
                         className: "w-5 h-5 text-green-600 flex-shrink-0 mt-0.5"
                     }, void 0, false, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 164,
+                        lineNumber: 232,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1675,7 +1520,7 @@ function NameAvailabilityStep() {
                                 children: "Name Selected"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 166,
+                                lineNumber: 234,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1690,32 +1535,32 @@ function NameAvailabilityStep() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/steps/name-availability.tsx",
-                                        lineNumber: 168,
+                                        lineNumber: 236,
                                         columnNumber: 31
                                     }, this),
                                     ". Click Next to continue with applicant information."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/steps/name-availability.tsx",
-                                lineNumber: 167,
+                                lineNumber: 235,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/name-availability.tsx",
-                        lineNumber: 165,
+                        lineNumber: 233,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/name-availability.tsx",
-                lineNumber: 163,
+                lineNumber: 231,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/name-availability.tsx",
-        lineNumber: 94,
+        lineNumber: 162,
         columnNumber: 5
     }, this);
 }
@@ -3273,8 +3118,8 @@ function ReviewSummaryStep() {
             const resp = await fetch(`https://cac-registration-backend.onrender.com/api/payments/checkout/status/${store.paymentReference}`);
             if (!resp.ok) throw new Error("Failed to fetch payment status");
             const json = await resp.json();
-            const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase();
-            // const status = "success" // For testing purposes
+            const status = (json?.data?.status || json?.status || "").toString().toLowerCase();
+            // const status = "success"
             if (status) {
                 store.updateField("paymentStatus", status);
                 setCheckMessage(`Payment status: ${status}`);
@@ -3312,13 +3157,6 @@ function ReviewSummaryStep() {
         store.submitRegistration,
         store.nextStep
     ]);
-    // React.useEffect(() => {
-    //   if (submitted || !store.paymentReference || store.paymentStatus === "success") return
-    //   const interval = setInterval(() => {
-    //     checkPaymentStatus()
-    //   }, 9000)
-    //   return () => clearInterval(interval)
-    // }, [submitted, store.paymentReference, store.paymentStatus, checkPaymentStatus])
     const initiatePayment = async ()=>{
         setErrors([]);
         if (!validateSubmission()) return;
@@ -3338,11 +3176,9 @@ function ReviewSummaryStep() {
                 body: JSON.stringify(payload)
             });
             if (!resp.ok) {
-                // const text = await resp.text()
                 setErrors([
                     `Payment initialization failed: ${resp.status}`
                 ]);
-                // setErrors([`Payment initialization failed: ${resp.status} ${text}`])
                 return;
             }
             const json = await resp.json();
@@ -3470,7 +3306,7 @@ function ReviewSummaryStep() {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 202,
+                lineNumber: 190,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3480,7 +3316,7 @@ function ReviewSummaryStep() {
                     className: "w-5 h-5 text-primary"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 207,
+                    lineNumber: 195,
                     columnNumber: 15
                 }, void 0),
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3494,7 +3330,7 @@ function ReviewSummaryStep() {
                                         children: section.section
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                        lineNumber: 212,
+                                        lineNumber: 200,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3507,7 +3343,7 @@ function ReviewSummaryStep() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                                        lineNumber: 216,
+                                                        lineNumber: 204,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3515,24 +3351,24 @@ function ReviewSummaryStep() {
                                                         children: item.value || "Not provided"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                                        lineNumber: 217,
+                                                        lineNumber: 205,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, item.label, true, {
                                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                                lineNumber: 215,
+                                                lineNumber: 203,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                        lineNumber: 213,
+                                        lineNumber: 201,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, section.section, true, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 211,
+                                lineNumber: 199,
                                 columnNumber: 13
                             }, this)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3543,7 +3379,7 @@ function ReviewSummaryStep() {
                                     children: "Documents Uploaded"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 225,
+                                    lineNumber: 213,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3572,7 +3408,7 @@ function ReviewSummaryStep() {
                                                     className: `w-2 h-2 rounded-full ${doc.uploaded ? "bg-green-600" : "bg-destructive"}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                                    lineNumber: 234,
+                                                    lineNumber: 222,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3580,35 +3416,35 @@ function ReviewSummaryStep() {
                                                     children: doc.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                                    lineNumber: 235,
+                                                    lineNumber: 223,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, doc.name, true, {
                                             fileName: "[project]/components/steps/review-summary.tsx",
-                                            lineNumber: 233,
+                                            lineNumber: 221,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 226,
+                                    lineNumber: 214,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 224,
+                            lineNumber: 212,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 209,
+                    lineNumber: 197,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 204,
+                lineNumber: 192,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3621,7 +3457,7 @@ function ReviewSummaryStep() {
                             className: "flex justify-between text-sm"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 246,
+                            lineNumber: 234,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3632,7 +3468,7 @@ function ReviewSummaryStep() {
                                     children: "CAC Registration Fee"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 259,
+                                    lineNumber: 247,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3643,24 +3479,24 @@ function ReviewSummaryStep() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 260,
+                                    lineNumber: 248,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 258,
+                            lineNumber: 246,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 245,
+                    lineNumber: 233,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 244,
+                lineNumber: 232,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3684,7 +3520,7 @@ function ReviewSummaryStep() {
                                     className: "w-4 h-4 mt-1"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 276,
+                                    lineNumber: 264,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3692,23 +3528,23 @@ function ReviewSummaryStep() {
                                     children: term
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 282,
+                                    lineNumber: 270,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, index, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 275,
+                            lineNumber: 263,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 267,
+                    lineNumber: 255,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 266,
+                lineNumber: 254,
                 columnNumber: 7
             }, this),
             errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3721,7 +3557,7 @@ function ReviewSummaryStep() {
                                 className: "w-5 h-5 text-destructive"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 292,
+                                lineNumber: 280,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3729,13 +3565,13 @@ function ReviewSummaryStep() {
                                 children: "Please fix the following before submitting:"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 293,
+                                lineNumber: 281,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 291,
+                        lineNumber: 279,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -3745,18 +3581,18 @@ function ReviewSummaryStep() {
                                 children: error
                             }, index, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 297,
+                                lineNumber: 285,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 295,
+                        lineNumber: 283,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 290,
+                lineNumber: 278,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3766,12 +3602,12 @@ function ReviewSummaryStep() {
                     children: "You'll be redirected to secure payment. Your application will be submitted to CAC after successful payment."
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 307,
+                    lineNumber: 295,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 306,
+                lineNumber: 294,
                 columnNumber: 7
             }, this),
             store.paymentReference && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -3784,7 +3620,7 @@ function ReviewSummaryStep() {
                                 children: "Payment status"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 316,
+                                lineNumber: 304,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3792,13 +3628,13 @@ function ReviewSummaryStep() {
                                 children: store.paymentStatus || "checking..."
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 317,
+                                lineNumber: 305,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 315,
+                        lineNumber: 303,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3809,7 +3645,7 @@ function ReviewSummaryStep() {
                                 children: "Document submitted"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 321,
+                                lineNumber: 309,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3817,13 +3653,13 @@ function ReviewSummaryStep() {
                                 children: submitted ? "Yes" : "No"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 322,
+                                lineNumber: 310,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 320,
+                        lineNumber: 308,
                         columnNumber: 11
                     }, this),
                     checkError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3831,7 +3667,7 @@ function ReviewSummaryStep() {
                         children: checkError
                     }, void 0, false, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 325,
+                        lineNumber: 313,
                         columnNumber: 26
                     }, this)
                 ]
@@ -3846,25 +3682,25 @@ function ReviewSummaryStep() {
                     children: isProcessingPayment ? "Redirecting to payment..." : `Pay ₦${amount}`
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 338,
+                    lineNumber: 326,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 329,
+                lineNumber: 317,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 348,
+                lineNumber: 336,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/review-summary.tsx",
-        lineNumber: 201,
+        lineNumber: 189,
         columnNumber: 5
     }, this);
 }
@@ -3881,7 +3717,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/store.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-ssr] (ecmascript) <export default as CheckCircle2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/download.js [app-ssr] (ecmascript) <export default as Download>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-ssr] (ecmascript) <export default as ArrowRight>");
 "use client";
 ;
@@ -3899,52 +3734,46 @@ function ConfirmationPageStep() {
         setCopied(true);
         setTimeout(()=>setCopied(false), 2000);
     };
-    const downloadReceipt = ()=>{
-        const receipt = `CAC BUSINESS REGISTRATION - RECEIPT
-
-    Date: ${new Date().toLocaleDateString()}
-    Time: ${new Date().toLocaleTimeString()}
-
-    REGISTERED DETAILS
-    ==================
-    Business Name: ${store.selectedBusinessName}
-    Applicant Type: ${store.applicantType.toUpperCase()}
-    ${store.applicantType === "individual" ? `Applicant Name: ${store.firstName} ${store.lastName}` : `Organization: ${store.organizationName}`}
-    Business Activity: ${store.businessActivity}
-
-    PAYMENT INFORMATION
-    ===================
-    Total Paid: ₦29,000.00
-    Payment Status: SUCCESS
-
-    NEXT STEPS
-    ==========
-    1. Your application has been successfully submitted to CAC
-    2. Check your application status via the support channels provided
-    3. Expected processing time: 2-5 working days
-
-    IMPORTANT NOTES
-    ===============
-    - Keep this receipt for your records
-    - Do not share sensitive transaction information
-    - For inquiries, contact support@cbitechnologiesltd.ng or call +234 (0) 800 000 0000
-
-    ---
-    This is an automated receipt. For questions, please contact CBI Technologies support.`;
-        const blob = new Blob([
-            receipt
-        ], {
-            type: "text/plain"
-        });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `CAC_Registration_Receipt_${Date.now()}.txt`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-    };
+    // const downloadReceipt = () => {
+    //   const receipt = `CAC BUSINESS REGISTRATION - RECEIPT
+    //   Date: ${new Date().toLocaleDateString()}
+    //   Time: ${new Date().toLocaleTimeString()}
+    //   REGISTERED DETAILS
+    //   ==================
+    //   Business Name: ${store.selectedBusinessName}
+    //   Applicant Type: ${store.applicantType.toUpperCase()}
+    //   ${
+    //     store.applicantType === "individual"
+    //       ? `Applicant Name: ${store.firstName} ${store.lastName}`
+    //       : `Organization: ${store.organizationName}`
+    //   }
+    //   Business Activity: ${store.businessActivity}
+    //   PAYMENT INFORMATION
+    //   ===================
+    //   Total Paid: ₦29,000.00
+    //   Payment Status: SUCCESS
+    //   NEXT STEPS
+    //   ==========
+    //   1. Your application has been successfully submitted to CAC
+    //   2. Check your application status via the support channels provided
+    //   3. Expected processing time: 2-5 working days
+    //   IMPORTANT NOTES
+    //   ===============
+    //   - Keep this receipt for your records
+    //   - Do not share sensitive transaction information
+    //   - For inquiries, contact support@cbitechnologiesltd.ng or call +234 (0) 800 000 0000
+    //   ---
+    //   This is an automated receipt. For questions, please contact CBI Technologies support.`
+    //   const blob = new Blob([receipt], { type: "text/plain" })
+    //   const url = window.URL.createObjectURL(blob)
+    //   const a = document.createElement("a")
+    //   a.href = url
+    //   a.download = `CAC_Registration_Receipt_${Date.now()}.txt`
+    //   document.body.appendChild(a)
+    //   a.click()
+    //   window.URL.revokeObjectURL(url)
+    //   document.body.removeChild(a)
+    // }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4082,6 +3911,31 @@ function ConfirmationPageStep() {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
                             lineNumber: 112,
                             columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "rounded-lg border border-border p-4",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-xs text-muted-foreground uppercase mb-1",
+                                    children: "Reference"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/steps/confirmation-page.tsx",
+                                    lineNumber: 117,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "font-semibold text-foreground",
+                                    children: store.applicationReference
+                                }, void 0, false, {
+                                    fileName: "[project]/components/steps/confirmation-page.tsx",
+                                    lineNumber: 118,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/steps/confirmation-page.tsx",
+                            lineNumber: 116,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
@@ -4097,7 +3951,7 @@ function ConfirmationPageStep() {
                             children: "What Happens Next?"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 120,
+                            lineNumber: 124,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4111,7 +3965,7 @@ function ConfirmationPageStep() {
                                             children: "1"
                                         }, void 0, false, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 134,
+                                            lineNumber: 138,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4121,7 +3975,7 @@ function ConfirmationPageStep() {
                                                     children: "CAC Processing"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 138,
+                                                    lineNumber: 142,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4129,19 +3983,19 @@ function ConfirmationPageStep() {
                                                     children: "CAC will process your application (typically 2-5 working days)"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 139,
+                                                    lineNumber: 143,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 137,
+                                            lineNumber: 141,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 133,
+                                    lineNumber: 137,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4149,10 +4003,10 @@ function ConfirmationPageStep() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0",
-                                            children: "2"
+                                            children: "3"
                                         }, void 0, false, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 156,
+                                            lineNumber: 160,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4162,7 +4016,7 @@ function ConfirmationPageStep() {
                                                     children: "Certificate Download"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 160,
+                                                    lineNumber: 164,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4170,95 +4024,65 @@ function ConfirmationPageStep() {
                                                     children: "Once approved, download your CAC certificate and proceed with PoS setup"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                                    lineNumber: 161,
+                                                    lineNumber: 165,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 163,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 155,
+                                    lineNumber: 159,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 121,
+                            lineNumber: 125,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 119,
+                    lineNumber: 123,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex flex-col sm:flex-row gap-3 max-w-md mx-auto",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: downloadReceipt,
-                            className: "flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-lg border border-primary text-primary font-semibold hover:bg-primary/10 transition-colors",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
-                                    className: "w-5 h-5"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 175,
-                                    columnNumber: 13
-                                }, this),
-                                "Download Receipt"
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 171,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            type: "button",
-                            onClick: ()=>store.previousStep(),
-                            className: "flex-1 px-4 py-2 rounded-lg border border-border bg-transparent text-foreground",
-                            children: "Previous"
-                        }, void 0, false, {
-                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 178,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                            href: "/",
-                            onClick: ()=>{
-                                try {
-                                    localStorage.clear();
-                                    sessionStorage.clear();
-                                } catch (e) {
-                                // ignore storage clearing errors
-                                }
-                                store.reset();
-                            },
-                            className: "flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors",
-                            children: [
-                                "Back to Home",
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
-                                    className: "w-5 h-5"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/steps/confirmation-page.tsx",
-                                    lineNumber: 199,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/steps/confirmation-page.tsx",
-                            lineNumber: 185,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                        href: "/",
+                        onClick: ()=>{
+                            try {
+                                localStorage.clear();
+                                sessionStorage.clear();
+                            } catch (e) {
+                            // ignore storage clearing errors
+                            }
+                            store.reset();
+                        },
+                        className: "flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors",
+                        children: [
+                            "Back to Home",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
+                                className: "w-5 h-5"
+                            }, void 0, false, {
+                                fileName: "[project]/components/steps/confirmation-page.tsx",
+                                lineNumber: 203,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/steps/confirmation-page.tsx",
+                        lineNumber: 189,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
-                    lineNumber: 170,
+                    lineNumber: 174,
                     columnNumber: 9
                 }, this)
             ]

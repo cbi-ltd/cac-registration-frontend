@@ -139,7 +139,7 @@ export default function StatusPage() {
             <div className="flex gap-2 flex-col sm:flex-row">
               <FormInput
                 label=""
-                placeholder="E.g., CBI-REG-2024-001234"
+                placeholder="E.g, VAS3547078455"
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSearch()}

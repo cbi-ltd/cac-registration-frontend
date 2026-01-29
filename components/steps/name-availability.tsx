@@ -16,15 +16,65 @@ export function NameAvailabilityStep() {
   const [recommendedMessage, setRecommendedMessage] = React.useState("")
   const [recommendedKeywords, setRecommendedKeywords] = React.useState<string[]>([])
 
-  // Feature toggle:
-  // For production uncomment the next line to REQUIRE the API responseMessage
-  // "Proceed to filing" before enabling the Next button.
-  // const REQUIRE_RESPONSE_FOR_NEXT = true
-  // const REQUIRE_RESPONSE_FOR_NEXT = false // development: allow proceed on first check
-
   const handleProposedNameChange = (value: string) => setProposedName(value.toLocaleUpperCase())
   const handleLineOfBusinessChange = (value: string) => setLineOfBusiness(value)
 
+  // const checkAvailability = async () => {
+  //   if (!proposedName.trim()) {
+  //     setError("Please enter a proposed business name")
+  //     return
+  //   }
+
+  //   setIsChecking(true)
+  //   setError("")
+  //   setResponseMessage("")
+
+  //   try {
+  //     const resp = await fetch(`${API_BASE_URL}check-bn`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ proposedName: proposedName.trim(), lineOfBusiness: lineOfBusiness.trim() }),
+  //     })
+
+  //     if (!resp.ok) {
+  //       setError("Name check failed. Please try again.")
+  //       return
+  //     }
+      
+  //     store.updateField("selectedBusinessName", proposedName.trim())
+  //     const json = await resp.json()
+      
+  //     // Attempt to locate recommendedActions in the nested response structure.
+  //     const recActions =
+  //     json?.data?.data?.data?.recommendedActions ??
+  //     json?.data?.data?.recommendedActions ??
+  //     json?.data?.recommendedActions ??
+  //     null
+      
+  //     if (recActions && Array.isArray(recActions) && recActions.length > 0) {
+  //       const msg = recActions[0].message ?? ""
+  //       setRecommendedMessage(msg)
+  //       setRecommendedKeywords(recActions[0].keywords ?? [])
+  //     } else {
+  //       setRecommendedMessage("")
+  //       setRecommendedKeywords([])
+  //     }
+      
+  //     // Optionally surface a short status message from the API (if present)
+  //     const statusMessage = json?.data?.data?.message ?? json?.data?.message ?? ""
+  //     const finalResponse = statusMessage || (recActions && recActions[0]?.message) || "Proceed to filing"
+  //     setResponseMessage(finalResponse)
+      
+  //     // Auto-select name when backend indicates proceed (or when there were no recommendations)
+  //     if (!recActions || finalResponse === "Proceed to filing") {
+  //     }
+  //   } catch (err) {
+  //     setError("Failed to check availability. Please try again.")
+  //   } finally {
+  //     setIsChecking(false)
+  //   }
+  // }
+  
   const checkAvailability = async () => {
     if (!proposedName.trim()) {
       setError("Please enter a proposed business name")
@@ -34,61 +84,79 @@ export function NameAvailabilityStep() {
     setIsChecking(true)
     setError("")
     setResponseMessage("")
+    setRecommendedMessage("")
+    setRecommendedKeywords([])
 
     try {
       const resp = await fetch(`${API_BASE_URL}check-bn`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ proposedName: proposedName.trim(), lineOfBusiness: lineOfBusiness.trim() }),
+        body: JSON.stringify({
+          proposedName: proposedName.trim(),
+          lineOfBusiness: lineOfBusiness.trim(),
+        }),
       })
 
       if (!resp.ok) {
-        setError("Name check failed. Please try again.")
-        return
+        throw new Error("Name check failed. Please try again.")
       }
-      store.updateField("selectedBusinessName", proposedName.trim())
-      
+
       const json = await resp.json()
 
-      // Attempt to locate recommendedActions in the nested response structure.
-      const recActions =
+      /**
+       * Normalize backend response
+       */
+      const apiMessage =
+        json?.data?.data?.message ??
+        json?.data?.message ??
+        ""
+
+      const recommendedActions =
         json?.data?.data?.data?.recommendedActions ??
         json?.data?.data?.recommendedActions ??
         json?.data?.recommendedActions ??
-        null
+        []
 
-      if (recActions && Array.isArray(recActions) && recActions.length > 0) {
-        const msg = recActions[0].message ?? ""
-        setRecommendedMessage(msg)
-        setRecommendedKeywords(recActions[0].keywords ?? [])
-      } else {
-        setRecommendedMessage("")
-        setRecommendedKeywords([])
+      /**
+       * Extract recommendations (if any)
+       */
+      if (Array.isArray(recommendedActions) && recommendedActions.length > 0) {
+        setRecommendedMessage(recommendedActions[0]?.message ?? "")
+        setRecommendedKeywords(recommendedActions[0]?.keywords ?? [])
       }
 
-      // Optionally surface a short status message from the API (if present)
-      const statusMessage = json?.data?.data?.message ?? json?.data?.message ?? ""
-      const finalResponse = statusMessage || (recActions && recActions[0]?.message) || "Proceed to filing"
-      setResponseMessage(finalResponse)
+      /**
+       * Determine final status
+       */
+      const finalStatus =
+        apiMessage ||
+        recommendedActions?.[0]?.message ||
+        ""
 
-      // Auto-select name when backend indicates proceed (or when there were no recommendations)
-      if (!recActions || finalResponse === "Proceed to filing") {
+      setResponseMessage(finalStatus)
+
+      /**
+       * STRICT RULE:
+       * Only store name if explicitly approved
+       */
+      if (finalStatus === "Proceed to filing") {
+        store.updateField("selectedBusinessName", proposedName.trim())
+      } else {
         store.updateField("selectedBusinessName", proposedName.trim())
       }
-    } catch (err) {
-      setError("Failed to check availability. Please try again.")
+    } catch (err: any) {
+      setError(err.message || "Failed to check availability. Please try again.")
+      store.updateField("selectedBusinessName", "")
     } finally {
       setIsChecking(false)
     }
   }
 
-  // const handleSelectName = (name: string) => store.updateField("selectedBusinessName", name)
-  // canProceed logic:
-  // - In development we allow proceeding as soon as the name check returns (responseMessage is set)
-  // - For production you can enable `REQUIRE_RESPONSE_FOR_NEXT` to require the API to return
-  //   the explicit responseMessage "Proceed to filing" before enabling Next.
-  const canProceed = responseMessage ? "Proceed to filing"
-    : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing"
+  const canProceed = responseMessage === "Proceed to filing"
+  // store.updateField("selectedBusinessName", proposedName.trim())
+
+  // const canProceed = responseMessage ? "Proceed to filing"
+  //   : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing"
 
   return (
     <div className="space-y-6 animate-slide-up">
