@@ -264,7 +264,6 @@ const buildSubmissionPayload = (data: Partial<RegistrationData>) => {
     )
   }
 
-
   // console.log("FORM DATA:", [...fd.entries()])
   return fd
 }

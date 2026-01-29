@@ -149,6 +149,7 @@ const base64ToFile = (base64, filename)=>{
     if (data.passportBase64) {
         fd.append("passport", base64ToFile(data.passportBase64, "passport.png"));
     }
+    console.log("Generated Transaction Reference:", applicationReference);
     // console.log("FORM DATA:", [...fd.entries()])
     return fd;
 };

@@ -3081,8 +3081,8 @@ function ReviewSummaryStep() {
     const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
     const [termsAccepted, setTermsAccepted] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [errors, setErrors] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState([]);
-    const amount = 500;
-    // const amount: number = 29000
+    // const amount: number = 500
+    const amount = 29000;
     const [isProcessingPayment, setIsProcessingPayment] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [checking, setChecking] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [checkMessage, setCheckMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState("");
@@ -3119,7 +3119,6 @@ function ReviewSummaryStep() {
             if (!resp.ok) throw new Error("Failed to fetch payment status");
             const json = await resp.json();
             const status = (json?.data?.status || json?.status || "").toString().toLowerCase();
-            // const status = "success"
             if (status) {
                 store.updateField("paymentStatus", status);
                 setCheckMessage(`Payment status: ${status}`);
@@ -3306,7 +3305,7 @@ function ReviewSummaryStep() {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 190,
+                lineNumber: 189,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3316,7 +3315,7 @@ function ReviewSummaryStep() {
                     className: "w-5 h-5 text-primary"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 195,
+                    lineNumber: 194,
                     columnNumber: 15
                 }, void 0),
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3330,7 +3329,7 @@ function ReviewSummaryStep() {
                                         children: section.section
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                        lineNumber: 200,
+                                        lineNumber: 199,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3343,7 +3342,7 @@ function ReviewSummaryStep() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                                        lineNumber: 204,
+                                                        lineNumber: 203,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3351,24 +3350,24 @@ function ReviewSummaryStep() {
                                                         children: item.value || "Not provided"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                                        lineNumber: 205,
+                                                        lineNumber: 204,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, item.label, true, {
                                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                                lineNumber: 203,
+                                                lineNumber: 202,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/components/steps/review-summary.tsx",
-                                        lineNumber: 201,
+                                        lineNumber: 200,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, section.section, true, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 199,
+                                lineNumber: 198,
                                 columnNumber: 13
                             }, this)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3379,7 +3378,7 @@ function ReviewSummaryStep() {
                                     children: "Documents Uploaded"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 213,
+                                    lineNumber: 212,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3408,7 +3407,7 @@ function ReviewSummaryStep() {
                                                     className: `w-2 h-2 rounded-full ${doc.uploaded ? "bg-green-600" : "bg-destructive"}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                                    lineNumber: 222,
+                                                    lineNumber: 221,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3416,35 +3415,35 @@ function ReviewSummaryStep() {
                                                     children: doc.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                                    lineNumber: 223,
+                                                    lineNumber: 222,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, doc.name, true, {
                                             fileName: "[project]/components/steps/review-summary.tsx",
-                                            lineNumber: 221,
+                                            lineNumber: 220,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 214,
+                                    lineNumber: 213,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 212,
+                            lineNumber: 211,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 197,
+                    lineNumber: 196,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 192,
+                lineNumber: 191,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3457,7 +3456,7 @@ function ReviewSummaryStep() {
                             className: "flex justify-between text-sm"
                         }, void 0, false, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 234,
+                            lineNumber: 233,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3468,7 +3467,7 @@ function ReviewSummaryStep() {
                                     children: "CAC Registration Fee"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 247,
+                                    lineNumber: 246,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3479,24 +3478,24 @@ function ReviewSummaryStep() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 248,
+                                    lineNumber: 247,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 246,
+                            lineNumber: 245,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 233,
+                    lineNumber: 232,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 232,
+                lineNumber: 231,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FormSection"], {
@@ -3520,7 +3519,7 @@ function ReviewSummaryStep() {
                                     className: "w-4 h-4 mt-1"
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 264,
+                                    lineNumber: 263,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3528,23 +3527,23 @@ function ReviewSummaryStep() {
                                     children: term
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/review-summary.tsx",
-                                    lineNumber: 270,
+                                    lineNumber: 269,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, index, true, {
                             fileName: "[project]/components/steps/review-summary.tsx",
-                            lineNumber: 263,
+                            lineNumber: 262,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 255,
+                    lineNumber: 254,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 254,
+                lineNumber: 253,
                 columnNumber: 7
             }, this),
             errors.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3557,7 +3556,7 @@ function ReviewSummaryStep() {
                                 className: "w-5 h-5 text-destructive"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 280,
+                                lineNumber: 279,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3565,13 +3564,13 @@ function ReviewSummaryStep() {
                                 children: "Please fix the following before submitting:"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 281,
+                                lineNumber: 280,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 279,
+                        lineNumber: 278,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -3581,18 +3580,18 @@ function ReviewSummaryStep() {
                                 children: error
                             }, index, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 285,
+                                lineNumber: 284,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 283,
+                        lineNumber: 282,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 278,
+                lineNumber: 277,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3602,12 +3601,12 @@ function ReviewSummaryStep() {
                     children: "You'll be redirected to secure payment. Your application will be submitted to CAC after successful payment."
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 295,
+                    lineNumber: 294,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 294,
+                lineNumber: 293,
                 columnNumber: 7
             }, this),
             store.paymentReference && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -3620,7 +3619,7 @@ function ReviewSummaryStep() {
                                 children: "Payment status"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 304,
+                                lineNumber: 303,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3628,13 +3627,13 @@ function ReviewSummaryStep() {
                                 children: store.paymentStatus || "checking..."
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 305,
+                                lineNumber: 304,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 303,
+                        lineNumber: 302,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3645,7 +3644,7 @@ function ReviewSummaryStep() {
                                 children: "Document submitted"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 309,
+                                lineNumber: 308,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3653,13 +3652,13 @@ function ReviewSummaryStep() {
                                 children: submitted ? "Yes" : "No"
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/review-summary.tsx",
-                                lineNumber: 310,
+                                lineNumber: 309,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 308,
+                        lineNumber: 307,
                         columnNumber: 11
                     }, this),
                     checkError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3667,7 +3666,7 @@ function ReviewSummaryStep() {
                         children: checkError
                     }, void 0, false, {
                         fileName: "[project]/components/steps/review-summary.tsx",
-                        lineNumber: 313,
+                        lineNumber: 312,
                         columnNumber: 26
                     }, this)
                 ]
@@ -3682,25 +3681,25 @@ function ReviewSummaryStep() {
                     children: isProcessingPayment ? "Redirecting to payment..." : `Pay ₦${amount}`
                 }, void 0, false, {
                     fileName: "[project]/components/steps/review-summary.tsx",
-                    lineNumber: 326,
+                    lineNumber: 325,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 317,
+                lineNumber: 316,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
             }, void 0, false, {
                 fileName: "[project]/components/steps/review-summary.tsx",
-                lineNumber: 336,
+                lineNumber: 335,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/steps/review-summary.tsx",
-        lineNumber: 189,
+        lineNumber: 188,
         columnNumber: 5
     }, this);
 }
@@ -3925,7 +3924,7 @@ function ConfirmationPageStep() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "font-semibold text-foreground",
-                                    children: store.applicationReference
+                                    children: store.paymentReference
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/confirmation-page.tsx",
                                     lineNumber: 118,

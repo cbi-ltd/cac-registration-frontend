@@ -9,8 +9,8 @@ export function ReviewSummaryStep() {
   const store = useRegistrationStore()
   const [termsAccepted, setTermsAccepted] = React.useState(false)
   const [errors, setErrors] = React.useState<string[]>([])
-  const amount: number = 500
-  // const amount: number = 29000
+  // const amount: number = 500
+  const amount: number = 29000
   const [isProcessingPayment, setIsProcessingPayment] = React.useState(false)
   const [checking, setChecking] = React.useState(false)
   const [checkMessage, setCheckMessage] = React.useState("")
@@ -54,7 +54,6 @@ export function ReviewSummaryStep() {
       if (!resp.ok) throw new Error("Failed to fetch payment status")
       const json = await resp.json()
       const status = (json?.data?.status || json?.status || "").toString().toLowerCase()
-      // const status = "success"
       if (status) {
         store.updateField("paymentStatus", status)
         setCheckMessage(`Payment status: ${status}`)

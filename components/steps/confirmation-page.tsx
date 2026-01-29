@@ -115,7 +115,7 @@ export function ConfirmationPageStep() {
           </div>
           <div className="rounded-lg border border-border p-4">
             <p className="text-xs text-muted-foreground uppercase mb-1">Reference</p>
-            <p className="font-semibold text-foreground">{store.applicationReference}</p>
+            <p className="font-semibold text-foreground">{store.paymentReference}</p>
           </div>
         </div>
 
