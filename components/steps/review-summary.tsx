@@ -9,8 +9,8 @@ export function ReviewSummaryStep() {
   const store = useRegistrationStore()
   const [termsAccepted, setTermsAccepted] = React.useState(false)
   const [errors, setErrors] = React.useState<string[]>([])
-  const amount: number = 500
-  // const amount: number = 29000
+  // const amount: number = 500
+  const amount: number = 29000
   const [isProcessingPayment, setIsProcessingPayment] = React.useState(false)
   const [checking, setChecking] = React.useState(false)
   const [checkMessage, setCheckMessage] = React.useState("")
@@ -53,8 +53,7 @@ export function ReviewSummaryStep() {
       const resp = await fetch(`https://cac-registration-backend.onrender.com/api/payments/checkout/status/${store.paymentReference}`)
       if (!resp.ok) throw new Error("Failed to fetch payment status")
       const json = await resp.json()
-      const status = (json?.data?.data?.status || json?.data?.status || json?.status || "").toString().toLowerCase()
-      // const status = "success" // For testing purposes
+      const status = (json?.data?.status || json?.status || "").toString().toLowerCase()
       if (status) {
         store.updateField("paymentStatus", status)
         setCheckMessage(`Payment status: ${status}`)
@@ -87,16 +86,6 @@ export function ReviewSummaryStep() {
       setChecking(false)
     }
   }, [store.paymentReference, store.updateField, store.submitRegistration, store.nextStep])
-
-  // React.useEffect(() => {
-  //   if (submitted || !store.paymentReference || store.paymentStatus === "success") return
-
-  //   const interval = setInterval(() => {
-  //     checkPaymentStatus()
-  //   }, 9000)
-
-  //   return () => clearInterval(interval)
-  // }, [submitted, store.paymentReference, store.paymentStatus, checkPaymentStatus])
   
 
   const initiatePayment = async () => {
@@ -120,9 +109,7 @@ export function ReviewSummaryStep() {
       })
 
       if (!resp.ok ) {
-        // const text = await resp.text()
         setErrors([`Payment initialization failed: ${resp.status}`])
-        // setErrors([`Payment initialization failed: ${resp.status} ${text}`])
         return
       }
 
@@ -143,7 +130,7 @@ export function ReviewSummaryStep() {
       }
 
       // Redirect user to the payment provider
-      window.location.href = authUrl
+      window.location.href = authUrl 
       // window.open(authUrl, "_blank")
       setIsProcessingPayment(false)
       checkPaymentStatus()
