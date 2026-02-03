@@ -3081,8 +3081,8 @@ function ReviewSummaryStep() {
     const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
     const [termsAccepted, setTermsAccepted] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [errors, setErrors] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState([]);
-    // const amount: number = 500
-    const amount = 29000;
+    const amount = 500;
+    // const amount: number = 29000
     const [isProcessingPayment, setIsProcessingPayment] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [checking, setChecking] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(false);
     const [checkMessage, setCheckMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState("");
@@ -3129,11 +3129,11 @@ function ReviewSummaryStep() {
                         if (result?.data?.message === "application received") {
                             setSubmitted(true);
                             store.updateField("submitted", true);
-                            try {
-                                store.nextStep();
-                            } catch (e) {
-                            // ignore
-                            }
+                        // try {
+                        //   store.nextStep()
+                        // } catch (e) {
+                        //   // ignore
+                        // }
                         } else {
                             setCheckError("Submission failed: " + (result?.data?.message || "Unknown error"));
                         }
@@ -3153,8 +3153,7 @@ function ReviewSummaryStep() {
     }, [
         store.paymentReference,
         store.updateField,
-        store.submitRegistration,
-        store.nextStep
+        store.submitRegistration
     ]);
     const initiatePayment = async ()=>{
         setErrors([]);
