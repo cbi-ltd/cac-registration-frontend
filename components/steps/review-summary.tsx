@@ -64,11 +64,6 @@ export function ReviewSummaryStep() {
             if (result?.data?.message === "application received") {
               setSubmitted(true)
               store.updateField("submitted", true)
-              // try {
-              //   store.nextStep()
-              // } catch (e) {
-              //   // ignore
-              // }
             } else {
               setCheckError("Submission failed: " + (result?.data?.message || "Unknown error"))
             }

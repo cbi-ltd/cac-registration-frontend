@@ -158,7 +158,7 @@ export function ConfirmationPageStep() {
             </div> */}
             <div className="flex gap-3">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
-                3
+                2
               </span>
               <div>
                 <p className="font-medium text-blue-900 dark:text-blue-100">Certificate Download</p>
