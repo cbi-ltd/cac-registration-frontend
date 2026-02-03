@@ -64,11 +64,6 @@ export function ReviewSummaryStep() {
             if (result?.data?.message === "application received") {
               setSubmitted(true)
               store.updateField("submitted", true)
-              try {
-                store.nextStep()
-              } catch (e) {
-                // ignore
-              }
             } else {
               setCheckError("Submission failed: " + (result?.data?.message || "Unknown error"))
             }
@@ -85,7 +80,7 @@ export function ReviewSummaryStep() {
     } finally {
       setChecking(false)
     }
-  }, [store.paymentReference, store.updateField, store.submitRegistration, store.nextStep])
+  }, [store.paymentReference, store.updateField, store.submitRegistration])
   
 
   const initiatePayment = async () => {
@@ -130,8 +125,8 @@ export function ReviewSummaryStep() {
       }
 
       // Redirect user to the payment provider
-      window.location.href = authUrl 
-      // window.open(authUrl, "_blank")
+      // window.location.href = authUrl 
+      window.open(authUrl, "_blank")
       setIsProcessingPayment(false)
       checkPaymentStatus()
       // Note: Page will unload, so finally block won't execute as expected
@@ -230,18 +225,6 @@ export function ReviewSummaryStep() {
       {/* Fee Summary */}
       <FormSection title="Total Amount Due" description="Make use of bank transfer where possible and not card payment.">
         <div className="space-y-3">
-          <div className="flex justify-between text-sm">
-            {/* <span className="text-muted-foreground">CAC Registration Fee</span> */}
-            {/* <span className="font-medium text-foreground">₦28,000.00</span> */}
-          </div>
-          {/* <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Service Charge</span>
-            <span className="font-medium text-foreground">₦2,000.00</span>
-          </div> */}
-          {/* <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">VAT (7.5%)</span>
-            <span className="font-medium text-foreground">₦900.00</span>
-          </div> */}
           <div className="border-t border-border pt-3 flex justify-between">
             <span className="font-semibold text-foreground">CAC Registration Fee</span>
             <span className="font-bold text-lg text-primary">₦{amount}</span>
