@@ -74,7 +74,7 @@ export function ConfirmationPageStep() {
 
         <h1 className="text-4xl font-bold text-foreground mb-2">Registration Successful!</h1>
         <p className="text-lg text-muted-foreground mb-8">
-          Your business registration application has been submitted to CAC successfully.
+          Your business registration application has been submitted to CAC successfully. copy and keep your reference
         </p>
 
         {/* Reference Notice (hidden transactionRef) */}

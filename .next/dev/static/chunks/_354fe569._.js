@@ -2731,12 +2731,30 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+/* ===================== HELPERS ===================== */ const formatBytes = (bytes)=>{
+    if (!bytes) return "0 Bytes";
+    const k = 1024;
+    const sizes = [
+        "Bytes",
+        "KB",
+        "MB"
+    ];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+};
+const formatAccepted = (types)=>types.map((t)=>{
+        if (t === "application/pdf") return "PDF";
+        if (t === "image/jpeg") return "JPG";
+        if (t === "image/png") return "PNG";
+        return t;
+    }).join(", ");
 function DocumentUploadStep() {
     _s();
     const store = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"])();
     const [uploadErrors, setUploadErrors] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState({});
+    const [fileMeta, setFileMeta] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useState({});
     const fileInputRefs = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useRef({});
-    const documents = [
+    /* ===================== DOCUMENT CONFIG ===================== */ const documents = [
         {
             name: "Supporting Document",
             description: "Any supporting document (ID copy or company document).",
@@ -2747,23 +2765,22 @@ function DocumentUploadStep() {
                 "image/jpeg",
                 "image/png"
             ],
-            // accepted: ["image/jpeg", "image/png"],
             maxSize: 5 * 1024 * 1024
         },
         {
             name: "Signature (scanned)",
-            description: "Scanned signature image",
+            description: "Scanned signature image.",
             fieldName: "signatureBase64",
             required: true,
             accepted: [
                 "image/jpeg",
                 "image/png"
             ],
-            maxSize: 5 * 1024 * 1024
+            maxSize: 2 * 1024 * 1024
         },
         {
-            name: "Means of ID (front)",
-            description: "Photo or scan of the ID used",
+            name: "Means of ID",
+            description: "Photo or scan of the ID used.",
             fieldName: "meansOfIdBase64",
             required: true,
             accepted: [
@@ -2775,383 +2792,494 @@ function DocumentUploadStep() {
         },
         {
             name: "Passport Photo",
-            description: "Recent passport-size photograph",
+            description: "Recent passport-size photograph.",
             fieldName: "passportBase64",
             required: true,
             accepted: [
                 "image/jpeg",
                 "image/png"
             ],
-            maxSize: 5 * 1024 * 1024
+            maxSize: 1 * 1024 * 1024
         }
     ];
-    const handleFileChange = (fieldName, file, docInfo)=>{
+    /* ===================== HANDLERS ===================== */ const handleFileChange = (fieldName, file, doc)=>{
         if (!file) {
             store.updateField(fieldName, null);
-            setUploadErrors({
-                ...uploadErrors,
-                [fieldName]: ""
+            setFileMeta((prev)=>{
+                const copy = {
+                    ...prev
+                };
+                delete copy[fieldName];
+                return copy;
             });
+            setUploadErrors((e)=>({
+                    ...e,
+                    [fieldName]: ""
+                }));
             return;
         }
-        if (!docInfo.accepted.includes(file.type)) {
-            setUploadErrors({
-                ...uploadErrors,
-                [fieldName]: "Invalid file type. Accepted: PDF, JPG, PNG"
-            });
+        if (!doc.accepted.includes(file.type)) {
+            setUploadErrors((e)=>({
+                    ...e,
+                    [fieldName]: `Invalid file type. Accepted: ${formatAccepted(doc.accepted)}`
+                }));
             return;
         }
-        if (file.size > docInfo.maxSize) {
-            setUploadErrors({
-                ...uploadErrors,
-                [fieldName]: `File size exceeds ${docInfo.maxSize / (1024 * 1024)}MB limit`
-            });
+        if (file.size > doc.maxSize) {
+            setUploadErrors((e)=>({
+                    ...e,
+                    [fieldName]: `File size exceeds ${formatBytes(doc.maxSize)} limit`
+                }));
             return;
         }
-        // convert to base64 and store into corresponding base64 field so payload can include it
         const reader = new FileReader();
         reader.onload = ()=>{
-            const result = reader.result;
-            // store base64 string
-            store.updateField(fieldName, result);
-            setUploadErrors({
-                ...uploadErrors,
-                [fieldName]: ""
-            });
+            store.updateField(fieldName, reader.result);
+            setFileMeta((prev)=>({
+                    ...prev,
+                    [fieldName]: {
+                        name: file.name,
+                        size: file.size
+                    }
+                }));
+            setUploadErrors((e)=>({
+                    ...e,
+                    [fieldName]: ""
+                }));
         };
         reader.onerror = ()=>{
-            setUploadErrors({
-                ...uploadErrors,
-                [fieldName]: "Failed to read file"
-            });
+            setUploadErrors((e)=>({
+                    ...e,
+                    [fieldName]: "Failed to read file"
+                }));
         };
         reader.readAsDataURL(file);
     };
-    // const downloadConsentLetter = () => {
-    //   const consentTemplate = `CONSENT LETTER FOR CAC BUSINESS NAME REGISTRATION
-    //   Date: ${new Date().toLocaleDateString()}
-    //   TO: CORPORATE AFFAIRS COMMISSION (CAC)
-    //   RE: CONSENT TO BUSINESS NAME REGISTRATION
-    //   Dear Sir/Madam,
-    //   I, ___________________________________ (Full Name), hereby give my consent to the registration of the business name:
-    //   "${store.selectedBusinessName || "[Business Name]"}"
-    //   as a proprietorship/partnership in my name. I confirm that:
-    //   1. I am the authorized person to sign this document on behalf of the business
-    //   2. All information provided in the registration application is accurate and complete
-    //   3. I understand the implications of business name registration
-    //   4. I consent to the processing of my personal data as required by law
-    //   5. I acknowledge that this registration is with the Corporate Affairs Commission (CAC)
-    //   I further declare that the information contained in this application is true to the best of my knowledge and belief.
-    //   Signed:
-    //   __________________________                    Date: ________________
-    //   Signature of Applicant
-    //   Printed Name: ________________________
-    //   I.D. Type: ________________________    I.D. Number: ________________
-    //   Phone: ________________________        Email: ________________
-    //   Address: ________________________________________________________
-    //   Witnessed by:
-    //   __________________________                    Date: ________________
-    //   Witness Signature
-    //   Witness Name: ________________________
-    //   I.D. Type: ________________________    I.D. Number: ________________
-    //   NOTE: This letter must be signed in the presence of a witness.`
-    //   const blob = new Blob([consentTemplate], { type: "text/plain" })
-    //   const url = window.URL.createObjectURL(blob)
-    //   const a = document.createElement("a")
-    //   a.href = url
-    //   a.download = "CAC_Consent_Letter_Template.txt"
-    //   document.body.appendChild(a)
-    //   a.click()
-    //   window.URL.revokeObjectURL(url)
-    //   document.body.removeChild(a)
-    // }
-    const uploadedCount = documents.filter((doc)=>!!store[doc.fieldName]).length;
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+    const uploadedCount = documents.filter((d)=>!!store[d.fieldName]).length;
+    /* ===================== RENDER ===================== */ return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-slide-up",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
+            title: "Document Upload",
+            description: "Upload all required documents. Each document has its own size and format requirements.",
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
+                className: "w-5 h-5 text-primary"
             }, void 0, false, {
                 fileName: "[project]/components/steps/document-upload.tsx",
-                lineNumber: 160,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$form$2d$section$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FormSection"], {
-                title: "Document Upload",
-                description: "Upload all required documents. Maximum file size: 5MB each. Accepted formats: PDF, JPG, PNG",
-                icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
-                    className: "w-5 h-5 text-primary"
-                }, void 0, false, {
-                    fileName: "[project]/components/steps/document-upload.tsx",
-                    lineNumber: 165,
-                    columnNumber: 15
-                }, void 0),
-                isRequired: true,
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "mb-4 p-4 rounded-lg bg-secondary/50 border border-border",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-muted-foreground",
-                                children: [
-                                    "Documents Uploaded: ",
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "font-semibold text-foreground",
-                                        children: uploadedCount
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 170,
-                                        columnNumber: 33
-                                    }, this),
-                                    " of",
-                                    " ",
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "font-semibold text-foreground",
-                                        children: documents.length
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 171,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/steps/document-upload.tsx",
-                                lineNumber: 169,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mt-2 h-2 bg-muted rounded-full overflow-hidden",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "h-full bg-primary transition-all duration-300",
-                                    style: {
-                                        width: `${uploadedCount / documents.length * 100}%`
-                                    }
+                lineNumber: 156,
+                columnNumber: 15
+            }, void 0),
+            isRequired: true,
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "mb-4 p-4 rounded-lg bg-secondary/50 border border-border",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "text-sm text-muted-foreground",
+                            children: [
+                                "Documents Uploaded:",
+                                " ",
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "font-semibold text-foreground",
+                                    children: uploadedCount
                                 }, void 0, false, {
                                     fileName: "[project]/components/steps/document-upload.tsx",
-                                    lineNumber: 174,
+                                    lineNumber: 163,
+                                    columnNumber: 13
+                                }, this),
+                                " ",
+                                "of",
+                                " ",
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "font-semibold text-foreground",
+                                    children: documents.length
+                                }, void 0, false, {
+                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                    lineNumber: 167,
                                     columnNumber: 13
                                 }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/steps/document-upload.tsx",
+                            lineNumber: 161,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "mt-2 h-2 bg-muted rounded-full overflow-hidden",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "h-full bg-primary transition-all",
+                                style: {
+                                    width: `${uploadedCount / documents.length * 100}%`
+                                }
                             }, void 0, false, {
                                 fileName: "[project]/components/steps/document-upload.tsx",
-                                lineNumber: 173,
-                                columnNumber: 11
+                                lineNumber: 172,
+                                columnNumber: 13
                             }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/components/steps/document-upload.tsx",
-                        lineNumber: 168,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "space-y-4",
-                        children: documents.map((doc)=>{
-                            const fieldKey = doc.fieldName;
-                            const value = store[fieldKey];
-                            const error = uploadErrors[doc.fieldName];
-                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "p-4 rounded-lg border border-border",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-start justify-between mb-3",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex-1",
+                        }, void 0, false, {
+                            fileName: "[project]/components/steps/document-upload.tsx",
+                            lineNumber: 171,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/steps/document-upload.tsx",
+                    lineNumber: 160,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "space-y-4",
+                    children: documents.map((doc)=>{
+                        const value = store[doc.fieldName];
+                        const error = uploadErrors[doc.fieldName];
+                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "p-4 rounded-lg border border-border",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                    className: "font-medium text-foreground flex items-center gap-2",
+                                    children: [
+                                        doc.name,
+                                        doc.required && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-destructive",
+                                            children: "*"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/steps/document-upload.tsx",
+                                            lineNumber: 195,
+                                            columnNumber: 21
+                                        }, this),
+                                        value && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
+                                            className: "w-4 h-4 text-green-600"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/steps/document-upload.tsx",
+                                            lineNumber: 198,
+                                            columnNumber: 21
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                    lineNumber: 192,
+                                    columnNumber: 17
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-sm text-muted-foreground mt-1",
+                                    children: doc.description
+                                }, void 0, false, {
+                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                    lineNumber: 202,
+                                    columnNumber: 17
+                                }, this),
+                                value ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center justify-between p-3 mt-3 rounded-lg bg-secondary",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex items-center gap-2",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                    className: "font-medium text-foreground flex items-center gap-2",
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__File$3e$__["File"], {
+                                                    className: "w-4 h-4 text-primary"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                                    lineNumber: 209,
+                                                    columnNumber: 23
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-sm font-medium text-foreground",
                                                     children: [
-                                                        doc.name,
-                                                        doc.required && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-destructive",
-                                                            children: "*"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/components/steps/document-upload.tsx",
-                                                            lineNumber: 193,
-                                                            columnNumber: 40
-                                                        }, this),
-                                                        value && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
-                                                            className: "w-4 h-4 text-green-600"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/components/steps/document-upload.tsx",
-                                                            lineNumber: 194,
-                                                            columnNumber: 33
-                                                        }, this)
+                                                        fileMeta[doc.fieldName]?.name,
+                                                        " (",
+                                                        formatBytes(fileMeta[doc.fieldName]?.size || 0),
+                                                        ")"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/steps/document-upload.tsx",
-                                                    lineNumber: 191,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-sm text-muted-foreground mt-1",
-                                                    children: doc.description
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/steps/document-upload.tsx",
-                                                    lineNumber: 196,
-                                                    columnNumber: 21
+                                                    lineNumber: 210,
+                                                    columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/steps/document-upload.tsx",
-                                            lineNumber: 190,
-                                            columnNumber: 19
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 189,
-                                        columnNumber: 17
-                                    }, this),
-                                    value ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center justify-between p-3 rounded-lg bg-secondary",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-center gap-2",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__File$3e$__["File"], {
-                                                        className: "w-4 h-4 text-primary"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                                        lineNumber: 203,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-sm text-foreground font-medium",
-                                                        children: [
-                                                            doc.name,
-                                                            " ",
-                                                            doc.maxSize / 1024,
-                                                            "MB"
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                                        lineNumber: 205,
-                                                        columnNumber: 23
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 202,
-                                                columnNumber: 21
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                onClick: ()=>{
-                                                    handleFileChange(doc.fieldName, null, doc);
-                                                    if (fileInputRefs.current[doc.fieldName]) {
-                                                        fileInputRefs.current[doc.fieldName].value = "";
-                                                    }
-                                                },
-                                                className: "p-1 hover:bg-muted rounded transition-colors",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
-                                                    className: "w-4 h-4 text-muted-foreground"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/steps/document-upload.tsx",
-                                                    lineNumber: 216,
-                                                    columnNumber: 23
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 207,
-                                                columnNumber: 21
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 201,
-                                        columnNumber: 19
-                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        onClick: ()=>fileInputRefs.current[doc.fieldName]?.click(),
-                                        className: "border-2 border-dashed border-border rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 hover:bg-secondary/30 transition-colors",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
-                                                className: "w-8 h-8 text-muted-foreground mx-auto mb-2"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 224,
-                                                columnNumber: 21
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-sm font-medium text-foreground",
-                                                children: "Click to upload"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 225,
-                                                columnNumber: 21
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-xs text-muted-foreground mt-1",
-                                                children: "or drag and drop"
+                                            lineNumber: 208,
+                                            columnNumber: 21
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            onClick: ()=>{
+                                                handleFileChange(doc.fieldName, null, doc);
+                                                fileInputRefs.current[doc.fieldName].value = "";
+                                            },
+                                            className: "p-1 hover:bg-muted rounded",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
+                                                className: "w-4 h-4 text-muted-foreground"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/steps/document-upload.tsx",
                                                 lineNumber: 226,
-                                                columnNumber: 21
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-xs text-muted-foreground mt-2",
-                                                children: "Max 1MB • JPG, PNG"
-                                            }, void 0, false, {
-                                                fileName: "[project]/components/steps/document-upload.tsx",
-                                                lineNumber: 227,
-                                                columnNumber: 21
+                                                columnNumber: 23
                                             }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 220,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                        ref: (el)=>{
-                                            if (el) fileInputRefs.current[doc.fieldName] = el;
-                                        },
-                                        type: "file",
-                                        accept: doc.accepted.join(","),
-                                        onChange: (e)=>handleFileChange(doc.fieldName, e.target.files?.[0] || null, doc),
-                                        className: "hidden"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 231,
-                                        columnNumber: 17
-                                    }, this),
-                                    error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-sm text-destructive mt-2",
-                                        children: error
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/steps/document-upload.tsx",
-                                        lineNumber: 241,
-                                        columnNumber: 27
-                                    }, this)
-                                ]
-                            }, doc.fieldName, true, {
-                                fileName: "[project]/components/steps/document-upload.tsx",
-                                lineNumber: 188,
-                                columnNumber: 15
-                            }, this);
-                        })
-                    }, void 0, false, {
-                        fileName: "[project]/components/steps/document-upload.tsx",
-                        lineNumber: 181,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/components/steps/document-upload.tsx",
-                lineNumber: 162,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"
-            }, void 0, false, {
-                fileName: "[project]/components/steps/document-upload.tsx",
-                lineNumber: 261,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/steps/document-upload.tsx",
+                                            lineNumber: 218,
+                                            columnNumber: 21
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                    lineNumber: 207,
+                                    columnNumber: 19
+                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    onClick: ()=>fileInputRefs.current[doc.fieldName]?.click(),
+                                    className: "border-2 border-dashed border-border rounded-lg p-6 mt-3 text-center cursor-pointer hover:border-primary/50 hover:bg-secondary/30",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
+                                            className: "w-8 h-8 mx-auto text-muted-foreground mb-2"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/steps/document-upload.tsx",
+                                            lineNumber: 236,
+                                            columnNumber: 21
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-sm font-medium text-foreground",
+                                            children: "Click to upload"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/steps/document-upload.tsx",
+                                            lineNumber: 237,
+                                            columnNumber: 21
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-xs text-muted-foreground mt-2",
+                                            children: [
+                                                "Max ",
+                                                formatBytes(doc.maxSize),
+                                                " •",
+                                                " ",
+                                                formatAccepted(doc.accepted)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/components/steps/document-upload.tsx",
+                                            lineNumber: 240,
+                                            columnNumber: 21
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                    lineNumber: 230,
+                                    columnNumber: 19
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                    ref: (el)=>{
+                                        if (el) fileInputRefs.current[doc.fieldName] = el;
+                                    },
+                                    type: "file",
+                                    accept: doc.accepted.join(","),
+                                    className: "hidden",
+                                    onChange: (e)=>handleFileChange(doc.fieldName, e.target.files?.[0] || null, doc)
+                                }, void 0, false, {
+                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                    lineNumber: 247,
+                                    columnNumber: 17
+                                }, this),
+                                error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-sm text-destructive mt-2",
+                                    children: error
+                                }, void 0, false, {
+                                    fileName: "[project]/components/steps/document-upload.tsx",
+                                    lineNumber: 265,
+                                    columnNumber: 19
+                                }, this)
+                            ]
+                        }, doc.fieldName, true, {
+                            fileName: "[project]/components/steps/document-upload.tsx",
+                            lineNumber: 188,
+                            columnNumber: 15
+                        }, this);
+                    })
+                }, void 0, false, {
+                    fileName: "[project]/components/steps/document-upload.tsx",
+                    lineNumber: 182,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/components/steps/document-upload.tsx",
+            lineNumber: 153,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
         fileName: "[project]/components/steps/document-upload.tsx",
-        lineNumber: 159,
+        lineNumber: 152,
         columnNumber: 5
     }, this);
-}
-_s(DocumentUploadStep, "i+GBoKfEGCA2IGI8zBRXAkROgj0=", false, function() {
+} // "use client"
+ // import React from "react"
+ // import { useRegistrationStore,RegistrationData } from "@/lib/store"
+ // import { FormSection } from "@/components/form-section"
+ // import { Upload, File, X, CheckCircle2, Download } from "lucide-react"
+ // interface DocumentInfo {
+ //   name: string
+ //   description: string
+ //   fieldName: string
+ //   required: boolean
+ //   accepted: string[]
+ //   maxSize: number
+ //   alreadyUploaded?: boolean
+ // }
+ // export function DocumentUploadStep() {
+ //   const store = useRegistrationStore()
+ //   const [uploadErrors, setUploadErrors] = React.useState<Record<string, string>>({})
+ //   const fileInputRefs = React.useRef<Record<string, HTMLInputElement | null>>({})
+ //   const documents: DocumentInfo[] = [
+ //     {
+ //       name: "Supporting Document",
+ //       description: "Any supporting document (ID copy or company document).",
+ //       fieldName: "supportingDocBase64",
+ //       required: true,
+ //       accepted: ["application/pdf", "image/jpeg", "image/png"],
+ //       // accepted: ["image/jpeg", "image/png"],
+ //       maxSize: 5 * 1024 * 1024,
+ //     },
+ //     {
+ //       name: "Signature (scanned)",
+ //       description: "Scanned signature image",
+ //       fieldName: "signatureBase64",
+ //       required: true,
+ //       accepted: ["image/jpeg", "image/png"],
+ //       maxSize: 5 * 1024 * 1024,
+ //     },
+ //     {
+ //       name: "Means of ID (front)",
+ //       description: "Photo or scan of the ID used",
+ //       fieldName: "meansOfIdBase64",
+ //       required: true,
+ //       accepted: ["application/pdf", "image/jpeg", "image/png"],
+ //       maxSize: 5 * 1024 * 1024,
+ //     },
+ //     {
+ //       name: "Passport Photo",
+ //       description: "Recent passport-size photograph",
+ //       fieldName: "passportBase64",
+ //       required: true,
+ //       accepted: ["image/jpeg", "image/png"],
+ //       maxSize: 5 * 1024 * 1024,
+ //     },
+ //   ]
+ //   const handleFileChange = (fieldName: string, file: File | null, docInfo: DocumentInfo) => {
+ //     if (!file) {
+ //       store.updateField(fieldName as keyof RegistrationData, null)
+ //       setUploadErrors({ ...uploadErrors, [fieldName]: "" })
+ //       return
+ //     }
+ //     if (!docInfo.accepted.includes(file.type)) {
+ //       setUploadErrors({
+ //         ...uploadErrors,
+ //         [fieldName]: "Invalid file type. Accepted: PDF, JPG, PNG",
+ //       })
+ //       return
+ //     }
+ //     if (file.size > docInfo.maxSize) {
+ //       setUploadErrors({
+ //         ...uploadErrors,
+ //         [fieldName]: `File size exceeds ${docInfo.maxSize / (1024 * 1024)}MB limit`,
+ //       })
+ //       return
+ //     }
+ //     // convert to base64 and store into corresponding base64 field so payload can include it
+ //     const reader = new FileReader()
+ //     reader.onload = () => {
+ //       const result = reader.result as string
+ //       // store base64 string
+ //       store.updateField(fieldName as keyof RegistrationData, result)
+ //       setUploadErrors({ ...uploadErrors, [fieldName]: "" })
+ //     }
+ //     reader.onerror = () => {
+ //       setUploadErrors({ ...uploadErrors, [fieldName]: "Failed to read file" })
+ //     }
+ //     reader.readAsDataURL(file)
+ //   }
+ //   const uploadedCount = documents.filter((doc) => !!(store as any)[doc.fieldName]).length
+ //   return (
+ //     <div className="space-y-6 animate-slide-up">
+ //       <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+ //       <FormSection
+ //         title="Document Upload"
+ //         description="Upload all required documents. Maximum file size: 5MB each. Accepted formats: PDF, JPG, PNG"
+ //         icon={<Upload className="w-5 h-5 text-primary" />}
+ //         isRequired
+ //       >
+ //         <div className="mb-4 p-4 rounded-lg bg-secondary/50 border border-border">
+ //           <p className="text-sm text-muted-foreground">
+ //             Documents Uploaded: <span className="font-semibold text-foreground">{uploadedCount}</span> of{" "}
+ //             <span className="font-semibold text-foreground">{documents.length}</span>
+ //           </p>
+ //           <div className="mt-2 h-2 bg-muted rounded-full overflow-hidden">
+ //             <div
+ //               className="h-full bg-primary transition-all duration-300"
+ //               style={{ width: `${(uploadedCount / documents.length) * 100}%` }}
+ //             />
+ //           </div>
+ //         </div>
+ //         <div className="space-y-4">
+ //           {documents.map((doc) => {
+ //             const fieldKey = doc.fieldName as keyof typeof store
+ //             const value = (store as any)[fieldKey] as string | null
+ //             const error = uploadErrors[doc.fieldName]
+ //             return (
+ //               <div key={doc.fieldName} className="p-4 rounded-lg border border-border">
+ //                 <div className="flex items-start justify-between mb-3">
+ //                   <div className="flex-1">
+ //                     <h3 className="font-medium text-foreground flex items-center gap-2">
+ //                       {doc.name}
+ //                       {doc.required && <span className="text-destructive">*</span>}
+ //                       {value && <CheckCircle2 className="w-4 h-4 text-green-600" />}
+ //                     </h3>
+ //                     <p className="text-sm text-muted-foreground mt-1">{doc.description}</p>
+ //                   </div>
+ //                 </div>
+ //                 {value ? (
+ //                   <div className="flex items-center justify-between p-3 rounded-lg bg-secondary">
+ //                     <div className="flex items-center gap-2">
+ //                       <File className="w-4 h-4 text-primary" />
+ //                       {/* <span className="text-sm text-foreground font-medium">Uploaded</span> */}
+ //                       <span className="text-sm text-foreground font-medium">{doc.name} {doc.maxSize /1024 }MB</span>
+ //                     </div>
+ //                     <button
+ //                       onClick={() => {
+ //                         handleFileChange(doc.fieldName, null, doc)
+ //                         if (fileInputRefs.current[doc.fieldName]) {
+ //                           fileInputRefs.current[doc.fieldName]!.value = ""
+ //                         }
+ //                       }}
+ //                       className="p-1 hover:bg-muted rounded transition-colors"
+ //                     >
+ //                       <X className="w-4 h-4 text-muted-foreground" />
+ //                     </button>
+ //                   </div>
+ //                 ) : (
+ //                   <div
+ //                     onClick={() => fileInputRefs.current[doc.fieldName]?.click()}
+ //                     className="border-2 border-dashed border-border rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 hover:bg-secondary/30 transition-colors"
+ //                   >
+ //                     <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+ //                     <p className="text-sm font-medium text-foreground">Click to upload</p>
+ //                     <p className="text-xs text-muted-foreground mt-1">or drag and drop</p>
+ //                     <p className="text-xs text-muted-foreground mt-2">Max 1MB • JPG, PNG</p>
+ //                   </div>
+ //                 )}
+ //                 <input
+ //                   ref={(el) => {
+ //                     if (el) fileInputRefs.current[doc.fieldName] = el
+ //                   }}
+ //                   type="file"
+ //                   accept={doc.accepted.join(",")}
+ //                   onChange={(e) => handleFileChange(doc.fieldName, e.target.files?.[0] || null, doc)}
+ //                   className="hidden"
+ //                 />
+ //                 {error && <p className="text-sm text-destructive mt-2">{error}</p>}
+ //               </div>
+ //             )
+ //           })}
+ //         </div>
+ //       </FormSection>
+ //       <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+ //     </div>
+ //   )
+ // }
+_s(DocumentUploadStep, "dQALP7MBv9nuvu/hLbiMxwZ0nVI=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRegistrationStore"]
     ];
@@ -3911,7 +4039,7 @@ function ConfirmationPageStep() {
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                     className: "text-lg text-muted-foreground mb-8",
-                    children: "Your business registration application has been submitted to CAC successfully."
+                    children: "Your business registration application has been submitted to CAC successfully. copy and keep your reference"
                 }, void 0, false, {
                     fileName: "[project]/components/steps/confirmation-page.tsx",
                     lineNumber: 76,
