@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import React from "react"
-import { AlertCircle, ChevronDown } from "lucide-react"
+import React from "react";
+import { AlertCircle, ChevronDown } from "lucide-react";
 
 interface FormSectionProps {
-  title: string
-  description?: string
-  children: React.ReactNode
-  error?: string
-  isRequired?: boolean
-  icon?: React.ReactNode
-  collapsible?: boolean
-  defaultOpen?: boolean
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+  error?: string;
+  isRequired?: boolean;
+  icon?: React.ReactNode;
+  collapsible?: boolean;
+  defaultOpen?: boolean;
 }
 
 export function FormSection({
@@ -24,7 +24,7 @@ export function FormSection({
   collapsible,
   defaultOpen = true,
 }: FormSectionProps) {
-  const [isOpen, setIsOpen] = React.useState(defaultOpen)
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   if (collapsible) {
     return (
@@ -40,15 +40,23 @@ export function FormSection({
                 {title}
                 {isRequired && <span className="text-destructive">*</span>}
               </h3>
-              {description && <p className="text-sm text-muted-foreground">{description}</p>}
+              {description && (
+                <p className="text-sm text-muted-foreground">{description}</p>
+              )}
             </div>
           </div>
-          <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`} />
+          <ChevronDown
+            className={`w-5 h-5 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
+          />
         </button>
 
-        {isOpen && <div className="px-4 pb-4 space-y-4 border-t border-border">{children}</div>}
+        {isOpen && (
+          <div className="px-4 pb-4 space-y-4 border-t border-border">
+            {children}
+          </div>
+        )}
       </div>
-    )
+    );
   }
 
   return (
@@ -60,7 +68,9 @@ export function FormSection({
             {title}
             {isRequired && <span className="text-destructive">*</span>}
           </h3>
-          {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
+          {description && (
+            <p className="text-sm text-muted-foreground mt-1">{description}</p>
+          )}
         </div>
       </div>
 
@@ -68,10 +78,10 @@ export function FormSection({
 
       {error && (
         <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/10 border border-destructive/20">
-          <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+          <AlertCircle className="size-5 text-destructive shrink-0 mt-0.5" />
           <p className="text-sm text-destructive">{error}</p>
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -1,47 +1,52 @@
-"use client"
+"use client";
 
-import { RegistrationData, useRegistrationStore } from "@/lib/store"
-import { FormSection } from "@/components/form-section"
-import { FormInput } from "@/components/form-input"
-import { FormSelect } from "@/components/form-select"
-import { User } from "lucide-react"
-import { countries } from "@/components/countries"
+import { RegistrationData, useRegistrationStore } from "@/lib/store";
+import { FormSection } from "@/components/form-section";
+import { FormInput } from "@/components/form-input";
+import { FormSelect } from "@/components/form-select";
+import { User } from "lucide-react";
+import { countries } from "@/components/countries";
 
 export function ApplicantInfoStep() {
-  const store = useRegistrationStore()
+  const store = useRegistrationStore();
 
   const genders = [
     { value: "MALE", label: "Male" },
     { value: "FEMALE", label: "Female" },
-  ]
-  const nationalities = countries
+  ];
+  const nationalities = countries;
 
   const handleFieldChange = (field: keyof RegistrationData, value: string) => {
-    store.updateField(field, value)
-  }
+    store.updateField(field, value);
+  };
 
-  const showIdExpiryDate = !["NIN", "Voter's Card"].includes(store.idType)
+  const showIdExpiryDate = !["NIN", "Voter's Card"].includes(store.idType);
 
   return (
     <div className="space-y-6 animate-slide-up">
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="w-full h-px bg-linear-to-r from-transparent via-border to-transparent" />
 
       <FormSection
         title="Applicant Type"
-        description="Are you registering as an individual or organization?"
-        icon={<User className="w-5 h-5 text-primary" />}
+        description="Register as an individual"
+        icon={<User className="size-5 text-primary" />}
         isRequired
       >
         <div className="flex gap-4">
-          {["individual", "organization"].map((type) => (
-            <label key={type} className="flex items-center gap-2 cursor-pointer">
+          {["individual"].map((type) => (
+            <label
+              key={type}
+              className="flex items-center gap-2 cursor-pointer"
+            >
               <input
                 type="radio"
                 name="applicantType"
                 value={type}
                 checked={store.applicantType === type}
-                onChange={(e) => handleFieldChange("applicantType", e.target.value)}
-                className="w-4 h-4"
+                onChange={(e) =>
+                  handleFieldChange("applicantType", e.target.value)
+                }
+                className="size-4"
               />
               <span className="text-foreground capitalize">{type}</span>
             </label>
@@ -64,7 +69,9 @@ export function ApplicantInfoStep() {
               <FormInput
                 label="Other/Middle Name"
                 value={store.middleName}
-                onChange={(e) => handleFieldChange("middleName", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("middleName", e.target.value)
+                }
                 placeholder="James"
               />
             </div>
@@ -81,7 +88,9 @@ export function ApplicantInfoStep() {
                 label="Date of Birth"
                 type="date"
                 value={store.dateOfBirth}
-                onChange={(e) => handleFieldChange("dateOfBirth", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("dateOfBirth", e.target.value)
+                }
                 required
               />
             </div>
@@ -111,13 +120,17 @@ export function ApplicantInfoStep() {
               <FormInput
                 label="Street Number"
                 value={store.proprietorStreetNumber}
-                onChange={(e) => handleFieldChange("proprietorStreetNumber", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("proprietorStreetNumber", e.target.value)
+                }
                 placeholder="41"
               />
               <FormInput
                 label="Street / Service Address"
                 value={store.residentialAddress}
-                onChange={(e) => handleFieldChange("residentialAddress", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("residentialAddress", e.target.value)
+                }
                 placeholder="limpopo street"
               />
             </div>
@@ -126,13 +139,17 @@ export function ApplicantInfoStep() {
               <FormInput
                 label="City"
                 value={store.proprietorCity}
-                onChange={(e) => handleFieldChange("proprietorCity", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("proprietorCity", e.target.value)
+                }
                 placeholder="Abuja"
               />
               <FormInput
                 label="State"
                 value={store.proprietorState}
-                onChange={(e) => handleFieldChange("proprietorState", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("proprietorState", e.target.value)
+                }
                 placeholder="F.C.T"
               />
             </div>
@@ -141,13 +158,17 @@ export function ApplicantInfoStep() {
               <FormInput
                 label="Postcode"
                 value={store.proprietorPostcode}
-                onChange={(e) => handleFieldChange("proprietorPostcode", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("proprietorPostcode", e.target.value)
+                }
                 placeholder="900108"
               />
               <FormInput
                 label="LGA"
                 value={store.proprietorLga}
-                onChange={(e) => handleFieldChange("proprietorLga", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("proprietorLga", e.target.value)
+                }
                 placeholder="lagos mainland"
               />
             </div>
@@ -165,7 +186,9 @@ export function ApplicantInfoStep() {
               <FormSelect
                 label="Nationality"
                 value={store.nationality}
-                onChange={(e) => handleFieldChange("nationality", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("nationality", e.target.value)
+                }
                 options={nationalities.map((n) => ({ value: n, label: n }))}
               />
             </div>
@@ -174,13 +197,15 @@ export function ApplicantInfoStep() {
       )}
 
       {/* Organization Fields */}
-      {store.applicantType === "organization" && (
+      {/* {store.applicantType === "organization" && (
         <>
           <FormSection title="Organization Information" isRequired>
             <FormInput
               label="Organization Name"
               value={store.organizationName}
-              onChange={(e) => handleFieldChange("organizationName", e.target.value)}
+              onChange={(e) =>
+                handleFieldChange("organizationName", e.target.value)
+              }
               placeholder="Organization name"
               required
             />
@@ -197,7 +222,9 @@ export function ApplicantInfoStep() {
                 label="Organization Email"
                 type="email"
                 value={store.organizationEmail}
-                onChange={(e) => handleFieldChange("organizationEmail", e.target.value)}
+                onChange={(e) =>
+                  handleFieldChange("organizationEmail", e.target.value)
+                }
                 placeholder="org@example.com"
                 required
               />
@@ -224,13 +251,15 @@ export function ApplicantInfoStep() {
             </div>
           </FormSection>
         </>
-      )}
+      )} */}
 
       <FormSection title="Residential Address" isRequired>
         <FormInput
           label="Street Address"
           value={store.residentialAddress}
-          onChange={(e) => handleFieldChange("residentialAddress", e.target.value)}
+          onChange={(e) =>
+            handleFieldChange("residentialAddress", e.target.value)
+          }
           placeholder="123 Main Street"
           required
         />
@@ -238,7 +267,7 @@ export function ApplicantInfoStep() {
 
       {/* Identification moved to Document Upload step; minimal fields kept above */}
 
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="w-full h-px bg-linear-to-r from-transparent via-border to-transparent" />
     </div>
-  )
+  );
 }

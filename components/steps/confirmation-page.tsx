@@ -1,21 +1,23 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useRegistrationStore, RegistrationData } from "@/lib/store"
-import Link from "next/link"
-import { CheckCircle2, Copy, Download, ArrowRight } from "lucide-react"
+import React from "react";
+import { useRegistrationStore, RegistrationData } from "@/lib/store";
+import Link from "next/link";
+import { CheckCircle2, Copy, Download, ArrowRight } from "lucide-react";
 
 export function ConfirmationPageStep() {
-  const store = useRegistrationStore()
-  const [copied, setCopied] = React.useState(false)
+  const store = useRegistrationStore();
+  const [copied, setCopied] = React.useState(false);
 
   const handleCopyReference = () => {
     // Do not expose transactionRef/applicationReference directly per privacy requirement
     // Provide a generic acknowledgement copy instead
-    navigator.clipboard.writeText("Your application reference is available in your email.")
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    navigator.clipboard.writeText(
+      "Your application reference is available in your email.",
+    );
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   // const downloadReceipt = () => {
   //   const receipt = `CAC BUSINESS REGISTRATION - RECEIPT
@@ -72,9 +74,12 @@ export function ConfirmationPageStep() {
           <CheckCircle2 className="w-12 h-12 text-green-600" />
         </div>
 
-        <h1 className="text-4xl font-bold text-foreground mb-2">Registration Successful!</h1>
+        <h1 className="text-4xl font-bold text-foreground mb-2">
+          Registration Successful!
+        </h1>
         <p className="text-lg text-muted-foreground mb-8">
-          Your business registration application has been submitted to CAC successfully. copy and keep your reference
+          Your business registration application has been submitted to CAC
+          successfully. copy and keep your reference
         </p>
 
         {/* Reference Notice (hidden transactionRef) */}
@@ -96,32 +101,52 @@ export function ConfirmationPageStep() {
         {/* Confirmation Details */}
         <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
           <div className="rounded-lg border border-border p-4">
-            <p className="text-xs text-muted-foreground uppercase mb-1">Business Name</p>
-            <p className="font-semibold text-foreground">{store.selectedBusinessName}</p>
-          </div>
-          <div className="rounded-lg border border-border p-4">
-            <p className="text-xs text-muted-foreground uppercase mb-1">Total Amount Paid</p>
-            <p className="font-semibold text-foreground">₦29,000.00</p>
-          </div>
-          <div className="rounded-lg border border-border p-4">
-            <p className="text-xs text-muted-foreground uppercase mb-1">Applicant</p>
+            <p className="text-xs text-muted-foreground uppercase mb-1">
+              Business Name
+            </p>
             <p className="font-semibold text-foreground">
-              {store.applicantType === "individual" ? `${store.firstName} ${store.lastName}` : store.organizationName}
+              {store.selectedBusinessName}
             </p>
           </div>
           <div className="rounded-lg border border-border p-4">
-            <p className="text-xs text-muted-foreground uppercase mb-1">Submission Date</p>
-            <p className="font-semibold text-foreground">{new Date().toLocaleDateString()}</p>
+            <p className="text-xs text-muted-foreground uppercase mb-1">
+              Total Amount Paid
+            </p>
+            <p className="font-semibold text-foreground">₦500.00</p>
           </div>
           <div className="rounded-lg border border-border p-4">
-            <p className="text-xs text-muted-foreground uppercase mb-1">Reference</p>
-            <p className="font-semibold text-foreground">{store.paymentReference}</p>
+            <p className="text-xs text-muted-foreground uppercase mb-1">
+              Applicant
+            </p>
+            <p className="font-semibold text-foreground">
+              {store.applicantType === "individual"
+                ? `${store.firstName} ${store.lastName}`
+                : store.organizationName}
+            </p>
+          </div>
+          <div className="rounded-lg border border-border p-4">
+            <p className="text-xs text-muted-foreground uppercase mb-1">
+              Submission Date
+            </p>
+            <p className="font-semibold text-foreground">
+              {new Date().toLocaleDateString()}
+            </p>
+          </div>
+          <div className="rounded-lg border border-border p-4">
+            <p className="text-xs text-muted-foreground uppercase mb-1">
+              Reference
+            </p>
+            <p className="font-semibold text-foreground">
+              {store.paymentReference}
+            </p>
           </div>
         </div>
 
         {/* What Happens Next */}
         <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-8 max-w-2xl mx-auto text-left">
-          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-4">What Happens Next?</h3>
+          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-4">
+            What Happens Next?
+          </h3>
           <div className="space-y-3">
             {/* <div className="flex gap-3">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
@@ -135,11 +160,13 @@ export function ConfirmationPageStep() {
               </div>
             </div> */}
             <div className="flex gap-3">
-              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm shrink-0">
                 1
               </span>
               <div>
-                <p className="font-medium text-blue-900 dark:text-blue-100">CAC Processing</p>
+                <p className="font-medium text-blue-900 dark:text-blue-100">
+                  CAC Processing
+                </p>
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                   CAC will process your application (typically 2-5 working days)
                 </p>
@@ -157,13 +184,16 @@ export function ConfirmationPageStep() {
               </div>
             </div> */}
             <div className="flex gap-3">
-              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm flex-shrink-0">
+              <span className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 font-semibold text-sm shrink-0">
                 2
               </span>
               <div>
-                <p className="font-medium text-blue-900 dark:text-blue-100">Certificate Download</p>
+                <p className="font-medium text-blue-900 dark:text-blue-100">
+                  Certificate Download
+                </p>
                 <p className="text-sm text-blue-800 dark:text-blue-200">
-                  Once approved, download your CAC certificate and proceed with PoS setup
+                  Once approved, download your CAC certificate and proceed with
+                  PoS setup
                 </p>
               </div>
             </div>
@@ -190,12 +220,12 @@ export function ConfirmationPageStep() {
             href="/"
             onClick={() => {
               try {
-                localStorage.clear()
-                sessionStorage.clear()
+                localStorage.clear();
+                sessionStorage.clear();
               } catch (e) {
                 // ignore storage clearing errors
               }
-              store.reset()
+              store.reset();
             }}
             className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors"
           >
@@ -230,5 +260,5 @@ export function ConfirmationPageStep() {
         </div> */}
       </div>
     </div>
-  )
+  );
 }
