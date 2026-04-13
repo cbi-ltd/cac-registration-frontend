@@ -70,6 +70,8 @@ export interface RegistrationData {
   signatureBase64?: string | null;
   meansOfIdBase64?: string | null;
   passportBase64?: string | null;
+
+  termsAccepted: boolean;
 }
 
 /* ===================== INITIAL STATE ===================== */
@@ -129,6 +131,8 @@ const initialState: RegistrationData = {
   signatureBase64: null,
   meansOfIdBase64: null,
   passportBase64: null,
+
+  termsAccepted: false,
 };
 
 /* ===================== HELPERS ===================== */

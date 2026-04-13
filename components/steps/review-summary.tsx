@@ -8,7 +8,6 @@ import { StatusBanner } from "@/components/status-banner";
 
 export function ReviewSummaryStep() {
   const store = useRegistrationStore();
-  const [termsAccepted, setTermsAccepted] = React.useState(false);
   const [errors, setErrors] = React.useState<string[]>([]);
   const amount: number = 500;
   // const amount: number = 29000
@@ -52,7 +51,9 @@ export function ReviewSummaryStep() {
 
     if (!store.meansOfIdBase64 || !store.passportBase64)
       newErrors.push("ID or passport missing");
-    if (!termsAccepted) newErrors.push("Terms and conditions must be accepted");
+
+    if (!store.termsAccepted)
+      newErrors.push("Terms and conditions must be accepted");
 
     setErrors(newErrors);
     return newErrors.length === 0;
@@ -138,6 +139,8 @@ export function ReviewSummaryStep() {
 
     if (!validateSubmission()) return;
 
+    const newTab = window.open("", "_blank");
+
     setIsProcessingPayment(true);
 
     try {
@@ -158,6 +161,7 @@ export function ReviewSummaryStep() {
       );
 
       if (!resp.ok) {
+        newTab?.close();
         setErrors([`Payment initialization failed: ${resp.status}`]);
         return;
       }
@@ -171,6 +175,7 @@ export function ReviewSummaryStep() {
       store.updateField("paymentStatus", "pending");
 
       if (!authUrl) {
+        newTab?.close();
         setErrors(["Payment initialization failed: missing authorization URL"]);
         return;
       }
@@ -193,11 +198,13 @@ export function ReviewSummaryStep() {
 
       // Redirect user to the payment provider
       // window.location.href = authUrl
-      window.open(authUrl, "_blank");
+      // window.open(authUrl, "_blank");
+      newTab!.location.href = authUrl as string;
       setIsProcessingPayment(false);
       checkPaymentStatus(ref);
       // Note: Page will unload, so finally block won't execute as expected
     } catch (err: any) {
+      newTab?.close();
       setErrors(["Unable to initialize payment. Please try again."]);
       setIsProcessingPayment(false);
     }
@@ -388,8 +395,10 @@ export function ReviewSummaryStep() {
             >
               <input
                 type="checkbox"
-                checked={termsAccepted}
-                onChange={(e) => setTermsAccepted(e.target.checked)}
+                checked={store.termsAccepted}
+                onChange={(e) =>
+                  store.updateField("termsAccepted", e.target.checked)
+                }
                 className="size-4"
               />
               <span className="text-sm text-muted-foreground">{term}</span>
