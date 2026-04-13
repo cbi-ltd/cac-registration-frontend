@@ -1,179 +1,37 @@
-[00:00:01.537] Server  LOG      ✓ Ready in 1059ms
-[02:26:28.032] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:26:28.237] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[00:00:01.130] Server  LOG      ✓ Ready in 755ms
+[00:00:11.262] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:11.262] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/","route":"/"}
+[00:00:11.262] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776068611806} /_vercel/insights/view
+[00:00:35.813] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776068636435} /_vercel/insights/view
+[00:16:50.253] Server  LOG      ✓ Compiled in 66ms
+[00:20:13.048] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[02:26:28.237] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[02:26:28.237] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[02:26:28.237] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1770121146933}
-[02:34:48.713] Server  LOG      ✓ Compiled in 54ms
-[02:42:55.684] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:42:55.844] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[00:20:13.048] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:20:13.048] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:20:13.048] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776069813674} /_vercel/insights/view
+[00:21:02.582] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:21:02.582] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:21:02.582] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776069863184} /_vercel/insights/view
+[00:21:02.582] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[02:42:55.844] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[02:42:55.844] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
-[02:42:55.844] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1770122134539}
-[02:54:47.329] Server  LOG      ✓ Compiled in 42ms
-[02:54:49.252] Server  LOG      ✓ Compiled in 39ms
-[02:54:56.012] Server  LOG      ✓ Compiled in 40ms
-[02:54:58.007] Server  LOG      ✓ Compiled in 36ms
-[02:55:06.642] Server  LOG      ✓ Compiled in 36ms
-[03:36:54.611] Server  LOG      ✓ Compiled in 47ms
-[03:47:02.035] Server  LOG      ✓ Compiled in 37ms
-[03:47:06.010] Server  LOG      ✓ Compiled in 39ms
-[04:04:56.397] Server  LOG      ✓ Compiled in 63ms
-[04:05:07.571] Server  LOG      ✓ Compiled in 79ms
-[04:06:01.102] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-client] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:06:01.102] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-ssr] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:06:01.102] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-client] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:06:01.103] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-ssr] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:06:01.103] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-client] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:06:01.103] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-ssr] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:06:01.103] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-client] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:06:01.103] Browser ERROR   ./components/registration-form.tsx:12:1
-Export DocumentUploadStep doesn't exist in target module
-  10 | import { ApplicantInfoStep } from "@/components/steps/applicant-info"
-  11 | import { BusinessDetailsStep } from "@/components/steps/business-details"
-> 12 | import { DocumentUploadStep } from "@/components/steps/document-upload"
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  13 | import { ReviewSummaryStep } from "@/components/steps/review-summary"
-  14 | import { ConfirmationPageStep } from "@/components/steps/confirmation-page"
-  15 |
-
-The export DocumentUploadStep was not found in module [project]/components/steps/document-upload.tsx [app-ssr] (ecmascript).
-The module has no exports at all.
-All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
-
-Import trace:
-  Server Component:
-    ./components/registration-form.tsx
-    ./app/register/page.tsx
-[04:08:09.334] Server  LOG      ✓ Compiled in 45ms
-[04:08:11.571] Server  LOG      ✓ Compiled in 41ms
-[04:08:14.237] Server  LOG      ✓ Compiled in 37ms
-[04:08:16.931] Server  LOG      ✓ Compiled in 37ms
-[04:08:20.324] Server  LOG      ✓ Compiled in 41ms
-[04:08:25.567] Server  LOG      ✓ Compiled in 45ms
-[04:08:36.319] Server  LOG      ✓ Compiled in 38ms
-[04:08:39.405] Server  LOG      ✓ Compiled in 37ms
-[04:09:04.078] Server  LOG      ✓ Compiled in 39ms
-[04:09:34.602] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/ color: rgb(120, 120, 120) color: inherit {"dp":"/","o":"http://localhost:3000/","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1770127333298}
-[04:10:07.356] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","sdkn":"@vercel/analytics/next","sdkv":"1.6.1","sv":"0.1.3","ts":1770127366051}
+[00:22:40.456] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[00:22:40.456] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:22:40.456] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:22:40.456] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776069961080} /_vercel/insights/view
+[00:23:26.623] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:23:26.623] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:23:26.623] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776070007244} /_vercel/insights/view
+[00:23:26.623] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[00:26:12.508] Server  LOG      ✓ Compiled in 38ms
+[00:26:17.512] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:26:17.512] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:26:17.512] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776070178069} /_vercel/insights/view
+[00:26:17.512] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[00:26:27.954] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:26:27.954] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[00:26:27.954] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776070188537} /_vercel/insights/view
+[00:26:27.954] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading

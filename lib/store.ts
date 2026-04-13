@@ -1,75 +1,75 @@
-import { create } from "zustand"
-import { persist,createJSONStorage, StateStorage } from "zustand/middleware"
+import { create } from "zustand";
+import { persist, createJSONStorage, StateStorage } from "zustand/middleware";
 
 export const API_BASE_URL =
-  "https://cac-registration-backend.onrender.com/api/merchant/"
+  "https://cac-registration-backend.onrender.com/api/merchant/";
 
 /* ===================== TYPES ===================== */
 
 export interface RegistrationData {
-  preferredNames: string[]
-  selectedBusinessName: string
+  preferredNames: string[];
+  selectedBusinessName: string;
 
-  applicantType: "individual" | "organization"
+  applicantType: "individual" | "organization";
 
-  title: string
-  firstName: string
-  middleName: string
-  lastName: string
+  title: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
 
-  organizationName: string
-  rcNumber: string
-  organizationEmail: string
+  organizationName: string;
+  rcNumber: string;
+  organizationEmail: string;
 
-  dateOfBirth: string
-  gender: "male" | "female" | ""
-  nationality: string
-  phone: string
-  email: string
-  residentialAddress: string
+  dateOfBirth: string;
+  gender: "male" | "female" | "";
+  nationality: string;
+  phone: string;
+  email: string;
+  residentialAddress: string;
 
-  idType: string
-  idNumber: string
-  idIssueDate: string
-  idExpiryDate: string
-  idDocument: File | null
-  passportPhoto: File | null
+  idType: string;
+  idNumber: string;
+  idIssueDate: string;
+  idExpiryDate: string;
+  idDocument: File | null;
+  passportPhoto: File | null;
 
-  businessActivity: string
-  businessActivityCode: string
-  natureOfBusiness: string
-  businessAddress: string
-  companyCity: string
-  companyState: string
-  companyStreetNumber: string
+  businessActivity: string;
+  businessActivityCode: string;
+  natureOfBusiness: string;
+  businessAddress: string;
+  companyCity: string;
+  companyState: string;
+  companyStreetNumber: string;
 
-  sameAsResidential: string
-  businessPhone: string
-  businessEmail: string
-  commencementDate: string
+  sameAsResidential: string;
+  businessPhone: string;
+  businessEmail: string;
+  commencementDate: string;
 
-  proofOfAddress: File | null
+  proofOfAddress: File | null;
 
-  paymentStatus: "pending" | "initiating" | "success" | "failed"
-  paymentReference: string
-  paymentError: string
-  submitted: boolean
+  paymentStatus: "pending" | "initiating" | "success" | "failed";
+  paymentReference: string;
+  paymentError: string;
+  submitted: boolean;
 
-  currentStep: number
-  completedSteps: number[]
-  applicationId: string
-  applicationReference: string
+  currentStep: number;
+  completedSteps: number[];
+  applicationId: string;
+  applicationReference: string;
 
-  proprietorCity: string
-  proprietorState: string
-  proprietorPostcode: string
-  proprietorLga: string
-  proprietorStreetNumber: string
+  proprietorCity: string;
+  proprietorState: string;
+  proprietorPostcode: string;
+  proprietorLga: string;
+  proprietorStreetNumber: string;
 
-  supportingDocBase64?: string | null
-  signatureBase64?: string | null
-  meansOfIdBase64?: string | null
-  passportBase64?: string | null
+  supportingDocBase64?: string | null;
+  signatureBase64?: string | null;
+  meansOfIdBase64?: string | null;
+  passportBase64?: string | null;
 }
 
 /* ===================== INITIAL STATE ===================== */
@@ -129,89 +129,91 @@ const initialState: RegistrationData = {
   signatureBase64: null,
   meansOfIdBase64: null,
   passportBase64: null,
-}
+};
 
 /* ===================== HELPERS ===================== */
 
 const extractStreetNumber = (addr = "") => {
-  const parts = addr.trim().split(/\s+/)
-  return /^\d+/.test(parts[0]) ? parts[0] : ""
-}
+  const parts = addr.trim().split(/\s+/);
+  return /^\d+/.test(parts[0]) ? parts[0] : "";
+};
 
 const appendIfExists = (
   fd: FormData,
   key: string,
-  value?: string | Blob | null
+  value?: string | Blob | null,
 ) => {
   if (value !== undefined && value !== null && value !== "") {
-    fd.append(key, value)
+    fd.append(key, value);
   }
-}
+};
 
 const generateApplicationReference = (length = 9): string => {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-  let result = ""
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
 
   for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length))
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
 
-  return result
-}
-const base64ToFile = (
-  base64: string,
-  filename: string
-): File => {
-  const [meta, data] = base64.split(",")
-  const mime = meta.match(/:(.*?);/)?.[1] || "application/octet-stream"
+  return result;
+};
 
-  const binary = atob(data)
-  const array = new Uint8Array(binary.length)
+const base64ToFile = (base64: string, filename: string): File => {
+  const [meta, data] = base64.split(",");
+  const mime = meta.match(/:(.*?);/)?.[1] || "application/octet-stream";
+
+  const binary = atob(data);
+  const array = new Uint8Array(binary.length);
 
   for (let i = 0; i < binary.length; i++) {
-    array[i] = binary.charCodeAt(i)
+    array[i] = binary.charCodeAt(i);
   }
 
-  return new File([array], filename, { type: mime })
-}
-
+  return new File([array], filename, { type: mime });
+};
 
 /* ===================== FORM DATA BUILDER ===================== */
 
 const buildSubmissionPayload = (data: Partial<RegistrationData>) => {
-  const fd = new FormData()
+  const fd = new FormData();
 
   appendIfExists(
     fd,
     "lineOfBusiness",
-    data.businessActivity || data.natureOfBusiness
-  )
-  appendIfExists(fd, "proprietorFirstname", data.firstName)
-  appendIfExists(fd, "proprietorOthername", data.middleName)
-  appendIfExists(fd, "proprietorSurname", data.lastName)
-  appendIfExists(fd, "proprietorEmail", data.email)
-  appendIfExists(fd, "proprietorPhonenumber", data.phone)
-  appendIfExists(fd, "proprietorNationality", data.nationality)
-  appendIfExists(fd, "proprietorDob", data.dateOfBirth)
-  appendIfExists(fd, "proprietorGender", data.gender?.toUpperCase())
+    data.businessActivity || data.natureOfBusiness,
+  );
 
-  appendIfExists(fd, "proprietorStreetNumber",
-    extractStreetNumber(data.proprietorStreetNumber)
-  )
-  appendIfExists(fd, "proprietorServiceAddress", data.residentialAddress)
+  appendIfExists(fd, "proprietorFirstname", data.firstName);
+  appendIfExists(fd, "proprietorOthername", data.middleName);
+  appendIfExists(fd, "proprietorSurname", data.lastName);
+  appendIfExists(fd, "proprietorEmail", data.email);
+  appendIfExists(fd, "proprietorPhonenumber", data.phone);
+  appendIfExists(fd, "proprietorNationality", data.nationality);
+  appendIfExists(fd, "proprietorDob", data.dateOfBirth);
+  appendIfExists(fd, "proprietorGender", data.gender?.toUpperCase());
 
-  appendIfExists(fd, "companyAddress", data.businessAddress)
-  appendIfExists(fd, "companyEmail", data.businessEmail)
-  appendIfExists(fd, "companyCity", data.companyCity)
-  appendIfExists(fd, "companyState", data.companyState)
-  appendIfExists(fd, "companyStreetNumber", data.companyStreetNumber)
-  appendIfExists(fd, "businessCommencementDate", data.commencementDate)
+  appendIfExists(
+    fd,
+    "proprietorStreetNumber",
+    extractStreetNumber(data.proprietorStreetNumber),
+  );
+
+  appendIfExists(fd, "proprietorServiceAddress", data.residentialAddress);
+
+  appendIfExists(fd, "companyAddress", data.businessAddress);
+  appendIfExists(fd, "companyEmail", data.businessEmail);
+  appendIfExists(fd, "companyCity", data.companyCity);
+  appendIfExists(fd, "companyState", data.companyState);
+  appendIfExists(fd, "companyStreetNumber", data.companyStreetNumber);
+  appendIfExists(fd, "businessCommencementDate", data.commencementDate);
 
   appendIfExists(
     fd,
     "proposedOption1",
-    data.selectedBusinessName || data.preferredNames?.[0]
-  )
+    data.selectedBusinessName || data.preferredNames?.[0],
+  );
 
   // appendIfExists(
   //   fd,
@@ -220,17 +222,16 @@ const buildSubmissionPayload = (data: Partial<RegistrationData>) => {
   // )
 
   const transactionRef =
-  // data.paymentReference ||
-  // data.applicationReference ||
-  generateApplicationReference(9)
+    // data.paymentReference ||
+    // data.applicationReference ||
+    generateApplicationReference(9);
 
-  appendIfExists(fd, "transactionRef", transactionRef)
+  appendIfExists(fd, "transactionRef", transactionRef);
 
-
-  appendIfExists(fd, "proprietorCity", data.proprietorCity)
-  appendIfExists(fd, "proprietorState", data.proprietorState)
-  appendIfExists(fd, "proprietorPostcode", data.proprietorPostcode)
-  appendIfExists(fd, "proprietorLga", data.proprietorLga)
+  appendIfExists(fd, "proprietorCity", data.proprietorCity);
+  appendIfExists(fd, "proprietorState", data.proprietorState);
+  appendIfExists(fd, "proprietorPostcode", data.proprietorPostcode);
+  appendIfExists(fd, "proprietorLga", data.proprietorLga);
 
   // appendIfExists(fd, "supportingDoc", data.supportingDocBase64)
   // appendIfExists(fd, "signature", data.signatureBase64)
@@ -239,51 +240,46 @@ const buildSubmissionPayload = (data: Partial<RegistrationData>) => {
   if (data.supportingDocBase64) {
     fd.append(
       "supportingDoc",
-      base64ToFile(data.supportingDocBase64, "supporting-doc.png")
-    )
+      base64ToFile(data.supportingDocBase64, "supporting-doc.png"),
+    );
   }
 
   if (data.signatureBase64) {
-    fd.append(
-      "signature",
-      base64ToFile(data.signatureBase64, "signature.png")
-    )
+    fd.append("signature", base64ToFile(data.signatureBase64, "signature.png"));
   }
 
   if (data.meansOfIdBase64) {
     fd.append(
       "meansOfId",
-      base64ToFile(data.meansOfIdBase64, "means-of-id.png")
-    )
+      base64ToFile(data.meansOfIdBase64, "means-of-id.png"),
+    );
   }
 
   if (data.passportBase64) {
-    fd.append(
-      "passport",
-      base64ToFile(data.passportBase64, "passport.png")
-    )
+    fd.append("passport", base64ToFile(data.passportBase64, "passport.png"));
   }
 
-  // console.log("FORM DATA:", [...fd.entries()])
-  return fd
-}
+  // console.log("FORM DATA:", [...fd.entries()]);
+  return fd;
+};
+
 const noopStorage: StateStorage = {
   getItem: () => null,
   setItem: () => {},
   removeItem: () => {},
-}
+};
 
 /* ===================== STORE ===================== */
 
 export const useRegistrationStore = create<
   RegistrationData & {
-    hasHydrated: boolean
-    updateField: (field: keyof RegistrationData, value: any) => void
-    nextStep: () => void
-    previousStep: () => void
-    submitRegistration: () => Promise<any>
-    reset: () => void
-    setHasHydrated: (value: boolean) => void
+    hasHydrated: boolean;
+    updateField: (field: keyof RegistrationData, value: any) => void;
+    nextStep: () => void;
+    previousStep: () => void;
+    submitRegistration: () => Promise<any>;
+    reset: () => void;
+    setHasHydrated: (value: boolean) => void;
   }
 >()(
   persist(
@@ -291,15 +287,15 @@ export const useRegistrationStore = create<
       ...initialState,
       hasHydrated: false,
 
-      updateField: (field, value) =>
-      set({ [field]: value }),
+      updateField: (field, value) => set({ [field]: value }),
+
       setHasHydrated: (value) => set({ hasHydrated: value }),
 
       nextStep: () =>
         set((state) => ({
           currentStep: Math.min(state.currentStep + 1, 7),
           completedSteps: Array.from(
-            new Set([...state.completedSteps, state.currentStep])
+            new Set([...state.completedSteps, state.currentStep]),
           ),
         })),
 
@@ -309,46 +305,90 @@ export const useRegistrationStore = create<
         })),
 
       submitRegistration: async () => {
-        const state = get()
-        const formData = buildSubmissionPayload(state)
+        const state = get();
 
-        const resp = await fetch(`${API_BASE_URL}reg-bn`, {
+        let docs: Record<string, { data: string }> = {};
+
+        try {
+          const { getAllDocuments } = await import("./document-storage");
+          docs = await getAllDocuments();
+        } catch {}
+
+        const stateWithDocs = {
+          ...state,
+          supportingDocBase64:
+            state.supportingDocBase64 || docs.supportingDocBase64?.data || null,
+          signatureBase64:
+            state.signatureBase64 || docs.signatureBase64?.data || null,
+          meansOfIdBase64:
+            state.meansOfIdBase64 || docs.meansOfIdBase64?.data || null,
+          passportBase64:
+            state.passportBase64 || docs.passportBase64?.data || null,
+        };
+
+        const formData = buildSubmissionPayload(stateWithDocs);
+
+        const resp = await fetch(`${API_BASE_URL}reg-bn?priorityService=true`, {
           method: "POST",
           body: formData,
-        })
+        });
 
         if (!resp.ok) {
-          let errorMessage = `${resp.status}: ${resp.statusText}`
+          let errorMessage = `${resp.status}: ${resp.statusText}`;
           try {
-            const errorData = await resp.json()
-            if (errorData?.message) errorMessage = errorData.message
+            const errorData = await resp.json();
+            if (errorData?.message) errorMessage = errorData.message;
           } catch {}
-          throw new Error(errorMessage)
+          throw new Error(errorMessage);
         }
 
-        const result = await resp.json()
+        const result = await resp.json();
 
         set({
           applicationId: result?.data?.transactionRef,
           applicationReference: result?.data?.transactionRef,
-        })
+        });
 
-        return result
+        return result;
       },
 
-      reset: () => set(initialState),
+      reset: () => {
+        set(initialState);
+        import("./document-storage")
+          .then(({ clearDocuments }) => clearDocuments())
+          .catch(() => {});
+      },
     }),
+
     {
       name: "cbi-registration",
+
       storage: createJSONStorage(() =>
-        typeof window !== "undefined" ? localStorage : noopStorage
+        typeof window !== "undefined" ? localStorage : noopStorage,
       ),
+
       onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true)
+        state?.setHasHydrated(true);
       },
 
-      // ✅ Persist ONLY serializable, long-lived data
-      partialize: (state) => state,
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...(persistedState as Record<string, unknown>),
+      }),
+
+      partialize: (state) => {
+        const {
+          hasHydrated,
+          setHasHydrated,
+          supportingDocBase64,
+          signatureBase64,
+          meansOfIdBase64,
+          passportBase64,
+          ...rest
+        } = state;
+        return rest;
+      },
+
       // partialize: (state) => ({
       //   currentStep: state.currentStep,
       //   completedSteps: state.completedSteps,
@@ -391,10 +431,9 @@ export const useRegistrationStore = create<
       //   passportBase64: state.passportBase64,
       //   // add others that must survive refresh
       // }),
-    }
-  )
-)
-
+    },
+  ),
+);
 
 // export const useRegistrationStore = create<
 //   RegistrationData & {
@@ -466,5 +505,3 @@ export const useRegistrationStore = create<
 //     }
 //   )
 // )
-
-

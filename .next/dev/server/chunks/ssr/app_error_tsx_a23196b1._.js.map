@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/kamsi%20Okonji/dev/cac-registration-frontend/app/error.tsx"],"sourcesContent":["interface ErrorProps {\r\n  error: Error;\r\n  reset: () => void;\r\n}\r\n\r\nexport default function Error({ error, reset }: ErrorProps) {\r\n  return (\r\n    <div>\r\n      <h1>Error</h1>\r\n      <p>{error.message}</p>\r\n      <button onClick={reset}>Reset</button>\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;AAKe,SAAS,MAAM,EAAE,KAAK,EAAE,KAAK,EAAc;IACxD,qBACE,6WAAC;;0BACC,6WAAC;0BAAG;;;;;;0BACJ,6WAAC;0BAAG,MAAM,OAAO;;;;;;0BACjB,6WAAC;gBAAO,SAAS;0BAAO;;;;;;;;;;;;AAG9B"}}]
+}

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/kamsi%20Okonji/dev/cac-registration-frontend/app/not-found.tsx"],"sourcesContent":["export default function NotFound() {\r\n  return (\r\n    <div className=\"flex flex-col items-center justify-center min-h-dvh\">\r\n      <h1 className=\"text-4xl font-bold\">404 - Page Not Found</h1>\r\n      <p className=\"text-lg\">This page does not exist.</p>\r\n    </div>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,6WAAC;QAAI,WAAU;;0BACb,6WAAC;gBAAG,WAAU;0BAAqB;;;;;;0BACnC,6WAAC;gBAAE,WAAU;0BAAU;;;;;;;;;;;;AAG7B"}}]
+}

@@ -1,26 +1,31 @@
-"use client"
+"use client";
 
-import { RegistrationData, useRegistrationStore } from "@/lib/store"
-import { FormSection } from "@/components/form-section"
-import { FormInput } from "@/components/form-input"
-import { FormSelect } from "@/components/form-select"
-import { Briefcase } from "lucide-react"
+import { RegistrationData, useRegistrationStore } from "@/lib/store";
+import { FormSection } from "@/components/form-section";
+import { FormInput } from "@/components/form-input";
+import { FormSelect } from "@/components/form-select";
+import { Briefcase } from "lucide-react";
 
 export function BusinessDetailsStep() {
-  const store = useRegistrationStore()
+  const store = useRegistrationStore();
 
   // Simplified: map user-entered lineOfBusiness and company address fields
 
   const handleFieldChange = (field: keyof RegistrationData, value: string) => {
-    store.updateField(field, value)
-  }
+    store.updateField(field, value);
+  };
 
   return (
     <div className="space-y-6 animate-slide-up">
-      <FormSection title="Selected Business Name" icon={<Briefcase className="w-5 h-5 text-primary" />}>
+      <FormSection
+        title="Selected Business Name"
+        icon={<Briefcase className="size-5 text-primary" />}
+      >
         <div className="p-4 rounded-lg bg-secondary border border-border">
           <p className="text-sm text-muted-foreground">Business Name</p>
-          <p className="text-lg font-semibold text-foreground mt-1">{store.selectedBusinessName}</p>
+          <p className="text-lg font-semibold text-foreground mt-1 uppercase">
+            {store.selectedBusinessName}
+          </p>
         </div>
       </FormSection>
 
@@ -29,14 +34,18 @@ export function BusinessDetailsStep() {
           <FormInput
             label="Line of Business"
             value={store.businessActivity}
-            onChange={(e) => handleFieldChange("businessActivity", e.target.value)}
+            onChange={(e) =>
+              handleFieldChange("businessActivity", e.target.value)
+            }
             placeholder="fashion"
             required
           />
           <FormInput
             label="Proposed Business Name"
             value={store.selectedBusinessName}
-            onChange={(e) => handleFieldChange("selectedBusinessName", e.target.value)}
+            onChange={(e) =>
+              handleFieldChange("selectedBusinessName", e.target.value)
+            }
             placeholder="joshua ahmed store"
             required
           />
@@ -60,13 +69,17 @@ export function BusinessDetailsStep() {
           <FormInput
             label="Business Street Number"
             value={store.companyStreetNumber}
-            onChange={(e) => handleFieldChange("companyStreetNumber", e.target.value)}
+            onChange={(e) =>
+              handleFieldChange("companyStreetNumber", e.target.value)
+            }
             placeholder="41"
           />
           <FormInput
             label="Business Street / Address"
             value={store.businessAddress}
-            onChange={(e) => handleFieldChange("businessAddress", e.target.value)}
+            onChange={(e) =>
+              handleFieldChange("businessAddress", e.target.value)
+            }
             placeholder="limpopo street"
           />
         </div>
@@ -112,10 +125,12 @@ export function BusinessDetailsStep() {
           label="Business Commencement Date"
           type="date"
           value={store.commencementDate}
-          onChange={(e) => handleFieldChange("commencementDate", e.target.value)}
+          onChange={(e) =>
+            handleFieldChange("commencementDate", e.target.value)
+          }
           required
         />
       </FormSection>
     </div>
-  )
+  );
 }

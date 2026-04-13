@@ -1,80 +1,95 @@
-"use client"
+"use client";
 
-import React from "react"
-import { API_BASE_URL, useRegistrationStore } from "@/lib/store"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { FormInput } from "@/components/form-input"
-import { FormSection } from "@/components/form-section"
-import { Search, Clock, CheckCircle2, AlertCircle, Download } from "lucide-react"
+import React from "react";
+import { API_BASE_URL } from "@/lib/store";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { FormInput } from "@/components/form-input";
+import { FormSection } from "@/components/form-section";
+import {
+  Search,
+  Clock,
+  CheckCircle2,
+  AlertCircle,
+  Download,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { getStatusColor } from "@/lib/utils";
 
 export default function StatusPage() {
-  const store = useRegistrationStore()
-  const [reference, setReference] = React.useState<string>("")
-  const [status, setStatus] = React.useState<any>(null)
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [error, setError] = React.useState("")
+  const [reference, setReference] = React.useState<string>("");
+  const [status, setStatus] = React.useState<any>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
 
-  const downloadBlob = async (endpoint: string, transactionRef: string, filename: string) => {
+  const downloadBlob = async (
+    endpoint: string,
+    transactionRef: string,
+    filename: string,
+  ) => {
     if (!transactionRef) {
-      setError("Transaction reference is required")
-      return
+      setError("Transaction reference is required");
+      return;
     }
 
-    setIsLoading(true)
-    setError("")
+    setIsLoading(true);
+    setError("");
+
     try {
       const resp = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ transactionRef }),
-      })
+      });
 
       if (!resp.ok) {
-        throw new Error("Download failed")
+        throw new Error("Download failed");
       }
 
-      const blob = await resp.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-      URL.revokeObjectURL(url)
-      a.remove()
+      const blob = await resp.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+      a.remove();
     } catch (err: any) {
-      setError(err?.message || "Download failed")
+      setError(err?.message || "Download failed");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleSearch = async () => {
     if (!reference.trim()) {
-      setError("Please enter an application reference")
-      return
+      setError("Please enter an application reference");
+      return;
     }
 
-    setIsLoading(true)
-    setError("")
+    setIsLoading(true);
+    setError("");
 
     try {
-      const resp = await fetch(`${API_BASE_URL}check-status/${reference.trim()}`)
+      const resp = await fetch(
+        `${API_BASE_URL}check-status/${reference.trim()}`,
+      );
 
       if (!resp.ok) {
-        setError("Failed to retrieve status. Please try again.")
-        return
+        setError("Failed to retrieve status. Please try again.");
+        return;
       }
 
-      const json = await resp.json()
+      const json = await resp.json();
 
       // Response shape provided by backend
       // { statusCode, status, message, data: { status, transactionRef, data: { rcNumber, entityName, entityType, registrationDate, tin }, partners }, ... }
-      const payload = json?.data ?? null
+      const payload = json?.data ?? null;
+
       if (!payload) {
-        setError("No status data returned.")
-        return
+        setError("No status data returned.");
+        return;
       }
 
       setStatus({
@@ -82,100 +97,101 @@ export default function StatusPage() {
         transactionRef: payload.transactionRef,
         entity: payload.data,
         message: json?.message ?? json?.data?.message ?? "",
-      })
+      });
     } catch (err) {
-      setError("Failed to retrieve status. Please try again.")
+      setError("Failed to retrieve status. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
-  const capitalize = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s)
-
-  const getStatusColor = (status: string) => {
-    const key = (status || "").toLowerCase()
-    switch (key) {
-      case "approved":
-        return "text-green-600"
-      case "pending":
-        return "text-amber-600"
-      case "submitted":
-        return "text-blue-600"
-      case "rejected":
-        return "text-destructive"
-      default:
-        return "text-foreground"
-    }
-  }
+  // const capitalize = (s: string) =>
+  //   s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
   const getStatusIcon = (status: string) => {
-    const key = (status || "").toLowerCase()
+    const key = (status || "").toLowerCase();
     switch (key) {
       case "approved":
-        return <CheckCircle2 className="w-6 h-6 text-green-600" />
+        return <CheckCircle2 className="size-6 text-green-600" />;
       case "pending":
-        return <Clock className="w-6 h-6 text-amber-600" />
+        return <Clock className="size-6 text-amber-600" />;
       case "rejected":
-        return <AlertCircle className="w-6 h-6 text-destructive" />
+        return <AlertCircle className="size-6 text-destructive" />;
       default:
-        return <Clock className="w-6 h-6 text-blue-600" />
+        return <Clock className="size-6 text-blue-600" />;
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
 
       <main className="flex-1 px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="mb-12 text-center space-y-2">
-            <h1 className="text-3xl sm:text-4xl font-bold text-foreground">Check Application Status</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+              Check Application Status
+            </h1>
             <p className="text-lg text-muted-foreground">
-              Enter your application reference number to view the status of your CAC registration
+              Enter your application reference number to view the status of your
+              CAC registration
             </p>
           </div>
 
           <FormSection title="Application Reference">
-            <div className="flex gap-2 flex-col sm:flex-row">
+            <div className="flex gap-2 flex-col md:flex-row md:items-center">
               <FormInput
                 label=""
                 placeholder="E.g, VAS3547078455"
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
-              <button
-                onClick={handleSearch}
-                disabled={isLoading}
-                className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-              >
-                <Search className="w-4 h-4" />
+
+              <Button onClick={handleSearch} disabled={isLoading}>
+                <Search className="size-4" />
                 {isLoading ? "Searching..." : "Search"}
-              </button>
-              <div className="flex gap-2 sm:ml-2">
-                <button
-                  onClick={() => downloadBlob("download-status-report", reference.trim(), `status-report-${reference.trim() || "report"}.pdf`)}
+              </Button>
+
+              <div className="flex gap-2 sm:ml-2 flex-col md:flex-row">
+                <Button
+                  onClick={() =>
+                    downloadBlob(
+                      "download-status-report",
+                      reference.trim(),
+                      `status-report-${reference.trim() || "report"}.pdf`,
+                    )
+                  }
                   disabled={isLoading || !reference.trim()}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  variant="secondary"
+                  // className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="size-4" />
                   Download Status Report
-                </button>
-                <button
-                  onClick={() => downloadBlob("download-cert", reference.trim(), `certificate-${reference.trim() || "cert"}.pdf`)}
+                </Button>
+
+                <Button
+                  onClick={() =>
+                    downloadBlob(
+                      "download-cert",
+                      reference.trim(),
+                      `certificate-${reference.trim() || "cert"}.pdf`,
+                    )
+                  }
                   disabled={isLoading || !reference.trim()}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  variant="secondary"
+                  // className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="size-4" />
                   Download Certificate
-                </button>
+                </Button>
               </div>
             </div>
           </FormSection>
 
           {error && (
             <div className="mt-6 p-4 rounded-lg bg-destructive/10 border border-destructive/20 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+              <AlertCircle className="size-5 text-destructive shrink-0 mt-0.5" />
               <p className="text-sm text-destructive">{error}</p>
             </div>
           )}
@@ -187,9 +203,19 @@ export default function StatusPage() {
                 <div className="flex items-start gap-4">
                   {getStatusIcon(status.status)}
                   <div className="flex-1">
-                    <p className="text-sm text-muted-foreground">Application Status</p>
-                    <p className={`text-2xl font-bold mt-1 ${getStatusColor(status.status)}`}>{capitalize(status.status)}</p>
-                    {status.message && <p className="text-sm text-muted-foreground mt-2">{status.message}</p>}
+                    <p className="text-sm text-muted-foreground">
+                      Application Status
+                    </p>
+                    <p
+                      className={`text-2xl font-bold mt-1 capitalize ${getStatusColor(status.status)}`}
+                    >
+                      {status.status.replace("_", " ")}
+                    </p>
+                    {status.message && (
+                      <p className="text-sm text-muted-foreground mt-2">
+                        {status.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -198,30 +224,56 @@ export default function StatusPage() {
               <FormSection title="Application Details">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Reference / Transaction</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.transactionRef}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Entity Name</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.entityName}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Entity Type</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.entityType}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">RC Number</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.rcNumber ?? "-"}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">Registration Date</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">
+                      Reference / Transaction
+                    </p>
                     <p className="text-sm font-medium text-foreground mt-1">
-                      {status.entity?.registrationDate ? new Date(status.entity.registrationDate).toLocaleDateString() : "-"}
+                      {status.transactionRef}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-muted-foreground uppercase">TIN</p>
-                    <p className="text-sm font-medium text-foreground mt-1">{status.entity?.tin ?? "-"}</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">
+                      Entity Name
+                    </p>
+                    <p className="text-sm font-medium text-foreground mt-1">
+                      {status.entity?.entityName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">
+                      Entity Type
+                    </p>
+                    <p className="text-sm font-medium text-foreground mt-1">
+                      {status.entity?.entityType ?? "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">
+                      RC Number
+                    </p>
+                    <p className="text-sm font-medium text-foreground mt-1">
+                      {status.entity?.rcNumber ?? "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">
+                      Registration Date
+                    </p>
+                    <p className="text-sm font-medium text-foreground mt-1">
+                      {status.entity?.registrationDate
+                        ? new Date(
+                            status.entity.registrationDate,
+                          ).toLocaleDateString()
+                        : "-"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-muted-foreground uppercase">
+                      TIN
+                    </p>
+                    <p className="text-sm font-medium text-foreground mt-1">
+                      {status.entity?.tin ?? "-"}
+                    </p>
                   </div>
                 </div>
               </FormSection>
@@ -229,11 +281,14 @@ export default function StatusPage() {
               {/* Support Info */}
               <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800">
                 <p className="text-sm text-blue-900 dark:text-blue-100">
-                  Have questions? Contact our support team at{' '}
-                  <a href="mailto:support@cbitechnologiesltd.com" className="font-medium underline">
+                  Have questions? Contact our support team at{" "}
+                  <a
+                    href="mailto:support@cbitechnologiesltd.com"
+                    className="font-medium underline"
+                  >
                     support@cbitechnologiesltd.com
-                  </a>{' '}
-                  or call{' '}
+                  </a>{" "}
+                  or call{" "}
                   <a href="tel:+234800000000" className="font-medium underline">
                     +234 800 000 0000
                   </a>
@@ -246,5 +301,5 @@ export default function StatusPage() {
 
       <Footer />
     </div>
-  )
+  );
 }

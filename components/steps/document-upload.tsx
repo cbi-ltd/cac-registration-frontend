@@ -1,55 +1,62 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useRegistrationStore, RegistrationData } from "@/lib/store"
-import { FormSection } from "@/components/form-section"
-import { Upload, File, X, CheckCircle2 } from "lucide-react"
+import React from "react";
+import { useRegistrationStore, RegistrationData } from "@/lib/store";
+import { FormSection } from "@/components/form-section";
+import { Upload, File, X, CheckCircle2 } from "lucide-react";
+import {
+  saveDocument,
+  removeDocument,
+  getAllDocuments,
+} from "@/lib/document-storage";
 
 /* ===================== TYPES ===================== */
 
 interface DocumentInfo {
-  name: string
-  description: string
-  fieldName: keyof RegistrationData
-  required: boolean
-  accepted: string[]
-  maxSize: number
+  name: string;
+  description: string;
+  fieldName: keyof RegistrationData;
+  required: boolean;
+  accepted: string[];
+  maxSize: number;
 }
 
 /* ===================== HELPERS ===================== */
 
 const formatBytes = (bytes: number) => {
-  if (!bytes) return "0 Bytes"
-  const k = 1024
-  const sizes = ["Bytes", "KB", "MB"]
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`
-}
+  if (!bytes) return "0 Bytes";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+};
 
 const formatAccepted = (types: string[]) =>
   types
     .map((t) => {
-      if (t === "application/pdf") return "PDF"
-      if (t === "image/jpeg") return "JPG"
-      if (t === "image/png") return "PNG"
-      return t
+      if (t === "application/pdf") return "PDF";
+      if (t === "image/jpeg") return "JPG";
+      if (t === "image/png") return "PNG";
+      return t;
     })
-    .join(", ")
+    .join(", ");
 
 /* ===================== COMPONENT ===================== */
 
 export function DocumentUploadStep() {
-  const store = useRegistrationStore()
+  const store = useRegistrationStore();
 
-  const [uploadErrors, setUploadErrors] = React.useState<Record<string, string>>(
-    {}
-  )
+  const [uploadErrors, setUploadErrors] = React.useState<
+    Record<string, string>
+  >({});
 
   const [fileMeta, setFileMeta] = React.useState<
     Record<string, { name: string; size: number }>
-  >({})
+  >({});
 
-  const fileInputRefs = React.useRef<Record<string, HTMLInputElement | null>>({})
+  const fileInputRefs = React.useRef<Record<string, HTMLInputElement | null>>(
+    {},
+  );
 
   /* ===================== DOCUMENT CONFIG ===================== */
 
@@ -86,65 +93,106 @@ export function DocumentUploadStep() {
       accepted: ["image/jpeg", "image/png"],
       maxSize: 1 * 1024 * 1024,
     },
-  ]
+  ];
 
   /* ===================== HANDLERS ===================== */
 
   const handleFileChange = (
     fieldName: keyof RegistrationData,
     file: File | null,
-    doc: DocumentInfo
+    doc: DocumentInfo,
   ) => {
     if (!file) {
-      store.updateField(fieldName, null)
+      store.updateField(fieldName, null);
+
       setFileMeta((prev) => {
-        const copy = { ...prev }
-        delete copy[fieldName as string]
-        return copy
-      })
-      setUploadErrors((e) => ({ ...e, [fieldName]: "" }))
-      return
+        const copy = { ...prev };
+        delete copy[fieldName as string];
+        return copy;
+      });
+
+      setUploadErrors((e) => ({ ...e, [fieldName]: "" }));
+      removeDocument(fieldName as string).catch(() => {});
+      return;
     }
 
     if (!doc.accepted.includes(file.type)) {
       setUploadErrors((e) => ({
         ...e,
         [fieldName]: `Invalid file type. Accepted: ${formatAccepted(
-          doc.accepted
+          doc.accepted,
         )}`,
-      }))
-      return
+      }));
+      return;
     }
 
     if (file.size > doc.maxSize) {
       setUploadErrors((e) => ({
         ...e,
         [fieldName]: `File size exceeds ${formatBytes(doc.maxSize)} limit`,
-      }))
-      return
+      }));
+      return;
     }
 
-    const reader = new FileReader()
+    const reader = new FileReader();
+
     reader.onload = () => {
-      store.updateField(fieldName, reader.result as string)
+      const base64 = reader.result as string;
+
+      store.updateField(fieldName, base64);
+
       setFileMeta((prev) => ({
         ...prev,
         [fieldName]: { name: file.name, size: file.size },
-      }))
-      setUploadErrors((e) => ({ ...e, [fieldName]: "" }))
-    }
+      }));
+
+      setUploadErrors((e) => ({ ...e, [fieldName]: "" }));
+
+      saveDocument(fieldName as string, {
+        data: base64,
+        name: file.name,
+        size: file.size,
+      }).catch(() => {});
+    };
+
     reader.onerror = () => {
       setUploadErrors((e) => ({
         ...e,
         [fieldName]: "Failed to read file",
-      }))
-    }
-    reader.readAsDataURL(file)
-  }
+      }));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  React.useEffect(() => {
+    let cancelled = false;
+    getAllDocuments()
+      .then((docs) => {
+        if (cancelled) return;
+        const state = useRegistrationStore.getState();
+        const restored: Record<string, { name: string; size: number }> = {};
+        for (const doc of documents) {
+          const key = doc.fieldName as string;
+          const stored = docs[key];
+          if (stored && !(state as any)[doc.fieldName]) {
+            state.updateField(doc.fieldName, stored.data);
+            restored[key] = { name: stored.name, size: stored.size };
+          }
+        }
+        if (Object.keys(restored).length > 0) {
+          setFileMeta((prev) => ({ ...prev, ...restored }));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const uploadedCount = documents.filter(
-    (d) => !!(store as any)[d.fieldName]
-  ).length
+    (d) => !!(store as any)[d.fieldName],
+  ).length;
 
   /* ===================== RENDER ===================== */
 
@@ -153,7 +201,7 @@ export function DocumentUploadStep() {
       <FormSection
         title="Document Upload"
         description="Upload all required documents. Each document has its own size and format requirements."
-        icon={<Upload className="w-5 h-5 text-primary" />}
+        icon={<Upload className="size-5 text-primary" />}
         isRequired
       >
         {/* Progress */}
@@ -181,8 +229,8 @@ export function DocumentUploadStep() {
         {/* Documents */}
         <div className="space-y-4">
           {documents.map((doc) => {
-            const value = (store as any)[doc.fieldName]
-            const error = uploadErrors[doc.fieldName as string]
+            const value = (store as any)[doc.fieldName];
+            const error = uploadErrors[doc.fieldName as string];
 
             return (
               <div
@@ -191,12 +239,8 @@ export function DocumentUploadStep() {
               >
                 <h3 className="font-medium text-foreground flex items-center gap-2">
                   {doc.name}
-                  {doc.required && (
-                    <span className="text-destructive">*</span>
-                  )}
-                  {value && (
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                  )}
+                  {doc.required && <span className="text-destructive">*</span>}
+                  {value && <CheckCircle2 className="w-4 h-4 text-green-600" />}
                 </h3>
 
                 <p className="text-sm text-muted-foreground mt-1">
@@ -210,16 +254,16 @@ export function DocumentUploadStep() {
                       <span className="text-sm font-medium text-foreground">
                         {fileMeta[doc.fieldName as string]?.name} (
                         {formatBytes(
-                          fileMeta[doc.fieldName as string]?.size || 0
+                          fileMeta[doc.fieldName as string]?.size || 0,
                         )}
                         )
                       </span>
                     </div>
                     <button
                       onClick={() => {
-                        handleFileChange(doc.fieldName, null, doc)
+                        handleFileChange(doc.fieldName, null, doc);
                         fileInputRefs.current[doc.fieldName as string]!.value =
-                          ""
+                          "";
                       }}
                       className="p-1 hover:bg-muted rounded"
                     >
@@ -246,8 +290,7 @@ export function DocumentUploadStep() {
 
                 <input
                   ref={(el) => {
-                    if (el)
-                      fileInputRefs.current[doc.fieldName as string] = el
+                    if (el) fileInputRefs.current[doc.fieldName as string] = el;
                   }}
                   type="file"
                   accept={doc.accepted.join(",")}
@@ -256,7 +299,7 @@ export function DocumentUploadStep() {
                     handleFileChange(
                       doc.fieldName,
                       e.target.files?.[0] || null,
-                      doc
+                      doc,
                     )
                   }
                 />
@@ -265,16 +308,13 @@ export function DocumentUploadStep() {
                   <p className="text-sm text-destructive mt-2">{error}</p>
                 )}
               </div>
-            )
+            );
           })}
         </div>
       </FormSection>
     </div>
-  )
+  );
 }
-
-
-
 
 // "use client"
 
