@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/kamsi%20Okonji/dev/cac-registration-frontend/app/global-not-found.tsx"],"sourcesContent":["const _geistSans = Geist({ subsets: [\"latin\"] });\r\n\r\nexport default function GlobalNotFound() {\r\n  return (\r\n    <html lang=\"en\" className={inter.className}>\r\n      <body>\r\n        <h1>404 - Page Not Found</h1>\r\n        <p>This page does not exist.</p>\r\n      </body>\r\n    </html>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;AAAA,MAAM,aAAa,MAAM;IAAE,SAAS;QAAC;KAAQ;AAAC;AAE/B,SAAS;IACtB,qBACE,6WAAC;QAAK,MAAK;QAAK,WAAW,MAAM,SAAS;kBACxC,cAAA,6WAAC;;8BACC,6WAAC;8BAAG;;;;;;8BACJ,6WAAC;8BAAE;;;;;;;;;;;;;;;;;AAIX"}},
-    {"offset": {"line": 51, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/kamsi%20Okonji/dev/cac-registration-frontend/node_modules/.pnpm/next%4016.0.7_react-dom%4019.2.0_react%4019.2.0__react%4019.2.0/node_modules/next/src/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = (\n  require('../../module.compiled') as typeof import('../../module.compiled')\n).vendored['react-rsc']!.ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":"AAAAA,OAAOC,OAAO,GACZC,QAAQ,uMACRC,QAAQ,CAAC,YAAY,CAAEC,kBAAkB","ignoreList":[0]}}]
-}
