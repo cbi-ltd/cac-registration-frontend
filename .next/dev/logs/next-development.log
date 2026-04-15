@@ -35,3 +35,74 @@ Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
 [00:26:27.954] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776070188537} /_vercel/insights/view
 [00:26:27.954] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[07:01:49.948] Server  LOG      ✓ Compiled in 134ms
+[07:02:09.924] Server  LOG      ✓ Compiled in 69ms
+[07:02:35.911] Server  LOG      ✓ Compiled in 75ms
+[07:02:54.377] Server  LOG      ✓ Compiled in 184ms
+[07:02:55.273] Browser ERROR   ./components/steps/review-summary.tsx:201:7
+Parsing ecmascript source code failed
+  199 |       // window.location.href = authUrl
+  200 |       // window.open(authUrl, "_blank");
+> 201 |       newTab?.location.href = authUrl;
+      |       ^^^^^^^^^^^^^^^^^^^^^
+  202 |       setIsProcessingPayment(false);
+  203 |       checkPaymentStatus(ref);
+  204 |       // Note: Page will unload, so finally block won't execute as expected
+
+The left-hand side of an assignment expression must be a variable or a property access.
+
+Import traces:
+  Client Component Browser:
+    ./components/steps/review-summary.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/steps/review-summary.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[07:03:00.251] Browser ERROR   ./components/steps/review-summary.tsx:201:7
+Parsing ecmascript source code failed
+  199 |       // window.location.href = authUrl
+  200 |       // window.open(authUrl, "_blank");
+> 201 |       newTab?.location.href = authUrl || "";
+      |       ^^^^^^^^^^^^^^^^^^^^^
+  202 |       setIsProcessingPayment(false);
+  203 |       checkPaymentStatus(ref);
+  204 |       // Note: Page will unload, so finally block won't execute as expected
+
+The left-hand side of an assignment expression must be a variable or a property access.
+
+Import traces:
+  Client Component Browser:
+    ./components/steps/review-summary.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Client Component Browser]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/steps/review-summary.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Client Component SSR]
+    ./components/registration-form.tsx [Server Component]
+    ./app/register/page.tsx [Server Component]
+[07:03:41.407] Server  LOG      ✓ Compiled in 66ms
+[07:03:52.226] Server  LOG      ✓ Compiled in 65ms
+[07:14:37.280] Server  LOG      ✓ Compiled in 70ms
+[07:15:48.305] Server  LOG      ✓ Compiled in 56ms
+[07:15:55.013] Server  LOG      ✓ Compiled in 74ms
+[07:16:20.016] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[07:16:20.016] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[07:16:20.016] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776094778217} /_vercel/insights/view
+[07:16:20.159] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[07:16:32.165] Server  LOG      ✓ Compiled in 59ms
+[07:16:42.057] Server  LOG      ✓ Compiled in 60ms
+[07:17:08.232] Server  LOG      ✓ Compiled in 70ms
+[07:17:13.934] Server  LOG      ✓ Compiled in 88ms
+[07:17:32.276] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[07:17:32.276] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/register","route":"/register"}
+[07:17:32.276] Browser LOG     %c[Vercel Web Analytics]%c [view] http://localhost:3000/register color: rgb(120, 120, 120) color: inherit {"dp":"/register","o":"http://localhost:3000/register","r":"","sdkn":"@vercel/analytics/next","sdkv":"2.0.1","sv":"0.1.3","ts":1776094850263} /_vercel/insights/view
+[07:17:32.276] Browser WARN    Image with src "/_next/static/media/cbi-logo.941f8d17.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
