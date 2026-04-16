@@ -12,6 +12,7 @@ import { BusinessDetailsStep } from "@/components/steps/business-details";
 import { DocumentUploadStep } from "@/components/steps/document-upload";
 import { ReviewSummaryStep } from "@/components/steps/review-summary";
 import { ConfirmationPageStep } from "@/components/steps/confirmation-page";
+import { validateDateOfBirth, validateEmail } from "@/lib/validation";
 
 const STEPS = [
   "Business Name",
@@ -83,10 +84,10 @@ export function RegistrationForm() {
           return (
             store.firstName !== "" &&
             store.lastName !== "" &&
-            store.dateOfBirth !== "" &&
+            validateDateOfBirth(store.dateOfBirth).isValid &&
             store.gender !== "" &&
             store.phone !== "" &&
-            store.email !== "" &&
+            validateEmail(store.email).isValid &&
             store.residentialAddress !== ""
           );
         } else {
@@ -103,7 +104,7 @@ export function RegistrationForm() {
           store.businessActivity !== "" &&
           (!!store.sameAsResidential || store.businessAddress !== "") &&
           store.businessPhone !== "" &&
-          store.businessEmail !== "" &&
+          validateEmail(store.businessEmail).isValid &&
           store.commencementDate !== ""
         );
 

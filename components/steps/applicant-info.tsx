@@ -6,6 +6,7 @@ import { FormInput } from "@/components/form-input";
 import { FormSelect } from "@/components/form-select";
 import { User } from "lucide-react";
 import { countries } from "@/components/countries";
+import { validateDateOfBirth, validateEmail } from "@/lib/validation";
 
 export function ApplicantInfoStep() {
   const store = useRegistrationStore();
@@ -14,13 +15,14 @@ export function ApplicantInfoStep() {
     { value: "MALE", label: "Male" },
     { value: "FEMALE", label: "Female" },
   ];
+
   const nationalities = countries;
 
   const handleFieldChange = (field: keyof RegistrationData, value: string) => {
     store.updateField(field, value);
   };
 
-  const showIdExpiryDate = !["NIN", "Voter's Card"].includes(store.idType);
+  // const showIdExpiryDate = !["NIN", "Voter's Card"].includes(store.idType);
 
   return (
     <div className="space-y-6 animate-slide-up">
@@ -66,6 +68,7 @@ export function ApplicantInfoStep() {
                 placeholder="Joshua"
                 required
               />
+
               <FormInput
                 label="Other/Middle Name"
                 value={store.middleName}
@@ -84,15 +87,24 @@ export function ApplicantInfoStep() {
                 placeholder="Adeyemo"
                 required
               />
-              <FormInput
-                label="Date of Birth"
-                type="date"
-                value={store.dateOfBirth}
-                onChange={(e) =>
-                  handleFieldChange("dateOfBirth", e.target.value)
-                }
-                required
-              />
+
+              <span className="space-y-1">
+                <FormInput
+                  label="Date of Birth"
+                  type="date"
+                  value={store.dateOfBirth}
+                  onChange={(e) =>
+                    handleFieldChange("dateOfBirth", e.target.value)
+                  }
+                  required
+                  max={new Date().toISOString().split("T")[0]}
+                />
+                {!validateDateOfBirth(store.dateOfBirth).isValid && (
+                  <p className="text-xs text-destructive">
+                    {validateDateOfBirth(store.dateOfBirth).errors.join(", ")}
+                  </p>
+                )}
+              </span>
             </div>
           </FormSection>
 
@@ -106,14 +118,22 @@ export function ApplicantInfoStep() {
                 placeholder="07057001119"
                 required
               />
-              <FormInput
-                label="Email Address"
-                type="email"
-                value={store.email}
-                onChange={(e) => handleFieldChange("email", e.target.value)}
-                placeholder="chylau12@gmail.com"
-                required
-              />
+
+              <span className="space-y-1">
+                <FormInput
+                  label="Email Address"
+                  type="email"
+                  value={store.email}
+                  onChange={(e) => handleFieldChange("email", e.target.value)}
+                  placeholder="chylau12@gmail.com"
+                  required
+                />
+                {!validateEmail(store.email).isValid && (
+                  <p className="text-xs text-destructive">
+                    {validateEmail(store.email).errors.join(", ")}
+                  </p>
+                )}
+              </span>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mt-4">
@@ -124,7 +144,9 @@ export function ApplicantInfoStep() {
                   handleFieldChange("proprietorStreetNumber", e.target.value)
                 }
                 placeholder="41"
+                required
               />
+
               <FormInput
                 label="Street / Service Address"
                 value={store.residentialAddress}
@@ -132,6 +154,7 @@ export function ApplicantInfoStep() {
                   handleFieldChange("residentialAddress", e.target.value)
                 }
                 placeholder="limpopo street"
+                required
               />
             </div>
 
@@ -143,7 +166,9 @@ export function ApplicantInfoStep() {
                   handleFieldChange("proprietorCity", e.target.value)
                 }
                 placeholder="Abuja"
+                required
               />
+
               <FormInput
                 label="State"
                 value={store.proprietorState}
@@ -151,6 +176,7 @@ export function ApplicantInfoStep() {
                   handleFieldChange("proprietorState", e.target.value)
                 }
                 placeholder="F.C.T"
+                required
               />
             </div>
 
@@ -162,7 +188,10 @@ export function ApplicantInfoStep() {
                   handleFieldChange("proprietorPostcode", e.target.value)
                 }
                 placeholder="900108"
+                maxLength={6}
+                required
               />
+
               <FormInput
                 label="LGA"
                 value={store.proprietorLga}
@@ -170,19 +199,18 @@ export function ApplicantInfoStep() {
                   handleFieldChange("proprietorLga", e.target.value)
                 }
                 placeholder="lagos mainland"
+                required
               />
             </div>
 
-            <div className="mt-4">
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
               <FormSelect
                 label="Gender"
                 value={store.gender?.toString().toUpperCase() ?? ""}
                 onChange={(e) => handleFieldChange("gender", e.target.value)}
                 options={genders}
               />
-            </div>
 
-            <div className="mt-4">
               <FormSelect
                 label="Nationality"
                 value={store.nationality}
@@ -190,6 +218,7 @@ export function ApplicantInfoStep() {
                   handleFieldChange("nationality", e.target.value)
                 }
                 options={nationalities.map((n) => ({ value: n, label: n }))}
+                required
               />
             </div>
           </FormSection>
