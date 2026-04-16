@@ -3,8 +3,8 @@
 import { RegistrationData, useRegistrationStore } from "@/lib/store";
 import { FormSection } from "@/components/form-section";
 import { FormInput } from "@/components/form-input";
-import { FormSelect } from "@/components/form-select";
 import { Briefcase } from "lucide-react";
+import { validateEmail } from "@/lib/validation";
 
 export function BusinessDetailsStep() {
   const store = useRegistrationStore();
@@ -40,6 +40,7 @@ export function BusinessDetailsStep() {
             placeholder="fashion"
             required
           />
+
           <FormInput
             label="Proposed Business Name"
             value={store.selectedBusinessName}
@@ -74,6 +75,7 @@ export function BusinessDetailsStep() {
             }
             placeholder="41"
           />
+
           <FormInput
             label="Business Street / Address"
             value={store.businessAddress}
@@ -83,6 +85,7 @@ export function BusinessDetailsStep() {
             placeholder="limpopo street"
           />
         </div>
+
         <div className="grid md:grid-cols-2 gap-4 mt-4">
           <FormInput
             label="City"
@@ -90,6 +93,7 @@ export function BusinessDetailsStep() {
             onChange={(e) => handleFieldChange("companyCity", e.target.value)}
             placeholder="Abuja"
           />
+
           <FormInput
             label="State"
             value={store.companyState}
@@ -109,14 +113,24 @@ export function BusinessDetailsStep() {
             placeholder="07057001119"
             required
           />
-          <FormInput
-            label="Business Email"
-            type="email"
-            value={store.businessEmail}
-            onChange={(e) => handleFieldChange("businessEmail", e.target.value)}
-            placeholder="chylau12@gmail.com"
-            required
-          />
+
+          <span className="space-y-1">
+            <FormInput
+              label="Business Email"
+              type="email"
+              value={store.businessEmail}
+              onChange={(e) =>
+                handleFieldChange("businessEmail", e.target.value)
+              }
+              placeholder="chylau12@gmail.com"
+              required
+            />
+            {!validateEmail(store.businessEmail).isValid && (
+              <p className="text-xs text-destructive">
+                {validateEmail(store.businessEmail).errors.join(", ")}
+              </p>
+            )}
+          </span>
         </div>
       </FormSection>
 
@@ -129,6 +143,7 @@ export function BusinessDetailsStep() {
             handleFieldChange("commencementDate", e.target.value)
           }
           required
+          max={new Date().toISOString().split("T")[0]}
         />
       </FormSection>
     </div>

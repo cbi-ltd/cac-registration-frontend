@@ -3,7 +3,7 @@
 import React from "react";
 import { useRegistrationStore } from "@/lib/store";
 import { FormSection } from "@/components/form-section";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { StatusBanner } from "@/components/status-banner";
 
 export function ReviewSummaryStep() {
@@ -449,14 +449,18 @@ export function ReviewSummaryStep() {
         </button>
       )}
 
-      {submissionError && (
+      {submissionError && !submitted && (
         <button
           type="button"
           onClick={retrySubmission}
           disabled={isSubmitting}
           className="w-full px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium disabled:opacity-50"
         >
-          {isSubmitting ? "Submitting..." : "Retry Submission"}
+          {isSubmitting ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            "Retry Submission"
+          )}
         </button>
       )}
 

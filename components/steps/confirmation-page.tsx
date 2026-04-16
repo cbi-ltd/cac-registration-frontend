@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRegistrationStore, RegistrationData } from "@/lib/store";
+import { useRegistrationStore } from "@/lib/store";
 import Link from "next/link";
 import { CheckCircle2, Copy, Download, ArrowRight } from "lucide-react";
 
@@ -12,9 +12,7 @@ export function ConfirmationPageStep() {
   const handleCopyReference = () => {
     // Do not expose transactionRef/applicationReference directly per privacy requirement
     // Provide a generic acknowledgement copy instead
-    navigator.clipboard.writeText(
-      "Your application reference is available in your email.",
-    );
+    navigator.clipboard.writeText(store.applicationReference);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -70,8 +68,8 @@ export function ConfirmationPageStep() {
   return (
     <div className="space-y-6 animate-slide-up">
       <div className="text-center py-12">
-        <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6 animate-bounce">
-          <CheckCircle2 className="w-12 h-12 text-green-600" />
+        <div className="mx-auto size-20 bg-green-100 rounded-full flex items-center justify-center mb-6 animate-bounce">
+          <CheckCircle2 className="size-12 text-green-600" />
         </div>
 
         <h1 className="text-4xl font-bold text-foreground mb-2">
@@ -83,20 +81,33 @@ export function ConfirmationPageStep() {
         </p>
 
         {/* Reference Notice (hidden transactionRef) */}
-        {/* <div className="bg-secondary rounded-lg p-6 mb-8 max-w-md mx-auto">
-          <p className="text-sm text-muted-foreground mb-2 uppercase font-semibold">Application Reference</p>
-          <div className="flex items-center justify-between gap-3 mb-3">
-            <span className="text-sm text-muted-foreground">A unique reference has been recorded and ${store.transactionRef}.</span>
-            <button
-              onClick={handleCopyReference}
-              className="p-2 hover:bg-secondary-dark rounded-lg transition-colors"
-              title="Copy info"
-            >
-              <Copy className="w-5 h-5 text-primary" />
-            </button>
+        <div className="bg-secondary rounded-lg p-6 mb-8 max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground mb-2 uppercase font-semibold">
+            Application Reference
+          </p>
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-sm text-muted-foreground">
+              Your application reference is:
+              <span className="flex items-center gap-2">
+                <span className="font-semibold">
+                  {store.applicationReference}
+                </span>
+                <button
+                  onClick={handleCopyReference}
+                  className="p-2 hover:bg-secondary-dark rounded-lg transition-colors"
+                  title="Copy info"
+                >
+                  <Copy className="size-5 text-primary" />
+                </button>
+              </span>
+            </span>
           </div>
-          <p className="text-xs text-muted-foreground">{copied ? "✓ Copied to clipboard!" : "Check your email for the reference number"}</p>
-        </div> */}
+          <p className="text-xs text-muted-foreground">
+            {copied
+              ? "✓ Copied to clipboard!"
+              : "Check your email for the reference number"}
+          </p>
+        </div>
 
         {/* Confirmation Details */}
         <div className="grid md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
@@ -221,7 +232,6 @@ export function ConfirmationPageStep() {
             onClick={() => {
               try {
                 localStorage.clear();
-                sessionStorage.clear();
               } catch (e) {
                 // ignore storage clearing errors
               }

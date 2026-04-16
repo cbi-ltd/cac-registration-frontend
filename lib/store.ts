@@ -332,7 +332,7 @@ export const useRegistrationStore = create<
 
         const formData = buildSubmissionPayload(stateWithDocs);
 
-        const resp = await fetch(`${API_BASE_URL}reg-bn?priorityService=true`, {
+        const resp = await fetch(`${API_BASE_URL}reg-bn`, {
           method: "POST",
           body: formData,
         });

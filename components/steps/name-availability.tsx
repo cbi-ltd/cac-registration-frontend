@@ -4,7 +4,7 @@ import React from "react";
 import { useRegistrationStore, API_BASE_URL } from "@/lib/store";
 import { FormSection } from "@/components/form-section";
 import { FormInput } from "@/components/form-input";
-import { Search, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Search, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 
 export function NameAvailabilityStep() {
   const store = useRegistrationStore();
@@ -103,7 +103,13 @@ export function NameAvailabilityStep() {
       });
 
       if (!resp.ok) {
-        throw new Error("Name check failed. Please try again.");
+        return resp.json().then((data) => {
+          setError(
+            data.error?.message ||
+              "Failed to check availability. Please try again.",
+          );
+          return;
+        });
       }
 
       const json = await resp.json();
@@ -153,11 +159,7 @@ export function NameAvailabilityStep() {
     }
   };
 
-  const canProceed = responseMessage === "Proceed to filing";
-  // store.updateField("selectedBusinessName", proposedName.trim())
-
-  // const canProceed = responseMessage ? "Proceed to filing"
-  //   : store.selectedBusinessName !== "" || responseMessage === "Proceed to filing"
+  const canProceed = responseMessage === "PROCEED_TO_FILING";
 
   return (
     <div className="space-y-6 animate-slide-up">
@@ -189,17 +191,21 @@ export function NameAvailabilityStep() {
         <button
           onClick={checkAvailability}
           disabled={isChecking}
-          className="w-full border border-secondary flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-secondary hover:bg-destructive text-foreground font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full border border-primary flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Check Name Availability"
         >
-          <Search className="w-4 h-4" />
-          {isChecking ? "Checking Availability..." : "Check Availability"}
+          {!isChecking && <Search className="size-4" />}
+          {isChecking ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            "Check Availability"
+          )}
         </button>
       </FormSection>
 
       {error && (
-        <div className="flex items-start gap-3 p-4 rounded-lg bg-destructive/10 border border-destructive/20">
-          <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
+        <div className="flex items-center gap-3 p-4 rounded-lg bg-destructive/10 border border-destructive/20">
+          <AlertCircle className="size-5 text-destructive" />
           <p className="text-sm text-destructive">{error}</p>
         </div>
       )}
@@ -209,8 +215,8 @@ export function NameAvailabilityStep() {
           <div className="p-4 rounded-lg bg-muted/5 border border-muted/20">
             {/* <p className="text-sm">{responseMessage === "Name is unique but check the similarity details" ? "Name is unique" : responseMessage}</p> */}
             <p className="text-sm">
-              {responseMessage === "Proceed to filing"
-                ? "Proceed to filing"
+              {responseMessage === "PROCEED_TO_FILING"
+                ? "Proposed name is available"
                 : responseMessage.replaceAll("_", " ")}
             </p>
           </div>
@@ -242,7 +248,7 @@ export function NameAvailabilityStep() {
 
       {canProceed && (
         <div className="p-4 rounded-lg bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800 flex items-start gap-3">
-          <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+          <CheckCircle2 className="size-5 text-green-600 shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-green-900 dark:text-green-100">
               Name Selected

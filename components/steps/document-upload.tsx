@@ -175,8 +175,17 @@ export function DocumentUploadStep() {
         for (const doc of documents) {
           const key = doc.fieldName as string;
           const stored = docs[key];
-          if (stored && !(state as any)[doc.fieldName]) {
-            state.updateField(doc.fieldName, stored.data);
+          // if (stored && !(state as any)[doc.fieldName]) {
+          //   state.updateField(doc.fieldName, stored.data);
+          //   restored[key] = { name: stored.name, size: stored.size };
+          // }
+          if (stored) {
+            // Ensure base64 exists in store
+            if (!(state as any)[doc.fieldName]) {
+              state.updateField(doc.fieldName, stored.data);
+            }
+
+            // ALWAYS restore metadata
             restored[key] = { name: stored.name, size: stored.size };
           }
         }
@@ -250,12 +259,12 @@ export function DocumentUploadStep() {
                 {value ? (
                   <div className="flex items-center justify-between p-3 mt-3 rounded-lg bg-secondary">
                     <div className="flex items-center gap-2">
-                      <File className="w-4 h-4 text-primary" />
+                      <File className="size-4 text-primary" />
                       <span className="text-sm font-medium text-foreground">
                         {fileMeta[doc.fieldName as string]?.name} (
-                        {formatBytes(
-                          fileMeta[doc.fieldName as string]?.size || 0,
-                        )}
+                        {fileMeta[doc.fieldName as string]?.size
+                          ? formatBytes(fileMeta[doc.fieldName as string]?.size)
+                          : "0 Bytes"}
                         )
                       </span>
                     </div>
@@ -267,7 +276,7 @@ export function DocumentUploadStep() {
                       }}
                       className="p-1 hover:bg-muted rounded"
                     >
-                      <X className="w-4 h-4 text-muted-foreground" />
+                      <X className="size-4 text-muted-foreground" />
                     </button>
                   </div>
                 ) : (
@@ -277,7 +286,7 @@ export function DocumentUploadStep() {
                     }
                     className="border-2 border-dashed border-border rounded-lg p-6 mt-3 text-center cursor-pointer hover:border-primary/50 hover:bg-secondary/30"
                   >
-                    <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+                    <Upload className="size-8 mx-auto text-muted-foreground mb-2" />
                     <p className="text-sm font-medium text-foreground">
                       Click to upload
                     </p>

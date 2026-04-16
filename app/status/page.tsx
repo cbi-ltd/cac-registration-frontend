@@ -12,6 +12,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Download,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getStatusColor } from "@/lib/utils";
@@ -19,20 +20,29 @@ import { getStatusColor } from "@/lib/utils";
 export default function StatusPage() {
   const [reference, setReference] = React.useState<string>("");
   const [status, setStatus] = React.useState<any>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState({
+    search: false,
+    certificate: false,
+    report: false,
+  });
   const [error, setError] = React.useState("");
 
   const downloadBlob = async (
     endpoint: string,
     transactionRef: string,
     filename: string,
+    type: "certificate" | "report",
   ) => {
     if (!transactionRef) {
       setError("Transaction reference is required");
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading((prev) => ({
+      ...prev,
+      [type]: true,
+    }));
+
     setError("");
 
     try {
@@ -58,7 +68,10 @@ export default function StatusPage() {
     } catch (err: any) {
       setError(err?.message || "Download failed");
     } finally {
-      setIsLoading(false);
+      setIsLoading((prev) => ({
+        ...prev,
+        [type]: false,
+      }));
     }
   };
 
@@ -68,7 +81,7 @@ export default function StatusPage() {
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading((prev) => ({ ...prev, search: true }));
     setError("");
 
     try {
@@ -101,7 +114,7 @@ export default function StatusPage() {
     } catch (err) {
       setError("Failed to retrieve status. Please try again.");
     } finally {
-      setIsLoading(false);
+      setIsLoading((prev) => ({ ...prev, search: false }));
     }
   };
 
@@ -139,7 +152,7 @@ export default function StatusPage() {
           </div>
 
           <FormSection title="Application Reference">
-            <div className="flex gap-2 flex-col md:flex-row md:items-center">
+            <div className="flex gap-3 flex-col md:flex-row md:items-center">
               <FormInput
                 label=""
                 placeholder="E.g, VAS3547078455"
@@ -148,26 +161,39 @@ export default function StatusPage() {
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
 
-              <Button onClick={handleSearch} disabled={isLoading}>
-                <Search className="size-4" />
-                {isLoading ? "Searching..." : "Search"}
+              <Button
+                onClick={handleSearch}
+                disabled={isLoading.search}
+                className="w-full md:w-24"
+              >
+                {!isLoading.search && <Search className="size-4" />}
+                {isLoading.search ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  "Search"
+                )}
               </Button>
 
-              <div className="flex gap-2 sm:ml-2 flex-col md:flex-row">
+              <div className="flex gap-3 flex-col md:flex-row ">
                 <Button
                   onClick={() =>
                     downloadBlob(
                       "download-status-report",
                       reference.trim(),
                       `status-report-${reference.trim() || "report"}.pdf`,
+                      "report",
                     )
                   }
-                  disabled={isLoading || !reference.trim()}
+                  disabled={isLoading.report || !reference.trim()}
                   variant="secondary"
-                  // className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full md:w-52"
                 >
-                  <Download className="size-4" />
-                  Download Status Report
+                  {!isLoading.report && <Download className="size-4" />}
+                  {isLoading.report ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    "Download Status Report"
+                  )}
                 </Button>
 
                 <Button
@@ -176,14 +202,19 @@ export default function StatusPage() {
                       "download-cert",
                       reference.trim(),
                       `certificate-${reference.trim() || "cert"}.pdf`,
+                      "certificate",
                     )
                   }
-                  disabled={isLoading || !reference.trim()}
+                  disabled={isLoading.certificate || !reference.trim()}
                   variant="secondary"
-                  // className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-foreground border border-border hover:bg-secondary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full md:w-48"
                 >
-                  <Download className="size-4" />
-                  Download Certificate
+                  {!isLoading.certificate && <Download className="size-4" />}
+                  {isLoading.certificate ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    "Download Certificate"
+                  )}
                 </Button>
               </div>
             </div>
