@@ -3,7 +3,7 @@
 import React from "react";
 import { useRegistrationStore } from "@/lib/store";
 import Link from "next/link";
-import { CheckCircle2, Copy, Download, ArrowRight } from "lucide-react";
+import { CheckCircle2, Copy, Download, ArrowRight, Check } from "lucide-react";
 
 export function ConfirmationPageStep() {
   const store = useRegistrationStore();
@@ -85,28 +85,29 @@ export function ConfirmationPageStep() {
           <p className="text-sm text-muted-foreground mb-2 uppercase font-semibold">
             Application Reference
           </p>
-          <div className="flex items-center justify-between gap-3">
-            <span className="text-sm text-muted-foreground">
-              Your application reference is:
-              <span className="flex items-center gap-2">
-                <span className="font-semibold">
-                  {store.applicationReference}
-                </span>
-                <button
-                  onClick={handleCopyReference}
-                  className="p-2 hover:bg-secondary-dark rounded-lg transition-colors"
-                  title="Copy info"
-                >
-                  <Copy className="size-5 text-primary" />
-                </button>
+          <div className="flex items-center justify-center gap-3">
+            <span className="flex items-center gap-2">
+              <span className="font-semibold">
+                {store.applicationReference}
               </span>
+              <button
+                onClick={handleCopyReference}
+                className="p-2 hover:bg-secondary-dark rounded-lg transition-colors"
+                title="Copy info"
+              >
+                {copied ? (
+                  <Check className="size-5 text-green-500" />
+                ) : (
+                  <Copy className="size-5 text-primary" />
+                )}
+              </button>
             </span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          {/* <p className="text-xs text-muted-foreground">
             {copied
               ? "✓ Copied to clipboard!"
               : "Check your email for the reference number"}
-          </p>
+          </p> */}
         </div>
 
         {/* Confirmation Details */}
