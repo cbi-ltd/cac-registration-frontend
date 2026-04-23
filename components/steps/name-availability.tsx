@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { useRegistrationStore, API_BASE_URL } from "@/lib/store";
+import { API_BASE_URL, useRegistrationStore } from "@/lib/store";
 import { FormSection } from "@/components/form-section";
 import { FormInput } from "@/components/form-input";
-import { Search, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, Search } from "lucide-react";
 
 export function NameAvailabilityStep() {
   const store = useRegistrationStore();
@@ -17,68 +17,13 @@ export function NameAvailabilityStep() {
   const [recommendedKeywords, setRecommendedKeywords] = React.useState<
     string[]
   >([]);
+  const [suggestedNames, setSuggestedNames] = React.useState<string[]>([]);
 
   const handleProposedNameChange = (value: string) =>
     setProposedName(value.toLocaleUpperCase());
 
   const handleLineOfBusinessChange = (value: string) =>
     setLineOfBusiness(value);
-
-  // const checkAvailability = async () => {
-  //   if (!proposedName.trim()) {
-  //     setError("Please enter a proposed business name")
-  //     return
-  //   }
-
-  //   setIsChecking(true)
-  //   setError("")
-  //   setResponseMessage("")
-
-  //   try {
-  //     const resp = await fetch(`${API_BASE_URL}check-bn`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ proposedName: proposedName.trim(), lineOfBusiness: lineOfBusiness.trim() }),
-  //     })
-
-  //     if (!resp.ok) {
-  //       setError("Name check failed. Please try again.")
-  //       return
-  //     }
-
-  //     store.updateField("selectedBusinessName", proposedName.trim())
-  //     const json = await resp.json()
-
-  //     // Attempt to locate recommendedActions in the nested response structure.
-  //     const recActions =
-  //     json?.data?.data?.data?.recommendedActions ??
-  //     json?.data?.data?.recommendedActions ??
-  //     json?.data?.recommendedActions ??
-  //     null
-
-  //     if (recActions && Array.isArray(recActions) && recActions.length > 0) {
-  //       const msg = recActions[0].message ?? ""
-  //       setRecommendedMessage(msg)
-  //       setRecommendedKeywords(recActions[0].keywords ?? [])
-  //     } else {
-  //       setRecommendedMessage("")
-  //       setRecommendedKeywords([])
-  //     }
-
-  //     // Optionally surface a short status message from the API (if present)
-  //     const statusMessage = json?.data?.data?.message ?? json?.data?.message ?? ""
-  //     const finalResponse = statusMessage || (recActions && recActions[0]?.message) || "Proceed to filing"
-  //     setResponseMessage(finalResponse)
-
-  //     // Auto-select name when backend indicates proceed (or when there were no recommendations)
-  //     if (!recActions || finalResponse === "Proceed to filing") {
-  //     }
-  //   } catch (err) {
-  //     setError("Failed to check availability. Please try again.")
-  //   } finally {
-  //     setIsChecking(false)
-  //   }
-  // }
 
   const checkAvailability = async () => {
     if (!proposedName.trim()) {
@@ -91,6 +36,7 @@ export function NameAvailabilityStep() {
     setResponseMessage("");
     setRecommendedMessage("");
     setRecommendedKeywords([]);
+    setSuggestedNames([]);
 
     try {
       const resp = await fetch(`${API_BASE_URL}check-bn`, {
@@ -125,12 +71,18 @@ export function NameAvailabilityStep() {
         json?.data?.recommendedActions ??
         [];
 
+      const availableNames = json?.data?.data?.data?.suggestedNames ?? [];
+
       /**
        * Extract recommendations (if any)
        */
       if (Array.isArray(recommendedActions) && recommendedActions.length > 0) {
         setRecommendedMessage(recommendedActions[0]?.message ?? "");
         setRecommendedKeywords(recommendedActions[0]?.keywords ?? []);
+      }
+
+      if (Array.isArray(availableNames) && availableNames.length > 0) {
+        setSuggestedNames(availableNames);
       }
 
       /**
@@ -240,6 +192,23 @@ export function NameAvailabilityStep() {
                     {k}
                   </span>
                 ))}
+              </div>
+            )}
+            {suggestedNames && suggestedNames.length > 0 && (
+              <div className="flex flex-col gap-2 mt-2">
+                <p className="text-sm">
+                  You can choose any of these suggested names below.
+                </p>
+                <span className="flex flex-wrap gap-2 mt-2">
+                  {suggestedNames.map((name) => (
+                    <span
+                      key={name}
+                      className="text-xs px-2 py-1 rounded bg-secondary/10 border border-secondary/20"
+                    >
+                      {name}
+                    </span>
+                  ))}
+                </span>
               </div>
             )}
           </div>
