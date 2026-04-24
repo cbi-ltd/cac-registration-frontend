@@ -19,6 +19,7 @@ export function Header() {
               src={cbiLogo}
               alt="CBI Logo"
               className="w-45.5 h-11.25"
+              loading="eager"
             />
           </Link>
 

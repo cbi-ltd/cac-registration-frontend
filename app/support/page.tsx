@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { Mail, Phone, Clock, AlertCircle, CheckCircle2 } from "lucide-react"
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { Mail, Phone, Clock, AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function SupportPage() {
   return (
@@ -13,9 +13,12 @@ export default function SupportPage() {
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-4xl font-bold text-foreground mb-3">Support Center</h1>
+            <h1 className="text-4xl font-bold text-foreground mb-3">
+              Support Center
+            </h1>
             <p className="text-lg text-muted-foreground">
-              We're here to help. Find answers to your questions or contact our support team.
+              We're here to help. Find answers to your questions or contact our
+              support team.
             </p>
           </div>
 
@@ -28,11 +31,15 @@ export default function SupportPage() {
                 </div>
                 <h3 className="font-semibold text-foreground">Email Support</h3>
               </div>
-              <p className="text-sm text-muted-foreground mb-4">Send us an email and we'll respond within 24 hours</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Send us an email and we'll respond within 24 hours
+              </p>
               <a
                 href="mailto:support@cbitechnologiesltd.com"
                 className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
-              > support@cbitechnologiesltd.com
+              >
+                {" "}
+                support@cbitechnologiesltd.com
               </a>
             </div>
 
@@ -43,7 +50,9 @@ export default function SupportPage() {
                 </div>
                 <h3 className="font-semibold text-foreground">Phone Support</h3>
               </div>
-              <p className="text-sm text-muted-foreground mb-4">Call our support team during business hours</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Call our support team during business hours
+              </p>
               <a
                 href="tel:+2348112936083"
                 className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
@@ -57,10 +66,14 @@ export default function SupportPage() {
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="font-semibold text-foreground">Business Hours</h3>
+                <h3 className="font-semibold text-foreground">
+                  Business Hours
+                </h3>
               </div>
               <p className="text-sm text-muted-foreground">
-                <span className="block">Monday - Friday: 9:00 AM - 5:00 PM</span>
+                <span className="block">
+                  Monday - Friday: 9:00 AM - 5:00 PM
+                </span>
                 <span className="block">Saturday: 10:00 AM - 3:00 PM</span>
                 <span className="block">Sunday: Closed</span>
               </p>
@@ -69,7 +82,9 @@ export default function SupportPage() {
 
           {/* FAQ Section */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-6">
+              Frequently Asked Questions
+            </h2>
 
             <div className="space-y-4">
               {[
@@ -104,12 +119,19 @@ export default function SupportPage() {
                     "Yes, we use SSL/TLS encryption and comply with NDPR data protection requirements. Your data is stored securely.",
                 },
               ].map((faq, index) => (
-                <details key={index} className="group p-4 rounded-lg border border-border cursor-pointer">
+                <details
+                  key={index}
+                  className="group p-4 rounded-lg border border-border cursor-pointer"
+                >
                   <summary className="flex items-center justify-between font-semibold text-foreground">
                     <span>{faq.question}</span>
-                    <span className="transition-transform group-open:rotate-180">▼</span>
+                    <span className="transition-transform group-open:rotate-180">
+                      ▼
+                    </span>
                   </summary>
-                  <p className="mt-4 text-sm text-muted-foreground">{faq.answer}</p>
+                  <p className="mt-4 text-sm text-muted-foreground">
+                    {faq.answer}
+                  </p>
                 </details>
               ))}
             </div>
@@ -126,7 +148,8 @@ export default function SupportPage() {
               {[
                 {
                   issue: "Payment gateway showing network error",
-                  solution: "Check your internet connection and try again. If persistent, contact support.",
+                  solution:
+                    "Check your internet connection and try again. If persistent, contact support.",
                 },
                 {
                   issue: "Application not submitted after payment",
@@ -135,18 +158,22 @@ export default function SupportPage() {
                 },
                 {
                   issue: "Receiving 'Name Not Available' message",
-                  solution: "Try alternative business names. Check with CAC if a similar name exists or is reserved.",
+                  solution:
+                    "Try alternative business names. Check with CAC if a similar name exists or is reserved.",
                 },
                 {
                   issue: "Document upload failing",
-                  solution: "Ensure file is PDF/JPG/PNG, under 5MB, and not corrupted. Try a different file.",
+                  solution:
+                    "Ensure file is PDF/JPG/PNG, under 5MB, and not corrupted. Try a different file.",
                 },
               ].map((item, index) => (
                 <div key={index} className="flex gap-4">
-                  <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-foreground">{item.issue}</p>
-                    <p className="text-sm text-muted-foreground mt-1">{item.solution}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {item.solution}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -155,7 +182,9 @@ export default function SupportPage() {
 
           {/* CTA */}
           <div className="mt-12 p-8 rounded-lg border-2 border-primary/30 bg-primary/5">
-            <h3 className="text-lg font-semibold text-foreground mb-2">Still need help?</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-2">
+              Still need help?
+            </h3>
             <p className="text-muted-foreground mb-6">
               Our support team is ready to assist. Reach out via email or phone.
             </p>
@@ -179,5 +208,5 @@ export default function SupportPage() {
 
       <Footer />
     </div>
-  )
+  );
 }

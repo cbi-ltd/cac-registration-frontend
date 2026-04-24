@@ -1,9 +1,9 @@
-"use client"
-import Image from "next/image"
-import cbiLogo from "../public/assets/cbi-logo.png"
+"use client";
+import Image from "next/image";
+import cbiLogo from "../public/assets/cbi-logo.png";
 
 export function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-secondary border-t border-border">
@@ -12,10 +12,16 @@ export function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Image src={cbiLogo} alt="CBI Logo" className="w-[182px] h-[45px]" />
+              <Image
+                src={cbiLogo}
+                alt="CBI Logo"
+                className="w-45.5 h-11.25"
+                loading="eager"
+              />
             </div>
             <p className="text-sm text-muted-foreground">
-              Empowering businesses to achieve CAC compliance and deploy PoS solutions.
+              Empowering businesses to achieve CAC compliance and deploy PoS
+              solutions.
             </p>
           </div>
 
@@ -24,12 +30,18 @@ export function Footer() {
             <h4 className="font-semibold text-foreground mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="/"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a href="/status" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="/status"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Check Status
                 </a>
               </li>
@@ -41,17 +53,26 @@ export function Footer() {
             <h4 className="font-semibold text-foreground mb-3">Support</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/support" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="/support"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Support Center
                 </a>
               </li>
               <li>
-                <a href="mailto:support@cbitechnologiesltd.com" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="mailto:support@cbitechnologiesltd.com"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Email Support
                 </a>
               </li>
               <li>
-                <a href="tel:+2348112936083" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="tel:+2348112936083"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Call Support
                 </a>
               </li>
@@ -63,12 +84,18 @@ export function Footer() {
             <h4 className="font-semibold text-foreground mb-3">Legal</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="/privacy"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="/terms"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Terms & Conditions
                 </a>
               </li>
@@ -79,14 +106,17 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground text-center sm:text-left">
-            © {currentYear} CBI Technologies Limited. All rights reserved. This portal is dedicated to CAC business
-            registration only.
+            © {currentYear} CBI Technologies Limited. All rights reserved. This
+            portal is dedicated to CAC business registration only.
           </p>
           <p className="text-xs text-muted-foreground">
-            Powered by <span className="font-medium text-foreground">CBI Technologies Ltd</span>
+            Powered by{" "}
+            <span className="font-medium text-foreground">
+              CBI Technologies Ltd
+            </span>
           </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

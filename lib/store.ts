@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage, StateStorage } from "zustand/middleware";
+import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
 
 export const API_BASE_URL =
   "https://cac-registration-backend.onrender.com/api/merchant/";
@@ -76,7 +76,7 @@ export interface RegistrationData {
 
 /* ===================== INITIAL STATE ===================== */
 
-const initialState: RegistrationData = {
+export const initialState: RegistrationData = {
   preferredNames: ["", ""],
   selectedBusinessName: "",
   applicantType: "individual",
@@ -152,7 +152,7 @@ const appendIfExists = (
   }
 };
 
-const generateApplicationReference = (length = 9): string => {
+export const generateApplicationReference = (length = 9): string => {
   const chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
@@ -392,120 +392,6 @@ export const useRegistrationStore = create<
         } = state;
         return rest;
       },
-
-      // partialize: (state) => ({
-      //   currentStep: state.currentStep,
-      //   completedSteps: state.completedSteps,
-      //   selectedBusinessName: state.selectedBusinessName,
-      //   applicantType: state.applicantType,
-      //   applicationId: state.applicationId,
-      //   applicationReference: state.applicationReference,
-      //   firstName: state.firstName,
-      //   middleName: state.middleName,
-      //   lastName: state.lastName,
-      //   organizationName: state.organizationName,
-      //   rcNumber: state.rcNumber,
-      //   organizationEmail: state.organizationEmail,
-      //   dateOfBirth: state.dateOfBirth,
-      //   lineOfBusiness: state.natureOfBusiness,
-      //   commencementDate: state.commencementDate,
-      //   gender: state.gender.toLocaleUpperCase(),
-      //   streetNumber: state.companyStreetNumber,
-      //   nationality: state.nationality,
-      //   phone: state.phone,
-      //   email: state.email,
-      //   residentialAddress: state.residentialAddress,
-      //   businessAddress: state.businessAddress,
-      //   companyCity: state.companyCity,
-      //   companyState: state.companyState,
-      //   businessEmail: state.businessEmail,
-      //   businessPhone: state.businessPhone,
-      //   proprietorCity: state.proprietorCity,
-      //   proprietorState: state.proprietorState,
-      //   proprietorPostcode: state.proprietorPostcode,
-      //   proprietorLga: state.proprietorLga,
-      //   proprietorStreetNumber: state.proprietorStreetNumber,
-      //   paymentStatus: state.paymentStatus,
-      //   paymentReference: state.paymentReference,
-      //   paymentError: state.paymentError,
-      //   submitted: state.submitted,
-      //   supportingDocBase64: state.supportingDocBase64,
-      //   signatureBase64: state.signatureBase64,
-      //   meansOfIdBase64: state.meansOfIdBase64,
-      //   passportBase64: state.passportBase64,
-      //   // add others that must survive refresh
-      // }),
     },
   ),
 );
-
-// export const useRegistrationStore = create<
-//   RegistrationData & {
-//     updateField: (field: keyof RegistrationData, value: any) => void
-//     nextStep: () => void
-//     previousStep: () => void
-//     submitRegistration: () => Promise<any>
-//     reset: () => void
-//   }
-// >()(
-//   persist(
-//     (set, get) => ({
-//       ...initialState,
-
-//       updateField: (field, value) =>
-//         set((state) => ({ ...state, [field]: value })),
-
-//       nextStep: () =>
-//         set((state) => ({
-//           currentStep: Math.min(state.currentStep + 1, 7),
-//           completedSteps: [...new Set([...state.completedSteps, state.currentStep])],
-//         })),
-
-//       previousStep: () =>
-//         set((state) => ({
-//           currentStep: Math.max(state.currentStep - 1, 1),
-//         })),
-
-//       submitRegistration: async () => {
-//         const state = get()
-//         const formData = buildSubmissionPayload(state)
-
-//         const resp = await fetch(`${API_BASE_URL}reg-bn`, {
-//           method: "POST",
-//           body: formData,
-//         })
-
-//         if (!resp.ok) {
-//           let errorMessage = `${resp.status}: ${resp.statusText}`
-//           try {
-//             const errorData = await resp.json()
-//             if (errorData.message) {
-//               errorMessage = errorData.message
-//             }
-//           } catch (e) {
-//             // If parsing JSON fails, use the default error message
-//           }
-//           throw new Error(errorMessage)
-//         }
-
-//         const result = await resp.json()
-
-//         set({
-//           applicationId: result?.data?.transactionRef,
-//           applicationReference: result?.data?.transactionRef,
-//         })
-
-//         return result
-//       },
-
-//       reset: () => set(initialState),
-//     }),
-//     {
-//       name: "cbi-registration",
-//       storage: createJSONStorage(() =>
-//         typeof window !== "undefined" ? localStorage : undefined
-//       ),
-//       // partialize: (state) => state, // persist full state safely
-//     }
-//   )
-// )
