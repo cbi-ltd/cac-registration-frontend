@@ -16,11 +16,13 @@ describe("useRegistrationStore.updateField", () => {
 
     store.updateField("firstName", "John");
     store.updateField("lastName", "Doe");
-    store.updateField("email", "test@exmaple.com");
+    store.updateField("email", "test@example.com");
 
-    expect(store.firstName).toBe("John");
-    expect(store.lastName).toBe("Doe");
-    expect(store.email).toBe("test@example.com");
+    const state = useRegistrationStore.getState();
+
+    expect(state.firstName).toBe("John");
+    expect(state.lastName).toBe("Doe");
+    expect(state.email).toBe("test@example.com");
   });
 });
 
@@ -32,7 +34,9 @@ describe("useRegistrationStore.nextStep", () => {
 
     store.nextStep();
 
-    expect(store.currentStep).toBe(initialStep + 1);
+    const updatedStep = useRegistrationStore.getState().currentStep;
+
+    expect(updatedStep).toBe(initialStep + 1);
   });
 });
 
@@ -44,7 +48,9 @@ describe("useRegistrationStore.previousStep", () => {
 
     store.previousStep();
 
-    expect(store.currentStep).toBe(initialStep - 1);
+    const updatedStep = useRegistrationStore.getState().currentStep;
+
+    expect(updatedStep).toBe(initialStep - 1);
   });
 });
 
@@ -63,20 +69,24 @@ describe("useRegistrationStore.reset", () => {
 
     store.reset();
 
-    expect(store.currentStep).toBe(0);
-    expect(store.email).toBe("");
+    const resetState = useRegistrationStore.getState();
+
+    expect(resetState.currentStep).toBe(1);
+    expect(resetState.email).toBe("");
   });
 });
 
 describe("generateApplicationReference", () => {
   it("should generate string with default length of 9 characters", () => {
     const ref = generateApplicationReference();
-    expect(ref).toBe(9);
+
+    expect(ref.length).toBe(9);
   });
 
   it("generates a string with custom length", () => {
     const ref = generateApplicationReference(15);
-    expect(ref).toBe(15);
+
+    expect(ref.length).toBe(15);
   });
 
   it("only contains valid characters", () => {
