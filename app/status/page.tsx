@@ -83,6 +83,7 @@ export default function StatusPage() {
 
     setIsLoading((prev) => ({ ...prev, search: true }));
     setError("");
+    setStatus(null);
 
     try {
       const resp = await fetch(
@@ -259,7 +260,7 @@ export default function StatusPage() {
                       Reference / Transaction
                     </p>
                     <p className="text-sm font-medium text-foreground mt-1">
-                      {status.transactionRef}
+                      {status?.transactionRef}
                     </p>
                   </div>
                   <div>

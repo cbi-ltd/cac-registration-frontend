@@ -209,6 +209,7 @@ export function ApplicantInfoStep() {
                 value={store.gender?.toString().toUpperCase() ?? ""}
                 onChange={(e) => handleFieldChange("gender", e.target.value)}
                 options={genders}
+                required
               />
 
               <FormSelect
