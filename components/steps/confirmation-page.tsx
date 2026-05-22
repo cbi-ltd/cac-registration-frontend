@@ -77,7 +77,8 @@ export function ConfirmationPageStep() {
         </h1>
         <p className="text-lg text-muted-foreground mb-8">
           Your business registration application has been submitted to CAC
-          successfully. copy and keep your reference
+          successfully. Copy and keep your reference. You will need it to check
+          your application status.
         </p>
 
         {/* Reference Notice (hidden transactionRef) */}
@@ -124,7 +125,7 @@ export function ConfirmationPageStep() {
             <p className="text-xs text-muted-foreground uppercase mb-1">
               Total Amount Paid
             </p>
-            <p className="font-semibold text-foreground">₦500.00</p>
+            <p className="font-semibold text-foreground">₦28,000.00</p>
           </div>
           <div className="rounded-lg border border-border p-4">
             <p className="text-xs text-muted-foreground uppercase mb-1">

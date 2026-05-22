@@ -9,7 +9,7 @@ import { StatusBanner } from "@/components/status-banner";
 export function ReviewSummaryStep() {
   const store = useRegistrationStore();
   const [errors, setErrors] = React.useState<string[]>([]);
-  const amount: number = 500;
+  const amount: number = 28000;
   // const amount: number = 29000
   const [isProcessingPayment, setIsProcessingPayment] = React.useState(false);
   const [checking, setChecking] = React.useState(false);
