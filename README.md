@@ -159,5 +159,4 @@ docker run -p 3000:3000 cac-frontend
 - Uses the **App Router** (`/app` directory)
 - All API calls route through `NEXT_PUBLIC_API_BASE_URL` — ensure this is set correctly per environment
 - File uploads use the **FormData API** — ensure your load balancer/proxy allows large request bodies (recommended: `client_max_body_size 20m` in Nginx)
-- Zustand state is persisted in **localStorage** — no server-side session management needed
 - App runs on port `3000` by default
