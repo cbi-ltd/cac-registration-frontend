@@ -1,8 +1,11 @@
 import { create } from "zustand";
 import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
 
-export const API_BASE_URL =
-  "https://cac-registration-backend.onrender.com/api/merchant/";
+if (!process.env.NEXT_PUBLIC_API_BASE_URL) {
+  throw new Error("NEXT_PUBLIC_API_BASE_URL is not defined");
+}
+
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 /* ===================== TYPES ===================== */
 
@@ -269,8 +272,8 @@ const buildSubmissionPayload = (data: Partial<RegistrationData>) => {
 
 const noopStorage: StateStorage = {
   getItem: () => null,
-  setItem: () => {},
-  removeItem: () => {},
+  setItem: () => { },
+  removeItem: () => { },
 };
 
 /* ===================== STORE ===================== */
@@ -316,7 +319,7 @@ export const useRegistrationStore = create<
         try {
           const { getAllDocuments } = await import("./document-storage");
           docs = await getAllDocuments();
-        } catch {}
+        } catch { }
 
         const stateWithDocs = {
           ...state,
@@ -342,7 +345,7 @@ export const useRegistrationStore = create<
           try {
             const errorData = await resp.json();
             if (errorData?.message) errorMessage = errorData.message;
-          } catch {}
+          } catch { }
           throw new Error(errorMessage);
         }
 
@@ -360,7 +363,7 @@ export const useRegistrationStore = create<
         set(initialState);
         import("./document-storage")
           .then(({ clearDocuments }) => clearDocuments())
-          .catch(() => {});
+          .catch(() => { });
       },
     }),
 
